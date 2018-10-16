@@ -22,7 +22,9 @@ public class PlayerHealthManager : MonoBehaviour {
             // Death code, maybe ragdoll?
             // Placeholder for now:
             currentHealth = 0;
-            this.GetComponent<PlayerController>().isDead = true;
+            //this.GetComponent<PlayerController>().isDead = true;
+            if(!GetComponent<PlayerController>().ragdolling)
+                GetComponent<PlayerController>().Ragdoll(true);
         }
 
         if(currentHealth > startingHealth) {

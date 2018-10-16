@@ -25,6 +25,6 @@ public class ProjectileScript : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        Debug.Log(other.gameObject);
+        //Debug.Log(other.gameObject);
     }
 }
