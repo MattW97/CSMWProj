@@ -6,9 +6,17 @@ public class ProjectileScript : MonoBehaviour {
 
     [SerializeField] float bulletSpeed;
 
+    private float lifeTime = 0.15f;
+
 	void Update () {
 
-        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);   
+        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+
+        lifeTime -= Time.deltaTime;
+        if(lifeTime <= 0)
+        {
+            Destroy(this.gameObject);
+        }
 	}
 
     void OnTriggerEnter(Collider other) {

@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour {
     
     private float shotTimer;
     private float playerTurnSpeed = 8;
-    private float ammoAmount = 30;
+    private float initAmmoAmount = 5;
+    private float ammoAmount;
     private float reloadTime = 1;
+    private float mashTimer;
     [SerializeField] float fireRate;
     [SerializeField] float movementSpeed = 4;
 
@@ -31,16 +33,16 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] string rightStickHorizontal;
     [SerializeField] string rightStickVertical;
     [SerializeField] string fireButton;
-    [SerializeField] string fineAim;
+    [SerializeField] string pickUp;
     [SerializeField] string reload;
-    [SerializeField] string pickUpState;
+    [SerializeField] string mashButton;
     private Vector3 movementInput;
     public Vector3 movementVelocity;
     [Space]
 
     [Header("Game Objects")]
-    public GameObject bullet;
-    public GameObject bulletSpawn;
+    public GameObject[] bulletSpawn;
+    public GameObject bullet;   
     public GameObject laserSight;
     public GameObject weapon;
     [Space]
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Transforms & Rigidbodies")]
     private Rigidbody thisRigidbody;
     public Rigidbody pointToGrab;
-    public Transform thisTransform;
+    [HideInInspector] public Transform thisTransform;
     public Transform placeToLook;
     public Transform thisPlayersHips;
     public List<Transform> otherPlayers;
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour {
     public Text ammoCountText;
     public Image reloadBarImage;
     public Text reloadingText;
+    public Text mashAmountText;
     [Space]
 
     public Vector3 playerDirection;
@@ -65,16 +68,17 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem muzzleFlash;
 
     [Header("Script Links")]
-    public PickUp _pickUpLink;
+    public PickUp pickUpLink;
     
     private void Start() {
 
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
-        shotTimer = fireRate;
+        ammoAmount = initAmmoAmount;
         reloading = false;
         canControl = true;
         isDead = false;
+        mashTimer = 0.5f;
 
         RagdollSetup();
 
@@ -86,8 +90,9 @@ public class PlayerController : MonoBehaviour {
     private void Update() {
 
         // UI elements
-        ammoCountText.text = ammoAmount.ToString() + " | ∞";
-        reloadBarImage.fillAmount = reloadTime;      
+        ammoCountText.text = initAmmoAmount.ToString() + " | ∞";
+        reloadBarImage.fillAmount = reloadTime;
+        mashAmountText.text = "Mash Amount: " + (10 - TotalCurrentMashes).ToString();
 
         #region Player directions
         float forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized);
@@ -150,7 +155,7 @@ public class PlayerController : MonoBehaviour {
                 // If right trigger is pressed...
                 if (Input.GetAxis(fireButton) > 0 && !reloading && !pickUpMode)
                 {
-                    if (ammoAmount > 0)
+                    if (initAmmoAmount > 0)
                     {
 
                         shotTimer -= Time.deltaTime;
@@ -158,15 +163,26 @@ public class PlayerController : MonoBehaviour {
                         if (shotTimer <= 0)
                         {
 
-                            Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
+                            for (int i = 0;  i < bulletSpawn.Length; i++)
+                            {
+
+                                Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
+                            }
+                            
                             muzzleFlash.Play();
                             shotTimer = fireRate;
-                            ammoAmount = ammoAmount - 1;
+                            initAmmoAmount = initAmmoAmount - 1;
                         }
                     }
                 }
+                else
+                {
+                    //Stops delay between pressing the fire button and the shot firing
+                    //Makes it so shotTimer is only active whilst the fire button is down
+                    shotTimer = 0;
+                }
 
-                if (Input.GetButton(reload) && !pickUpMode && ammoAmount < 30 || ammoAmount == 0)
+                if (Input.GetButtonDown(reload) && !pickUpMode && initAmmoAmount < ammoAmount || initAmmoAmount == 0)
                 {
 
                     reloading = true;
@@ -181,7 +197,8 @@ public class PlayerController : MonoBehaviour {
                     if (reloadTime <= 0)
                     {
 
-                        ammoAmount = 30;
+                        initAmmoAmount = ammoAmount;
+                        shotTimer = 0;
                         reloadTime = 1;
                         reloading = false;
                         reloadBarImage.enabled = false;
@@ -190,105 +207,120 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 // If left trigger is pressed...
-                if (Input.GetAxis(fineAim) > 0)
-                {
+                //if (Input.GetAxis(fineAim) > 0)
+                //{
 
-                    playerTurnSpeed = 0.5f;
-                    movementSpeed = 1;
+                //    playerTurnSpeed = 0.5f;
+                //    movementSpeed = 1;
 
-                    // Slowly extends laser sight
-                    if (laserSight.transform.localScale.y != 10)
-                    {
+                //    // Slowly extends laser sight
+                //    if (laserSight.transform.localScale.y != 10)
+                //    {
 
-                        laserSight.transform.localScale += new Vector3(0, 0.1f, 0);
-                    }
+                //        laserSight.transform.localScale += new Vector3(0, 0.1f, 0);
+                //    }
 
-                    // Stops floating point error, sets to extended scale if it goes above 10
-                    if (laserSight.transform.localScale.y > 10)
-                    {
+                //    // Stops floating point error, sets to extended scale if it goes above 10
+                //    if (laserSight.transform.localScale.y > 10)
+                //    {
 
-                        laserSight.transform.localScale = new Vector3(3, 10, 1);
-                    }
+                //        laserSight.transform.localScale = new Vector3(3, 10, 1);
+                //    }
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                    playerTurnSpeed = 8;
-                    movementSpeed = 4;
+                //    playerTurnSpeed = 8;
+                //    movementSpeed = 4;
 
-                    // Quickly retracts laser sight
-                    if (laserSight.transform.localScale.y != 1)
-                    {
+                //    // Quickly retracts laser sight
+                //    if (laserSight.transform.localScale.y != 1)
+                //    {
 
-                        laserSight.transform.localScale -= new Vector3(0, 0.5f, 0);
-                    }
+                //        laserSight.transform.localScale -= new Vector3(0, 0.5f, 0);
+                //    }
 
-                    // Stops floating point error, sets to normal scale if it goes below 1
-                    if (laserSight.transform.localScale.y < 1)
-                    {
+                //    // Stops floating point error, sets to normal scale if it goes below 1
+                //    if (laserSight.transform.localScale.y < 1)
+                //    {
 
-                        laserSight.transform.localScale = new Vector3(3, 1, 1);
-                    }
-                }
+                //        laserSight.transform.localScale = new Vector3(3, 1, 1);
+                //    }
+                //}
 
-                //Y button is used to swap between Pick Up mode and weapon mode
-                if (Input.GetButtonDown(pickUpState) && !pickUpMode && !ragdolling)
+                //Left Trigger picks up player when held
+                if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
                 {
                     pickUpMode = true;
                     weapon.SetActive(false);
                 }
-                else if (Input.GetButtonDown(pickUpState) && pickUpMode && !ragdolling)
+                else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
                 {
-                    _pickUpLink.join = false;
-                    Destroy(_pickUpLink.GetComponent<SpringJoint>());
+                    pickUpLink.join = false;
+                    Destroy(pickUpLink.GetComponent<SpringJoint>());
                     pickUpMode = false;
-                    pointToGrab.GetComponentInParent<PlayerController>().beenDragged = false;
+                    pointToGrab.GetComponentInParent<PlayerController>().beenDragged = true;
                     weapon.SetActive(true);
                 }
 
                 //Current Setup for picking up player
-                if(Input.GetButtonDown(reload) && pickUpMode && inRange && !_pickUpLink.join)
+                if(pickUpMode && inRange && !pickUpLink.join)
                 {
-                    _pickUpLink.join = false;
-                    _pickUpLink.CreateJoint();
+                    pickUpLink.join = false;
+                    pickUpLink.CreateJoint();
                 }
                 #endregion
+
+                
             }
+
+            #region Button Mashing 
+
+            //Button mashing if the player is just ragdolling
+            if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
+            {
+                print("Button Mash Ragdoll");
+                if (TotalCurrentMashes >= (numToMash - 1))
+                {
+                    GetComponent<PlayerHealthManager>().currentHealth = GetComponent<PlayerHealthManager>().startingHealth;
+                    ragdolling = false;
+                    Ragdoll(false);
+                }
+                else
+                {
+                    TotalCurrentMashes++;
+                }
+            }
+
+            //Button mashing if the player is been dragged by an opposing player
+            if (beenDragged && Input.GetButtonDown(mashButton))
+            {
+                if (TotalCurrentMashes >= (numToMash - 1))
+                {
+                    BreakDragging();
+                }
+                else
+                {
+                    TotalCurrentMashes++;
+                }
+
+            }
+
+            if (TotalCurrentMashes > 0)
+            {
+                mashTimer -= Time.deltaTime;
+                if (mashTimer <= 0)
+                {
+                    TotalCurrentMashes = TotalCurrentMashes - 1;
+                    mashTimer = 0.3f;
+                }
+
+                Debug.Log(TotalCurrentMashes);
+            }
+
+            #endregion
         }
-
-        #region Button Mashing 
-
-        //Button mashing if the player is just ragdolling
-        if (ragdolling && !beenDragged && Input.GetButtonDown(pickUpState))
-        {
-            if (TotalCurrentMashes >= (numToMash - 1))
-            {
-                GetComponent<PlayerHealthManager>().currentHealth = GetComponent<PlayerHealthManager>().startingHealth;
-                ragdolling = false;
-                Ragdoll(false);
-            }
-            else
-            {
-                TotalCurrentMashes++;
-            }
-        }
-
-        //Button mashing if the player is been dragged by an opposing player
-        if (beenDragged && Input.GetButtonDown(pickUpState))
-        {
-            if (TotalCurrentMashes >= (numToMash - 1))
-            {
-                BreakDragging();
-            }
-            else
-            {
-                TotalCurrentMashes++;
-            }
-
-        }
-
-        #endregion
 
         DistanceToPlayer();
     }
@@ -360,10 +392,12 @@ public class PlayerController : MonoBehaviour {
             weapon.gameObject.SetActive(false);
             thisRigidbody.isKinematic = true;
             GetComponent<Animator>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
 
         else if (!ragdollToggle) //Reset Ragdoll
         {
+            ragdolling = false;
             thisTransform.position = new Vector3(thisPlayersHips.position.x, 0 , thisPlayersHips.position.z);
             TotalCurrentMashes = 0;
             canControl = true;
@@ -376,7 +410,7 @@ public class PlayerController : MonoBehaviour {
             weapon.gameObject.SetActive(true);
             thisRigidbody.isKinematic = false;
             GetComponent<Animator>().enabled = true;
-            ragdolling = false;
+            GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 

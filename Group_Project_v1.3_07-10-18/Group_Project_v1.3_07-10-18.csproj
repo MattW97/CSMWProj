@@ -213,16 +213,10 @@
       <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/mat15/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/stewi/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/mat15/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+      <HintPath>C:/Users/stewi/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -284,10 +278,12 @@
     <Compile Include="Assets\Scripts\HealthOrbSpawner.cs" />
     <Compile Include="Assets\Scripts\IKControl.cs" />
     <Compile Include="Assets\Scripts\KillZone.cs" />
+    <Compile Include="Assets\Scripts\NewCameraScript.cs" />
     <Compile Include="Assets\Scripts\PickUp.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerDamage.cs" />
     <Compile Include="Assets\Scripts\PlayerHealthManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerManagerScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\RagdollToggle.cs" />
     <Compile Include="Assets\Scripts\UtilityManager.cs" />

@@ -18,6 +18,11 @@ public class PlayerHealthManager : MonoBehaviour {
 
     private void Update() {
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            currentHealth = currentHealth - 50;
+        }
+
         if (currentHealth <= 0) {
             // Death code, maybe ragdoll?
             // Placeholder for now:
