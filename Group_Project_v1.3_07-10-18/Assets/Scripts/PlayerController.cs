@@ -4,19 +4,19 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(IKControl))]
 public class PlayerController : MonoBehaviour {
-    
+
+    [Header("Variables")]
+    public float playerNum;
+    [SerializeField] float fireRate;
+    [SerializeField] float movementSpeed = 4;
     private float shotTimer;
     private float playerTurnSpeed = 8;
     private float initAmmoAmount = 5;
     private float ammoAmount;
     private float reloadTime = 1;
     private float mashTimer;
-    [SerializeField] float fireRate;
-    [SerializeField] float movementSpeed = 4;
-
     private int totalCurrentMashes = 0;
     public int numToMash = 4;
-
     private bool reloading;
     public bool canControl;
     public bool isDead;
@@ -24,36 +24,33 @@ public class PlayerController : MonoBehaviour {
     public bool ragdolling;
     public bool inRange;
     public bool pickUpMode;
-
-
-    [Header("Controller Inputs")]
-    [Tooltip("Enter the same name that is found within the input manager of Unity")]
-    [SerializeField] string leftStickHorizontal;
-    [SerializeField] string leftStickVertical;
-    [SerializeField] string rightStickHorizontal;
-    [SerializeField] string rightStickVertical;
-    [SerializeField] string fireButton;
-    [SerializeField] string pickUp;
-    [SerializeField] string reload;
-    [SerializeField] string mashButton;
-    private Vector3 movementInput;
-    public Vector3 movementVelocity;
     [Space]
+
+    // Inputs
+    [SerializeField] private string leftStickHorizontal;
+    [SerializeField] private string leftStickVertical;
+    [SerializeField] private string rightStickHorizontal;
+    [SerializeField] private string rightStickVertical;
+    [SerializeField] private string fireButton;
+    [SerializeField] private string pickUp;
+    [SerializeField] private string reload;
+    [SerializeField] private string mashButton;
+    private Vector3 movementInput;
+    [HideInInspector] public Vector3 movementVelocity;
 
     [Header("Game Objects")]
     public GameObject[] bulletSpawn;
     public GameObject bullet;   
-    public GameObject laserSight;
     public GameObject weapon;
     [Space]
 
-    [Header("Transforms & Rigidbodies")]
-    private Rigidbody thisRigidbody;
+    [Header("Transforms & Rigidbodies")]   
     public Rigidbody pointToGrab;
-    [HideInInspector] public Transform thisTransform;
     public Transform placeToLook;
     public Transform thisPlayersHips;
     public List<Transform> otherPlayers;
+    [HideInInspector] public Transform thisTransform;
+    private Rigidbody thisRigidbody;
     [Space]
 
     [Header("UI")]
@@ -63,14 +60,19 @@ public class PlayerController : MonoBehaviour {
     public Text mashAmountText;
     [Space]
 
-    public Vector3 playerDirection;
+    [HideInInspector] public Vector3 playerDirection;
 
+    [Header("Particle Systems")]
     public ParticleSystem muzzleFlash;
+    [Space]
 
-    [Header("Script Links")]
-    public PickUp pickUpLink;
+    [Header("Scripts")]
+    public PickUp pickUpScript;
+    public UtilityManager utilManagerScript;
     
-    private void Start() {
+    void Start()
+    {
+        SetUpInputs();
 
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
@@ -87,27 +89,219 @@ public class PlayerController : MonoBehaviour {
         reloadingText.enabled = false;
     }
 
-    private void Update() {
+    void Update()
+    {
+        Debug.Log(Input.GetAxisRaw(pickUp));
 
         // UI elements
         ammoCountText.text = initAmmoAmount.ToString() + " | ∞";
         reloadBarImage.fillAmount = reloadTime;
         mashAmountText.text = "Mash Amount: " + (10 - TotalCurrentMashes).ToString();
+       
+        
+    }
 
-        #region Player directions
+    private void FixedUpdate()
+    {
+        GetCharDirections();
+        DistanceToPlayer();
+
+        if (!isDead)
+        {
+            if(canControl)
+            {
+                CharMovement();
+                Shooting();
+                GrabAndDrag();
+
+                //This causes the player not to fall with gravity. Remove this line and player falls with gravity working normally.
+                // Applies velocity from this script directly to the Rigidbody
+                thisRigidbody.velocity = movementVelocity;
+            }
+
+            ButtonMashing();
+            if (TotalCurrentMashes > 0)
+            {
+                mashTimer -= Time.deltaTime;
+                if (mashTimer <= 0)
+                {
+                    TotalCurrentMashes = TotalCurrentMashes - 1;
+                    mashTimer = 0.3f;
+                }
+
+                Debug.Log(TotalCurrentMashes);
+            }
+
+        }
+    }
+
+    void CharMovement()
+    {
+        #region Twin Stick Character Movement
+
+        // Configure input for left analog stick
+        movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal), 0f, Input.GetAxisRaw(leftStickVertical));
+        movementVelocity = movementInput * movementSpeed;
+
+        // Configure input for right analog stick
+        playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
+
+        // Stops log outputting that the Vector3 is equal to 0
+        if (playerDirection != Vector3.zero)
+        {
+
+            // Old method of rotation - Jittery
+            // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+
+            // New method of rotation - Smooth
+            Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+            thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
+        }
+        #endregion
+    }
+
+    void Shooting()
+    {
+        #region Shooting and Reloading
+        // If right trigger is pressed...
+        if (Input.GetAxis(fireButton) > 0 && !reloading && !pickUpMode)
+        {
+            if (initAmmoAmount > 0)
+            {
+
+                shotTimer -= Time.deltaTime;
+
+                if (shotTimer <= 0)
+                {
+
+                    for (int i = 0; i < bulletSpawn.Length; i++)
+                    {
+
+                        Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
+                    }
+
+                    muzzleFlash.Play();
+                    shotTimer = fireRate;
+                    initAmmoAmount = initAmmoAmount - 1;
+                }
+            }
+        }
+        else
+        {
+            //Stops delay between pressing the fire button and the shot firing
+            //Makes it so shotTimer is only active whilst the fire button is down
+            shotTimer = 0;
+        }
+
+        if (Input.GetButtonDown(reload) && !pickUpMode && initAmmoAmount < ammoAmount || initAmmoAmount == 0)
+        {
+
+            reloading = true;
+            reloadBarImage.enabled = true;
+            reloadingText.enabled = true;
+        }
+
+        if (reloading)
+        {
+            reloadTime -= Time.deltaTime;
+
+            if (reloadTime <= 0)
+            {
+
+                initAmmoAmount = ammoAmount;
+                shotTimer = 0;
+                reloadTime = 1;
+                reloading = false;
+                reloadBarImage.enabled = false;
+                reloadingText.enabled = false;
+            }
+        }
+        #endregion
+    }
+
+    void GrabAndDrag()
+    {
+        #region Grabbing and Dragging
+        //Left Trigger picks up player when held
+        if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
+        {
+            pickUpMode = true;
+            weapon.SetActive(false);
+        }
+        else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
+        {
+            pickUpScript.join = false;
+            Destroy(pickUpScript.GetComponent<SpringJoint>());
+            pickUpMode = false;
+            pointToGrab.GetComponentInParent<PlayerController>().beenDragged = true;
+            weapon.SetActive(true);
+        }
+
+        //Current Setup for picking up player
+        if (pickUpMode && inRange && !pickUpScript.join)
+        {
+            pickUpScript.join = false;
+            pickUpScript.CreateJoint();
+        }
+        #endregion
+    }
+
+    void ButtonMashing()
+    {
+        #region Button Mashing 
+
+        //Button mashing if the player is just ragdolling
+        if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
+        {
+            print("Button Mash Ragdoll");
+            if (TotalCurrentMashes >= (numToMash - 1))
+            {
+                BreakDragging();
+                Ragdoll(false);
+            }
+            else
+            {
+                TotalCurrentMashes++;
+            }
+        }
+
+        //Button mashing if the player is been dragged by an opposing player
+        if (beenDragged && Input.GetButtonDown(mashButton))
+        {
+            if (TotalCurrentMashes >= (numToMash - 1))
+            {
+                BreakDragging();
+                Ragdoll(false);
+            }
+            else
+            {
+                TotalCurrentMashes++;
+            }
+
+        }
+        #endregion
+    }
+
+    //Used to calculate player directions for animation blend trees
+    void GetCharDirections()
+    {        
+        #region Player Directions
         float forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized);
 
-        if (forwardBackward > 0) {
+        if (forwardBackward > 0)
+        {
 
             //Debug.Log(forwardBackward);
             // forward
         }
-        else if (forwardBackward < 0) {
+        else if (forwardBackward < 0)
+        {
 
             //Debug.Log(forwardBackward);
             // backward
         }
-        else {
+        else
+        {
             // neither
         }
 
@@ -128,214 +322,6 @@ public class PlayerController : MonoBehaviour {
             // neither
         }
         #endregion
-
-        if(!isDead) {
-            if (canControl) {
-                #region Character inputs
-
-                // Configure input for left analog stick
-                movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal), 0f, Input.GetAxisRaw(leftStickVertical));
-                movementVelocity = movementInput * movementSpeed;
-
-                // Configure input for right analog stick
-                playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
-
-                // Stops log outputting that the Vector3 is equal to 0
-                if (playerDirection != Vector3.zero)
-                {
-
-                    // Old method of rotation - Jittery
-                    // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-
-                    // New method of rotation - Smooth
-                    Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-                    thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
-                }
-
-                // If right trigger is pressed...
-                if (Input.GetAxis(fireButton) > 0 && !reloading && !pickUpMode)
-                {
-                    if (initAmmoAmount > 0)
-                    {
-
-                        shotTimer -= Time.deltaTime;
-
-                        if (shotTimer <= 0)
-                        {
-
-                            for (int i = 0;  i < bulletSpawn.Length; i++)
-                            {
-
-                                Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
-                            }
-                            
-                            muzzleFlash.Play();
-                            shotTimer = fireRate;
-                            initAmmoAmount = initAmmoAmount - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    //Stops delay between pressing the fire button and the shot firing
-                    //Makes it so shotTimer is only active whilst the fire button is down
-                    shotTimer = 0;
-                }
-
-                if (Input.GetButtonDown(reload) && !pickUpMode && initAmmoAmount < ammoAmount || initAmmoAmount == 0)
-                {
-
-                    reloading = true;
-                    reloadBarImage.enabled = true;
-                    reloadingText.enabled = true;
-                }
-
-                if (reloading)
-                {
-                    reloadTime -= Time.deltaTime;
-
-                    if (reloadTime <= 0)
-                    {
-
-                        initAmmoAmount = ammoAmount;
-                        shotTimer = 0;
-                        reloadTime = 1;
-                        reloading = false;
-                        reloadBarImage.enabled = false;
-                        reloadingText.enabled = false;
-                    }
-                }
-
-                // If left trigger is pressed...
-                //if (Input.GetAxis(fineAim) > 0)
-                //{
-
-                //    playerTurnSpeed = 0.5f;
-                //    movementSpeed = 1;
-
-                //    // Slowly extends laser sight
-                //    if (laserSight.transform.localScale.y != 10)
-                //    {
-
-                //        laserSight.transform.localScale += new Vector3(0, 0.1f, 0);
-                //    }
-
-                //    // Stops floating point error, sets to extended scale if it goes above 10
-                //    if (laserSight.transform.localScale.y > 10)
-                //    {
-
-                //        laserSight.transform.localScale = new Vector3(3, 10, 1);
-                //    }
-
-                //}
-                //else
-                //{
-
-                //    playerTurnSpeed = 8;
-                //    movementSpeed = 4;
-
-                //    // Quickly retracts laser sight
-                //    if (laserSight.transform.localScale.y != 1)
-                //    {
-
-                //        laserSight.transform.localScale -= new Vector3(0, 0.5f, 0);
-                //    }
-
-                //    // Stops floating point error, sets to normal scale if it goes below 1
-                //    if (laserSight.transform.localScale.y < 1)
-                //    {
-
-                //        laserSight.transform.localScale = new Vector3(3, 1, 1);
-                //    }
-                //}
-
-                //Left Trigger picks up player when held
-                if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
-                {
-                    pickUpMode = true;
-                    weapon.SetActive(false);
-                }
-                else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
-                {
-                    pickUpLink.join = false;
-                    Destroy(pickUpLink.GetComponent<SpringJoint>());
-                    pickUpMode = false;
-                    pointToGrab.GetComponentInParent<PlayerController>().beenDragged = true;
-                    weapon.SetActive(true);
-                }
-
-                //Current Setup for picking up player
-                if(pickUpMode && inRange && !pickUpLink.join)
-                {
-                    pickUpLink.join = false;
-                    pickUpLink.CreateJoint();
-                }
-                #endregion
-
-                
-            }
-
-            #region Button Mashing 
-
-            //Button mashing if the player is just ragdolling
-            if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
-            {
-                print("Button Mash Ragdoll");
-                if (TotalCurrentMashes >= (numToMash - 1))
-                {
-                    GetComponent<PlayerHealthManager>().currentHealth = GetComponent<PlayerHealthManager>().startingHealth;
-                    ragdolling = false;
-                    Ragdoll(false);
-                }
-                else
-                {
-                    TotalCurrentMashes++;
-                }
-            }
-
-            //Button mashing if the player is been dragged by an opposing player
-            if (beenDragged && Input.GetButtonDown(mashButton))
-            {
-                if (TotalCurrentMashes >= (numToMash - 1))
-                {
-                    BreakDragging();
-                }
-                else
-                {
-                    TotalCurrentMashes++;
-                }
-
-            }
-
-            if (TotalCurrentMashes > 0)
-            {
-                mashTimer -= Time.deltaTime;
-                if (mashTimer <= 0)
-                {
-                    TotalCurrentMashes = TotalCurrentMashes - 1;
-                    mashTimer = 0.3f;
-                }
-
-                Debug.Log(TotalCurrentMashes);
-            }
-
-            #endregion
-        }
-
-        DistanceToPlayer();
-    }
-
-    private void FixedUpdate() {
-
-        if(!isDead) {
-            if(canControl) {
-
-                //This causes the player not to fall with gravity. Remove this line and player falls with gravity working normally.
-
-                // Applies velocity from this script directly to the Rigidbody
-                thisRigidbody.velocity = movementVelocity;
-            }
-        }
     }
 
     /// <summary>
@@ -434,9 +420,39 @@ public class PlayerController : MonoBehaviour {
                 inRange = false;
                 GetComponent<IKControl>().ikActive = false;
             }
-
-
         }
+    }
+
+    internal void SetUpInputs()
+    {
+        // Get the player number in order to set up the inputs
+        #region Setting player number
+        if (this.gameObject.name == "Player 1")
+        {
+            playerNum = 1;
+        }
+        if (this.gameObject.name == "Player 2")
+        {
+            playerNum = 2;
+        }
+        if (this.gameObject.name == "Player 3")
+        {
+            playerNum = 3;
+        }
+        if (this.gameObject.name == "Player 4")
+        {
+            playerNum = 4;
+        }
+        #endregion
+
+        leftStickHorizontal = "L_Horizontal_" + playerNum.ToString();
+        leftStickVertical = "L_Vertical_" + playerNum.ToString();
+        rightStickHorizontal = "R_Horizontal_" + playerNum.ToString();
+        rightStickVertical = "R_Vertical_" + playerNum.ToString();
+        fireButton = "Fire_" + playerNum.ToString();
+        pickUp = "PickUp_" + playerNum.ToString();
+        reload = "Reload_" + playerNum.ToString();
+        mashButton = "Mash_" + playerNum.ToString();
     }
 
     #region Getters/ Setters
