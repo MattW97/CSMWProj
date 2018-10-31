@@ -5,13 +5,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(IKControl))]
 public class PlayerController : MonoBehaviour {
 
-    [Header("Variables")]
+    [Header("Variables")]    
     public float playerNum;
     [SerializeField] float fireRate;
     [SerializeField] float movementSpeed = 4;
+    private bool playerInGame;
     private float shotTimer;
     private float playerTurnSpeed = 8;
-    private float initAmmoAmount = 5;
+    private float initAmmoAmount = 4;
     private float ammoAmount;
     private float reloadTime = 1;
     private float mashTimer;
@@ -26,15 +27,17 @@ public class PlayerController : MonoBehaviour {
     public bool pickUpMode;
     [Space]
 
-    // Inputs
-    [SerializeField] private string leftStickHorizontal;
-    [SerializeField] private string leftStickVertical;
-    [SerializeField] private string rightStickHorizontal;
-    [SerializeField] private string rightStickVertical;
-    [SerializeField] private string fireButton;
-    [SerializeField] private string pickUp;
-    [SerializeField] private string reload;
-    [SerializeField] private string mashButton;
+    #region Inputs
+    [HideInInspector] [SerializeField] private string leftStickHorizontal;
+    [HideInInspector] [SerializeField] private string leftStickVertical;
+    [HideInInspector] [SerializeField] private string rightStickHorizontal;
+    [HideInInspector] [SerializeField] private string rightStickVertical;
+    [HideInInspector] [SerializeField] private string fireButton;
+    [HideInInspector] [SerializeField] private string pickUp;
+    [HideInInspector] [SerializeField] private string reload;
+    [HideInInspector] [SerializeField] private string mashButton;
+    #endregion
+
     private Vector3 movementInput;
     [HideInInspector] public Vector3 movementVelocity;
 
@@ -53,12 +56,6 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody thisRigidbody;
     [Space]
 
-    [Header("UI")]
-    public Text ammoCountText;
-    public Image reloadBarImage;
-    public Text reloadingText;
-    public Text mashAmountText;
-    [Space]
 
     [HideInInspector] public Vector3 playerDirection;
 
@@ -68,15 +65,16 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Scripts")]
     public PickUp pickUpScript;
+    public PlayerUI playerUILink;
     public UtilityManager utilManagerScript;
     
     void Start()
     {
-        SetUpInputs();
+        //SetUpInputs();
 
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
-        ammoAmount = initAmmoAmount;
+        ammoAmount = InitAmmoAmount;
         reloading = false;
         canControl = true;
         isDead = false;
@@ -84,21 +82,11 @@ public class PlayerController : MonoBehaviour {
 
         RagdollSetup();
 
-        // UI
-        reloadBarImage.enabled = false;
-        reloadingText.enabled = false;
     }
 
     void Update()
     {
-        Debug.Log(Input.GetAxisRaw(pickUp));
-
-        // UI elements
-        ammoCountText.text = initAmmoAmount.ToString() + " | ∞";
-        reloadBarImage.fillAmount = reloadTime;
-        mashAmountText.text = "Mash Amount: " + (10 - TotalCurrentMashes).ToString();
-       
-        
+        //Debug.Log(Input.GetAxisRaw(pickUp));        
     }
 
     private void FixedUpdate()
@@ -129,7 +117,7 @@ public class PlayerController : MonoBehaviour {
                     mashTimer = 0.3f;
                 }
 
-                Debug.Log(TotalCurrentMashes);
+                //Debug.Log(TotalCurrentMashes);
             }
 
         }
@@ -166,7 +154,7 @@ public class PlayerController : MonoBehaviour {
         // If right trigger is pressed...
         if (Input.GetAxis(fireButton) > 0 && !reloading && !pickUpMode)
         {
-            if (initAmmoAmount > 0)
+            if (InitAmmoAmount > 0)
             {
 
                 shotTimer -= Time.deltaTime;
@@ -182,7 +170,7 @@ public class PlayerController : MonoBehaviour {
 
                     muzzleFlash.Play();
                     shotTimer = fireRate;
-                    initAmmoAmount = initAmmoAmount - 1;
+                    InitAmmoAmount = InitAmmoAmount - 1;
                 }
             }
         }
@@ -193,27 +181,24 @@ public class PlayerController : MonoBehaviour {
             shotTimer = 0;
         }
 
-        if (Input.GetButtonDown(reload) && !pickUpMode && initAmmoAmount < ammoAmount || initAmmoAmount == 0)
+        if (Input.GetButtonDown(reload) && !pickUpMode && InitAmmoAmount < ammoAmount || InitAmmoAmount == 0)
         {
-
             reloading = true;
-            reloadBarImage.enabled = true;
-            reloadingText.enabled = true;
+            //playerUILink.reloadBarImage.enabled = true;
+            //playerUILink.reloadingText.enabled = true;
         }
 
         if (reloading)
         {
-            reloadTime -= Time.deltaTime;
+            ReloadTime -= Time.deltaTime;
 
-            if (reloadTime <= 0)
+            if (ReloadTime <= 0)
             {
 
-                initAmmoAmount = ammoAmount;
+                InitAmmoAmount = ammoAmount;
                 shotTimer = 0;
-                reloadTime = 1;
+                ReloadTime = 1;
                 reloading = false;
-                reloadBarImage.enabled = false;
-                reloadingText.enabled = false;
             }
         }
         #endregion
@@ -253,7 +238,6 @@ public class PlayerController : MonoBehaviour {
         //Button mashing if the player is just ragdolling
         if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
         {
-            print("Button Mash Ragdoll");
             if (TotalCurrentMashes >= (numToMash - 1))
             {
                 BreakDragging();
@@ -332,7 +316,7 @@ public class PlayerController : MonoBehaviour {
     private void BreakDragging()
     {
         beenDragged = false;
-        GetComponent<PlayerHealthManager>().currentHealth = GetComponent<PlayerHealthManager>().startingHealth;
+        GetComponent<PlayerHealthManager>().CurrentHealth = GetComponent<PlayerHealthManager>().startingHealth;
         pointToGrab.GetComponent<PickUp>().join = false;
         Destroy(pointToGrab.GetComponent<SpringJoint>());
         TotalCurrentMashes = 0;
@@ -423,27 +407,29 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    internal void SetUpInputs()
+    internal void SetUpInputs(int controller)
     {
+
+        playerNum = controller;
         // Get the player number in order to set up the inputs
-        #region Setting player number
-        if (this.gameObject.name == "Player 1")
-        {
-            playerNum = 1;
-        }
-        if (this.gameObject.name == "Player 2")
-        {
-            playerNum = 2;
-        }
-        if (this.gameObject.name == "Player 3")
-        {
-            playerNum = 3;
-        }
-        if (this.gameObject.name == "Player 4")
-        {
-            playerNum = 4;
-        }
-        #endregion
+        //#region Setting player number
+        //if (this.gameObject.name == "Player 1")
+        //{
+        //    playerNum = 1;
+        //}
+        //if (this.gameObject.name == "Player 2")
+        //{
+        //    playerNum = 2;
+        //}
+        //if (this.gameObject.name == "Player 3")
+        //{
+        //    playerNum = 3;
+        //}
+        //if (this.gameObject.name == "Player 4")
+        //{
+        //    playerNum = 4;
+        //}
+        //#endregion
 
         leftStickHorizontal = "L_Horizontal_" + playerNum.ToString();
         leftStickVertical = "L_Vertical_" + playerNum.ToString();
@@ -457,17 +443,13 @@ public class PlayerController : MonoBehaviour {
 
     #region Getters/ Setters
 
-    public int TotalCurrentMashes
-    {
-        get
-        {
-            return totalCurrentMashes;
-        }
+    public int TotalCurrentMashes { get { return totalCurrentMashes; } set { totalCurrentMashes = value; } }
 
-        set
-        {
-            totalCurrentMashes = value;
-        }
-    }
+    public float InitAmmoAmount { get { return initAmmoAmount; } set { initAmmoAmount = value; } }
+
+    public float ReloadTime { get { return reloadTime; } set { reloadTime = value; } }
+
+    public bool PlayerInGame { get { return playerInGame; } set { playerInGame = value; } }
+
     #endregion
 }

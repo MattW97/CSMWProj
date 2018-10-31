@@ -37,7 +37,7 @@ public class HealthOrb : MonoBehaviour {
 
             if (other.gameObject.tag == "Player") {
 
-                if (other.gameObject.GetComponent<PlayerHealthManager>().currentHealth < other.gameObject.GetComponent<PlayerHealthManager>().startingHealth) {
+                if (other.gameObject.GetComponent<PlayerHealthManager>().CurrentHealth < other.gameObject.GetComponent<PlayerHealthManager>().startingHealth) {
 
                     other.gameObject.GetComponent<PlayerHealthManager>().HealPlayer(25);
                     canHeal = false;

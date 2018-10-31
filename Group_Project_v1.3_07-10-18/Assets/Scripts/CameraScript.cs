@@ -65,7 +65,7 @@ public class CameraScript : MonoBehaviour {
         newCameraPos.y = (1 - (1 / distanceBetweenPlayers)) * 25.0f;
         newCameraPos.z = midPoint.transform.position.z + (-1 * (newCameraPos.y * 0.466f));
 
-        Debug.Log(distanceBetweenPlayers);
+        //Debug.Log(distanceBetweenPlayers);
 
         Camera.main.transform.position = new Vector3(midPoint.transform.position.x, newCameraPos.y, (0.75f + newCameraPos.z));
     }

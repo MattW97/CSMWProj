@@ -5,50 +5,78 @@ using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour {
 
-    public Image healthBar;
-    public Text healthValue;
+    public Image heartIcon;
+    public List<Sprite> hearts;
 
     public float startingHealth;
-    public float currentHealth;
+    private float currentHealth;
+
 
     private void Start() {
 
-        currentHealth = startingHealth;
+        CurrentHealth = startingHealth;
     }
 
     private void Update() {
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            currentHealth = currentHealth - 50;
+            CurrentHealth = CurrentHealth - 50;
         }
 
-        if (currentHealth <= 0) {
-            // Death code, maybe ragdoll?
-            // Placeholder for now:
-            currentHealth = 0;
-            //this.GetComponent<PlayerController>().isDead = true;
-            if(!GetComponent<PlayerController>().ragdolling)
+        if (CurrentHealth <= 0)
+        {
+            CurrentHealth = 0;
+            if (!GetComponent<PlayerController>().ragdolling)
+            {
                 GetComponent<PlayerController>().Ragdoll(true);
+                heartIcon.enabled = false;
+            }
         }
 
-        if(currentHealth > startingHealth) {
-
-            currentHealth = startingHealth;
+        if(CurrentHealth > startingHealth)
+        {
+            CurrentHealth = startingHealth;
         }
 
-        healthValue.text = currentHealth.ToString();
-        healthBar.fillAmount = currentHealth / startingHealth;
+        #region Hearts on UI
+        ///This Just Changes the heart depending on health levels
+        
+        if (CurrentHealth >= 76) ///First Quater 76 - 100
+        {
+            heartIcon.enabled = true;
+            heartIcon.sprite = hearts[0];
+        }
+        else if (CurrentHealth >= 51 && CurrentHealth <= 75) ///Second Quater 51 - 75
+        {
+            heartIcon.sprite = hearts[1];
+        }
+        else if (CurrentHealth >= 26 && CurrentHealth <= 50) ///Third Quater 26 - 50
+        {
+            heartIcon.sprite = hearts[2];
+        }
+        else if(CurrentHealth <= 25) ///Fourth Quater 0 - 25
+        {
+            heartIcon.sprite = hearts[3];
+        }
+
+        #endregion
+
     }
 
     public void DamagePlayer(int damageAmount) {
 
-        currentHealth = currentHealth - damageAmount;
+        CurrentHealth = CurrentHealth - damageAmount;
     }
 
     public void HealPlayer(int healAmount) {
 
-        currentHealth = currentHealth + healAmount;
+        CurrentHealth = CurrentHealth + healAmount;
     }
 
+    #region Getters/ Setters
+
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
+
+    #endregion
 }
