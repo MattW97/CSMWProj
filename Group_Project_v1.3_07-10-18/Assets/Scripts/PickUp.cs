@@ -22,8 +22,8 @@ public class PickUp : MonoBehaviour {
             SpringJoint sp = gameObject.AddComponent<SpringJoint>();
             sp.connectedBody = GetComponentInParent<PlayerController>().pointToGrab;
             ConnectionPoint = sp.connectedBody;
-            ConnectionPoint.GetComponentInParent<PlayerController>().beenDragged = true;
-            ConnectionPoint.GetComponentInParent<PlayerController>().TotalCurrentMashes = 0;
+            //ConnectionPoint.GetComponentInParent<PlayerController>().beenDragged = true;
+            //ConnectionPoint.GetComponentInParent<PlayerController>().TotalCurrentMashes = 0;
             sp.autoConfigureConnectedAnchor = false;
             sp.connectedAnchor = new Vector3 (0,0,0);
 

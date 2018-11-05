@@ -50,7 +50,7 @@ public class PlayerPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// "PlayerIndex" is either 0 - 4 with the actual controller repersented ben -1 to the value.
+    /// "PlayerIndex" is either 0 - 4 with the actual controller represented been -1 to the value.
     /// i.e. PlayerIndex.Four = 3
     /// </summary>
     IEnumerator Vibration()

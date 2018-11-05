@@ -13,6 +13,8 @@ public class StartMenu : MonoBehaviour {
     public GameObject playerSelectionGameObj;
     public GameObject startGameInfo;
     public GameObject parentObject;
+    public GameObject overrideButton;
+    private bool playerOverride;
 
     [Header("Links")]
     public List<PlayerController> players;
@@ -71,6 +73,50 @@ public class StartMenu : MonoBehaviour {
             }
         }
 
+        #region PlayerOverride
+
+        if (controlAssign.existingConNums.Count >= 1)
+        {
+            overrideButton.SetActive(true);
+        }
+        else
+        {
+            overrideButton.SetActive(false);
+        }
+              
+
+        if (playerOverride)
+        {
+            parentObject.SetActive(false);
+
+            foreach (PlayerController player in players)
+            {
+                if (player.playerNum == 0)
+                {
+                    player.playerNum = 3;
+                    player.PlayerInGame = true;
+
+                    player.GetComponent<PlayerHealthManager>().heartIcon.gameObject.SetActive(true);
+
+                    player.gameObject.SetActive(true);
+                }
+                else if (player.playerNum != 0)
+                {
+                    player.PlayerInGame = true;
+
+                    player.GetComponent<PlayerHealthManager>().heartIcon.gameObject.SetActive(true);
+
+                    player.gameObject.SetActive(true);
+                }
+            }
+        }
+        #endregion
+
+    }
+
+    public void RunOverride()
+    {
+        playerOverride = true;
     }
 
     public void OpenPlayerSelection()

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(IKControl))]
 public class PlayerController : MonoBehaviour {
 
-    [Header("Variables")]    
+    [Header("Variables")]
+    public float distanceCheck;
     public float playerNum;
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float movementSpeed = 4;
@@ -59,11 +60,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject dodgePoint;
     [Space]
 
-    [Header("Transforms & Rigidbodies")]   
-    public Rigidbody pointToGrab;
-    public Transform placeToLook;
-    public Transform thisPlayersHips;
-    public List<Transform> otherPlayers;
+    [Header("Transforms & Rigidbodies")] 
     [HideInInspector] public Transform thisTransform;
     private Rigidbody thisRigidbody;
     [Space]
@@ -76,10 +73,23 @@ public class PlayerController : MonoBehaviour {
     [Space]
 
     [Header("Scripts")]
-    public PickUp pickUpScript;
-    public PlayerUI playerUILink;
     public UtilityManager utilManagerScript;
-    
+
+
+    [Header("Change These For Each Player")]
+    public Rigidbody pointToGrab;
+    //public Transform placeToLook;
+    public Transform thisPlayersOrigin;
+    public List<Transform> thisPlayersHand;
+    public List<Transform> thisPlayersLimbs;
+    public List<Transform> otherPlayersOrigin;
+    [Space]
+    public PlayerUI playerUILink;
+    public GameObject closestPlayer;
+    public PickUp pickUpScript;
+    private GameObject closestEnemyLimb;
+    public GameObject closestHand;
+
     void Start()
     {
         //SetUpInputs();
@@ -151,6 +161,13 @@ public class PlayerController : MonoBehaviour {
     {
         GetCharDirections();
         DistanceToPlayer();
+
+        if(closestPlayer != null)
+        {
+            ClosestHand();
+            ClosestLimb();
+            //closestPlayer.GetComponentInParent<PlayerController>().ClosestLimb();
+        }
 
         if (!isDead)
         {
@@ -254,6 +271,7 @@ public class PlayerController : MonoBehaviour {
     {
         #region Grabbing and Dragging
         //Left Trigger picks up player when held
+
         if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
             pickUpMode = true;
@@ -264,16 +282,25 @@ public class PlayerController : MonoBehaviour {
             pickUpScript.join = false;
             Destroy(pickUpScript.GetComponent<SpringJoint>());
             pickUpMode = false;
-            pointToGrab.GetComponentInParent<PlayerController>().beenDragged = true;
+            weapon.SetActive(true);
+        }
+        else if (!pickUpMode)
+        {
+            foreach (Transform limbs in thisPlayersLimbs)
+            {
+                limbs.GetComponent<PickUp>().join = false;
+                Destroy(limbs.GetComponent<SpringJoint>());
+            }
+
             weapon.SetActive(true);
         }
 
         //Current Setup for picking up player
-        if (pickUpMode && inRange && !pickUpScript.join)
-        {
-            pickUpScript.join = false;
-            pickUpScript.CreateJoint();
-        }
+        if (pickUpMode && inRange && !pickUpScript.join && closestPlayer.GetComponentInParent<PlayerController>().ragdolling)
+            {
+                pickUpScript.join = false;
+                pickUpScript.CreateJoint();
+            }
         #endregion
     }
 
@@ -411,7 +438,7 @@ public class PlayerController : MonoBehaviour {
         else if (!ragdollToggle) //Reset Ragdoll
         {
             ragdolling = false;
-            thisTransform.position = new Vector3(thisPlayersHips.position.x, 0 , thisPlayersHips.position.z);
+            thisTransform.position = new Vector3(thisPlayersOrigin.position.x, 0 , thisPlayersOrigin.position.z);
             TotalCurrentMashes = 0;
             numToMash = numToMash * numToMashMultiplier;
             canControl = true;
@@ -433,20 +460,58 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void DistanceToPlayer()
     {
-        foreach (Transform otherPlayertrans in otherPlayers)
+        foreach (Transform otherPlayertrans in otherPlayersOrigin)
         {
             float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
             
-            if (dist < 1)
+            if (dist < distanceCheck)
             {
-                GetComponent<IKControl>().lookObj = placeToLook;
-                GetComponent<IKControl>().ikActive = true;
+                //GetComponent<IKControl>().lookObj = placeToLook;
+                //GetComponent<IKControl>().ikActive = true;
+                closestPlayer = otherPlayertrans.gameObject;
                 inRange = true;
+                //pickUpScript = closestPlayer.GetComponentInChildren<PickUp>();
             }
             else
             {
                 inRange = false;
                 GetComponent<IKControl>().ikActive = false;
+                //closestPlayer = null;
+                //otherPlayertrans.GetComponentInParent<PlayerController>().closestPlayer = null;
+                //pickUpScript = null;
+            }
+        }   
+    }
+
+    /// <summary>
+    /// Used to be  aware of how closest enemy limb the player
+    /// </summary>
+    public void ClosestLimb()
+    {
+        foreach (Transform otherPlayerLimb in closestPlayer.GetComponentInParent<PlayerController>().thisPlayersLimbs)
+        {
+            float dist = Vector3.Distance(otherPlayerLimb.position, closestHand.transform.position);
+
+            if (dist < distanceCheck)
+            {
+                pointToGrab = otherPlayerLimb.GetComponent<Rigidbody>();
+                pickUpScript = otherPlayerLimb.GetComponent<PickUp>();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Used to be aware of closest hand to enemy players 
+    /// </summary>
+    public void ClosestHand()
+    {
+        foreach (Transform thisPlayersHandPos in thisPlayersHand)
+        {
+            float dist = Vector3.Distance(thisPlayersHandPos.position, closestPlayer.transform.position);
+
+            if (dist < distanceCheck)
+            {
+                closestHand = thisPlayersHandPos.gameObject;
             }
         }
     }
