@@ -12,17 +12,13 @@ public class PlayerHealthManager : MonoBehaviour {
     private float currentHealth;
 
 
-    private void Start() {
-
+    private void Start()
+    {
         CurrentHealth = startingHealth;
     }
 
-    private void Update() {
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            CurrentHealth = CurrentHealth - 50;
-        }
+    private void Update()
+    {
 
         if (CurrentHealth <= 0)
         {

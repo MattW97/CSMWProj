@@ -19,6 +19,7 @@ public class CameraScript : MonoBehaviour {
     private float distanceFromMiddlePoint;
     private float distanceBetweenPlayers;
     private float cameraDistance;
+    private float cameraSpeed;
     private float aspectRatio;
     private float fov;
     private float tanFov;
@@ -30,15 +31,14 @@ public class CameraScript : MonoBehaviour {
 
     void Start()
     {
-
         aspectRatio = Screen.width / Screen.height;
         tanFov = Mathf.Tan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2.0f);
         newCameraPos = Camera.main.transform.position;
+        cameraSpeed = 3;
     }
 
     void LateUpdate()
     {
-
         p1DistToMid = Vector3.Distance(player1.position, midPoint.transform.position);
         p2DistToMid = Vector3.Distance(player2.position, midPoint.transform.position);
         p3DistToMid = Vector3.Distance(player3.position, midPoint.transform.position);
@@ -67,12 +67,13 @@ public class CameraScript : MonoBehaviour {
 
         //Debug.Log(distanceBetweenPlayers);
 
-        Camera.main.transform.position = new Vector3(midPoint.transform.position.x, newCameraPos.y, (0.75f + newCameraPos.z));
+        Vector3 des = new Vector3(midPoint.transform.position.x, newCameraPos.y, (0.75f + newCameraPos.z));
+
+        Camera.main.transform.position = Vector3.Lerp(transform.position, des, cameraSpeed);
     }
 
     void FixedUpdate()
     {
-
         midPoint.transform.position = middlePoint + new Vector3(0, 1.25f, 0);
     }
 }

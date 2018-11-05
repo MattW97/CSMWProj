@@ -7,18 +7,27 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Variables")]    
     public float playerNum;
-    [SerializeField] float fireRate;
+    [SerializeField] float fireRate = 0.3f;
     [SerializeField] float movementSpeed = 4;
-    private bool playerInGame;
+    private float dodgeSpeed = 10;
     private float shotTimer;
     private float playerTurnSpeed = 8;
     private float initAmmoAmount = 4;
     private float ammoAmount;
     private float reloadTime = 1;
     private float mashTimer;
+    public float numToMash = 5;
+    private float numToMashMultiplier = 2.0f;
+
+    public float forwardBackward;
+    public float rightLeft;
+
     private int totalCurrentMashes = 0;
-    public int numToMash = 4;
+    
     private bool reloading;
+    private bool dodging;
+    private bool canDodge;
+    private bool playerInGame;
     public bool canControl;
     public bool isDead;
     public bool beenDragged;
@@ -28,16 +37,18 @@ public class PlayerController : MonoBehaviour {
     [Space]
 
     #region Inputs
-    [HideInInspector] [SerializeField] private string leftStickHorizontal;
-    [HideInInspector] [SerializeField] private string leftStickVertical;
-    [HideInInspector] [SerializeField] private string rightStickHorizontal;
-    [HideInInspector] [SerializeField] private string rightStickVertical;
-    [HideInInspector] [SerializeField] private string fireButton;
-    [HideInInspector] [SerializeField] private string pickUp;
-    [HideInInspector] [SerializeField] private string reload;
-    [HideInInspector] [SerializeField] private string mashButton;
+    [HideInInspector] public string leftStickHorizontal;
+    [HideInInspector] public string leftStickVertical;
+    [HideInInspector] public string rightStickHorizontal;
+    [HideInInspector] public string rightStickVertical;
+    [HideInInspector] public string fireButton;
+    [HideInInspector] public string pickUp;
+    [HideInInspector] public string reload;
+    [HideInInspector] public string mashButton;
+    [HideInInspector] public string dodgeButton;
     #endregion
 
+    private Vector3 dodgePos;
     private Vector3 movementInput;
     [HideInInspector] public Vector3 movementVelocity;
 
@@ -45,6 +56,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject[] bulletSpawn;
     public GameObject bullet;   
     public GameObject weapon;
+    public GameObject dodgePoint;
     [Space]
 
     [Header("Transforms & Rigidbodies")]   
@@ -76,17 +88,63 @@ public class PlayerController : MonoBehaviour {
         thisRigidbody = GetComponent<Rigidbody>();
         ammoAmount = InitAmmoAmount;
         reloading = false;
+        dodging = false;
+        canDodge = true;
         canControl = true;
         isDead = false;
         mashTimer = 0.5f;
 
-        RagdollSetup();
-
+        RagdollSetup();      
     }
 
     void Update()
     {
-        //Debug.Log(Input.GetAxisRaw(pickUp));        
+        if (!isDead)
+        {
+            // Placed the ButtonMashing() function in here as FixedUpdate() missed some Y inputs
+            // Regular Update() fixes this issue
+            ButtonMashing();
+
+            #region Button Mash degredation timer (Optional)
+            //if (TotalCurrentMashes > 0)
+            //{
+            //    mashTimer -= Time.deltaTime;
+            //if (mashTimer <= 0)
+            //{
+            //    TotalCurrentMashes = TotalCurrentMashes - 1;
+            //    mashTimer = 1f;
+            //}
+
+            //Debug.Log(TotalCurrentMashes);
+            //}
+            #endregion
+
+            if (canControl)
+            {
+                if (Input.GetButtonDown(dodgeButton) && canDodge)
+                {
+                    dodging = true;
+                }
+            }
+
+            #region Dodge bool
+            if (dodging)
+            {
+                dodgePos = dodgePoint.transform.position;
+                dodgePoint.transform.parent = null;
+                canControl = false;
+                transform.position = Vector3.Lerp(transform.position, dodgePos, dodgeSpeed * Time.deltaTime);
+            }
+            else
+            {
+                dodgePoint.transform.parent = this.gameObject.transform;
+                dodgePoint.transform.position = (movementInput.normalized * 2) + transform.position;
+                canControl = true;
+            }
+
+            // See OnTriggerEnter() function for dodging = false;
+            #endregion
+        }
     }
 
     private void FixedUpdate()
@@ -105,21 +163,9 @@ public class PlayerController : MonoBehaviour {
                 //This causes the player not to fall with gravity. Remove this line and player falls with gravity working normally.
                 // Applies velocity from this script directly to the Rigidbody
                 thisRigidbody.velocity = movementVelocity;
+
+                
             }
-
-            ButtonMashing();
-            if (TotalCurrentMashes > 0)
-            {
-                mashTimer -= Time.deltaTime;
-                if (mashTimer <= 0)
-                {
-                    TotalCurrentMashes = TotalCurrentMashes - 1;
-                    mashTimer = 0.3f;
-                }
-
-                //Debug.Log(TotalCurrentMashes);
-            }
-
         }
     }
 
@@ -261,7 +307,6 @@ public class PlayerController : MonoBehaviour {
             {
                 TotalCurrentMashes++;
             }
-
         }
         #endregion
     }
@@ -270,17 +315,15 @@ public class PlayerController : MonoBehaviour {
     void GetCharDirections()
     {        
         #region Player Directions
-        float forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized);
+        forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized);
 
         if (forwardBackward > 0)
         {
-
             //Debug.Log(forwardBackward);
             // forward
         }
         else if (forwardBackward < 0)
         {
-
             //Debug.Log(forwardBackward);
             // backward
         }
@@ -289,7 +332,7 @@ public class PlayerController : MonoBehaviour {
             // neither
         }
 
-        float rightLeft = Vector3.Dot(-movementVelocity.normalized, Vector3.Cross(thisTransform.forward, thisTransform.up).normalized);
+        rightLeft = Vector3.Dot(-movementVelocity.normalized, Vector3.Cross(thisTransform.forward, thisTransform.up).normalized);
 
         if (rightLeft > 0)
         {
@@ -370,6 +413,7 @@ public class PlayerController : MonoBehaviour {
             ragdolling = false;
             thisTransform.position = new Vector3(thisPlayersHips.position.x, 0 , thisPlayersHips.position.z);
             TotalCurrentMashes = 0;
+            numToMash = numToMash * numToMashMultiplier;
             canControl = true;
             foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
             {
@@ -411,25 +455,6 @@ public class PlayerController : MonoBehaviour {
     {
 
         playerNum = controller;
-        // Get the player number in order to set up the inputs
-        //#region Setting player number
-        //if (this.gameObject.name == "Player 1")
-        //{
-        //    playerNum = 1;
-        //}
-        //if (this.gameObject.name == "Player 2")
-        //{
-        //    playerNum = 2;
-        //}
-        //if (this.gameObject.name == "Player 3")
-        //{
-        //    playerNum = 3;
-        //}
-        //if (this.gameObject.name == "Player 4")
-        //{
-        //    playerNum = 4;
-        //}
-        //#endregion
 
         leftStickHorizontal = "L_Horizontal_" + playerNum.ToString();
         leftStickVertical = "L_Vertical_" + playerNum.ToString();
@@ -439,6 +464,33 @@ public class PlayerController : MonoBehaviour {
         pickUp = "PickUp_" + playerNum.ToString();
         reload = "Reload_" + playerNum.ToString();
         mashButton = "Mash_" + playerNum.ToString();
+        dodgeButton = "B_" + playerNum.ToString();
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Dodge Point")
+        {
+            dodging = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Obstacle")
+        {
+            dodging = false;
+            canDodge = false;
+            Debug.Log("Obstacle Hit");
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            canDodge = true;
+        }
     }
 
     #region Getters/ Setters

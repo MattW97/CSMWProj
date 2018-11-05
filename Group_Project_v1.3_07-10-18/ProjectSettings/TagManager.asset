@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - KillZone
+  - Dodge Point
   layers:
   - Default
   - TransparentFX

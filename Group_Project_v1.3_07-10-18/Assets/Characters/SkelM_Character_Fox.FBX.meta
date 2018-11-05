@@ -1,0 +1,324 @@
+fileFormatVersion: 2
+guid: f502450df48b7c34797173dad957455b
+timeCreated: 1541414479
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: BodyBicep
+    100002: BodyBody
+    100004: BodyFeet
+    100006: BodyHands
+    100008: BodyThighs
+    100010: Chest
+    100012: FoxEars
+    100014: FoxEyes
+    100016: FoxHead
+    100018: FoxNose
+    100020: FoxPupils
+    100022: FoxTail
+    100024: FoxTeeth
+    100026: FoxTongue
+    100028: Head
+    100030: LeftAnkle
+    100032: LeftArmCollarbone
+    100034: LeftFingers
+    100036: LeftFoot
+    100038: LeftLowerArm
+    100040: LeftLowerLeg
+    100042: LeftLowerThumb
+    100044: LeftPalm
+    100046: LeftUpperArm
+    100048: LeftUpperLeg
+    100050: LeftUpperThumb
+    100052: Neck
+    100054: Pelvis
+    100056: RightAnkle
+    100058: RightArmCollarbone
+    100060: RightFingers
+    100062: RightFoot
+    100064: RightLowerArm
+    100066: RightLowerLeg
+    100068: RightLowerThumb
+    100070: RightPalm
+    100072: RightUpperArm
+    100074: RightUpperLeg
+    100076: RightUpperThumb
+    100078: SkeletonArms1
+    100080: SkeletonArms2
+    100082: SkeletonCollar
+    100084: SkeletonFeet
+    100086: SkeletonFingers
+    100088: SkeletonHands
+    100090: SkeletonHipbone
+    100092: SkeletonJaw
+    100094: SkeletonLegs1
+    100096: SkeletonLegs2
+    100098: SkeletonLegs3
+    100100: SkeletonRibcage
+    100102: SkeletonShoulder
+    100104: SkeletonSkull1
+    100106: SkeletonSkull2
+    100108: SkeletonSpine1
+    100110: SkeletonSpine2
+    100112: SkeletonToes
+    100114: //RootNode
+    100116: Spine1
+    100118: Spine2
+    100120: Spine3
+    100122: Spine4
+    100124: Spine5
+    400000: BodyBicep
+    400002: BodyBody
+    400004: BodyFeet
+    400006: BodyHands
+    400008: BodyThighs
+    400010: Chest
+    400012: FoxEars
+    400014: FoxEyes
+    400016: FoxHead
+    400018: FoxNose
+    400020: FoxPupils
+    400022: FoxTail
+    400024: FoxTeeth
+    400026: FoxTongue
+    400028: Head
+    400030: LeftAnkle
+    400032: LeftArmCollarbone
+    400034: LeftFingers
+    400036: LeftFoot
+    400038: LeftLowerArm
+    400040: LeftLowerLeg
+    400042: LeftLowerThumb
+    400044: LeftPalm
+    400046: LeftUpperArm
+    400048: LeftUpperLeg
+    400050: LeftUpperThumb
+    400052: Neck
+    400054: Pelvis
+    400056: RightAnkle
+    400058: RightArmCollarbone
+    400060: RightFingers
+    400062: RightFoot
+    400064: RightLowerArm
+    400066: RightLowerLeg
+    400068: RightLowerThumb
+    400070: RightPalm
+    400072: RightUpperArm
+    400074: RightUpperLeg
+    400076: RightUpperThumb
+    400078: SkeletonArms1
+    400080: SkeletonArms2
+    400082: SkeletonCollar
+    400084: SkeletonFeet
+    400086: SkeletonFingers
+    400088: SkeletonHands
+    400090: SkeletonHipbone
+    400092: SkeletonJaw
+    400094: SkeletonLegs1
+    400096: SkeletonLegs2
+    400098: SkeletonLegs3
+    400100: SkeletonRibcage
+    400102: SkeletonShoulder
+    400104: SkeletonSkull1
+    400106: SkeletonSkull2
+    400108: SkeletonSpine1
+    400110: SkeletonSpine2
+    400112: SkeletonToes
+    400114: //RootNode
+    400116: Spine1
+    400118: Spine2
+    400120: Spine3
+    400122: Spine4
+    400124: Spine5
+    4300000: BodyBicep
+    4300002: BodyBody
+    4300004: BodyFeet
+    4300006: BodyHands
+    4300008: BodyThighs
+    4300010: FoxEars
+    4300012: FoxEyes
+    4300014: FoxHead
+    4300016: FoxNose
+    4300018: FoxPupils
+    4300020: FoxTail
+    4300022: FoxTeeth
+    4300024: FoxTongue
+    4300026: SkeletonArms1
+    4300028: SkeletonArms2
+    4300030: SkeletonCollar
+    4300032: SkeletonFeet
+    4300034: SkeletonFingers
+    4300036: SkeletonHands
+    4300038: SkeletonHipbone
+    4300040: SkeletonJaw
+    4300042: SkeletonLegs1
+    4300044: SkeletonLegs2
+    4300046: SkeletonLegs3
+    4300048: SkeletonRibcage
+    4300050: SkeletonShoulder
+    4300052: SkeletonSkull1
+    4300054: SkeletonSkull2
+    4300056: SkeletonSpine1
+    4300058: SkeletonSpine2
+    4300060: SkeletonToes
+    9500000: //RootNode
+    13700000: BodyBicep
+    13700002: BodyBody
+    13700004: BodyFeet
+    13700006: BodyHands
+    13700008: BodyThighs
+    13700010: FoxEars
+    13700012: FoxEyes
+    13700014: FoxHead
+    13700016: FoxNose
+    13700018: FoxPupils
+    13700020: FoxTail
+    13700022: FoxTeeth
+    13700024: FoxTongue
+    13700026: SkeletonArms1
+    13700028: SkeletonArms2
+    13700030: SkeletonCollar
+    13700032: SkeletonFeet
+    13700034: SkeletonFingers
+    13700036: SkeletonHands
+    13700038: SkeletonHipbone
+    13700040: SkeletonJaw
+    13700042: SkeletonLegs1
+    13700044: SkeletonLegs2
+    13700046: SkeletonLegs3
+    13700048: SkeletonRibcage
+    13700050: SkeletonShoulder
+    13700052: SkeletonSkull1
+    13700054: SkeletonSkull2
+    13700056: SkeletonSpine1
+    13700058: SkeletonSpine2
+    13700060: SkeletonToes
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BearBody
+    second: {fileID: 2100000, guid: 238571ccf3c44f1478bdf4c6e9520025, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FoxPupils_defaultMat
+    second: {fileID: 2100000, guid: 95b9b4b775db5b74e93521092f905120, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxears_defaultMat
+    second: {fileID: 2100000, guid: fe31eb7c40cec0c4f9a9bce5b977da94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxeyes_defaultMat
+    second: {fileID: 2100000, guid: a75a891a278a47a42a54c9a3eb0fcf6c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxhead_defaultMat
+    second: {fileID: 2100000, guid: b3cae2daa03a5f949b6d21eefab4f82b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxnose_defaultMat
+    second: {fileID: 2100000, guid: fead49ec25470ef40ab3603f5d1c8e34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxtail_defaultMat
+    second: {fileID: 2100000, guid: 1522a17e4afc8b644a6a5bfcc6258eeb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxteeth_defaultMat
+    second: {fileID: 2100000, guid: e43a86b5eeb7e844091666a1eeff1f39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Foxtongue_defaultMat
+    second: {fileID: 2100000, guid: d5511e3ab19d2f54cad3e600afa2fd12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skeleton_default
+    second: {fileID: 2100000, guid: 0d1fb2cce1664fd418f4efb05464f123, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

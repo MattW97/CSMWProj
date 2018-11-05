@@ -13,7 +13,6 @@ public class PlayerPanel : MonoBehaviour {
     public bool hasControllerAssinged;
     public PlayerController player;
     public ControllerAssigner controlAssign;
-
     public GameObject join;
     public GameObject ready;
     public Color32 playerColour;

@@ -2072,7 +2072,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1011959707223242}
-  m_LocalRotation: {x: 0.53267515, y: 0.07034045, z: 0.83613265, w: -0.11041513}
+  m_LocalRotation: {x: 0.5326752, y: 0.070340455, z: 0.83613276, w: -0.110415146}
   m_LocalPosition: {x: 0.000022271464, y: -0.00006150465, z: 0.026027026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3192,21 +3192,13 @@ MonoBehaviour:
   playerNum: 0
   fireRate: 0.3
   movementSpeed: 4
-  numToMash: 10
+  numToMash: 5
   canControl: 0
   isDead: 0
   beenDragged: 0
   ragdolling: 0
   inRange: 0
   pickUpMode: 0
-  leftStickHorizontal: 
-  leftStickVertical: 
-  rightStickHorizontal: 
-  rightStickVertical: 
-  fireButton: 
-  pickUp: 
-  reload: 
-  mashButton: 
   movementVelocity: {x: 0, y: 0, z: 0}
   bulletSpawn:
   - {fileID: 1930384088498656}
@@ -3216,19 +3208,17 @@ MonoBehaviour:
   - {fileID: 1726249899985972}
   bullet: {fileID: 1511319414114544, guid: 531633ddf3c913b4cacf455e4e4051b1, type: 2}
   weapon: {fileID: 1589338134977448}
+  dodgePoint: {fileID: 1754285741113320, guid: c395a49c00dfd1242b7caeb53f7feabd, type: 2}
   pointToGrab: {fileID: 0}
   placeToLook: {fileID: 0}
   thisPlayersHips: {fileID: 4154783328304568}
   otherPlayers:
   - {fileID: 0}
   thisTransform: {fileID: 0}
-  ammoCountText: {fileID: 0}
-  reloadBarImage: {fileID: 0}
-  reloadingText: {fileID: 0}
-  mashAmountText: {fileID: 0}
   playerDirection: {x: 0, y: 0, z: 0}
   muzzleFlash: {fileID: 198585753701865978}
   pickUpScript: {fileID: 0}
+  playerUILink: {fileID: 0}
   utilManagerScript: {fileID: 0}
 --- !u!114 &114593063113596960
 MonoBehaviour:
@@ -3269,10 +3259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967434707521ab74489a41638c68de7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
-  healthValue: {fileID: 0}
+  heartIcon: {fileID: 0}
+  hearts: []
   startingHealth: 100
-  currentHealth: 0
 --- !u!135 &135828144258046812
 SphereCollider:
   m_ObjectHideFlags: 1

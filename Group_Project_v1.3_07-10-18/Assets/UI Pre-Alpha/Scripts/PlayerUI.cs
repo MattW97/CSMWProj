@@ -19,7 +19,7 @@ public class PlayerUI : MonoBehaviour {
 
     void Update()
     {
-        yMash.fillAmount = (assignedPlayer.TotalCurrentMashes) * 0.1f;
+        yMash.fillAmount = assignedPlayer.TotalCurrentMashes / assignedPlayer.numToMash;
 
         #region Ammo Shells on UI
 
