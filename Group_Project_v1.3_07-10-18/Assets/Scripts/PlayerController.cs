@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
     [Header("Variables")]
-    public float distanceCheck;
     public float playerNum;
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float movementSpeed = 4;
-    private float dodgeSpeed = 10;
+    private float dodgeSpeed = 5;
     private float shotTimer;
     private float playerTurnSpeed = 8;
     private float initAmmoAmount = 4;
@@ -19,9 +18,11 @@ public class PlayerController : MonoBehaviour {
     private float mashTimer;
     public float numToMash = 5;
     private float numToMashMultiplier = 2.0f;
+    private float joystickAxisValue;
 
     public float forwardBackward;
     public float rightLeft;
+    public float distanceCheck;
 
     private int totalCurrentMashes = 0;
     
@@ -104,11 +105,16 @@ public class PlayerController : MonoBehaviour {
         isDead = false;
         mashTimer = 0.5f;
 
+        //IntialDistance();
         RagdollSetup();      
     }
 
     void Update()
     {
+        GetCharDirections();
+
+        joystickAxisValue = Mathf.Clamp01(new Vector2(Input.GetAxis(leftStickHorizontal), Input.GetAxis(leftStickVertical)).magnitude);
+
         if (!isDead)
         {
             // Placed the ButtonMashing() function in here as FixedUpdate() missed some Y inputs
@@ -158,8 +164,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate()
-    {
-        GetCharDirections();
+    {      
         DistanceToPlayer();
 
         if(closestPlayer != null)
@@ -274,6 +279,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
+            print(pickUpMode);
             pickUpMode = true;
             weapon.SetActive(false);
         }
@@ -342,7 +348,7 @@ public class PlayerController : MonoBehaviour {
     void GetCharDirections()
     {        
         #region Player Directions
-        forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized);
+        forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized) * joystickAxisValue;
 
         if (forwardBackward > 0)
         {
@@ -359,7 +365,7 @@ public class PlayerController : MonoBehaviour {
             // neither
         }
 
-        rightLeft = Vector3.Dot(-movementVelocity.normalized, Vector3.Cross(thisTransform.forward, thisTransform.up).normalized);
+        rightLeft = Vector3.Dot(-movementVelocity.normalized, Vector3.Cross(thisTransform.forward, thisTransform.up).normalized) * joystickAxisValue;
 
         if (rightLeft > 0)
         {
@@ -481,6 +487,20 @@ public class PlayerController : MonoBehaviour {
                 //pickUpScript = null;
             }
         }   
+    }
+
+    private void IntialDistance()
+    {
+        foreach (Transform otherPlayertrans in otherPlayersOrigin)
+        {
+            float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
+
+            if (dist < 1000)
+            {
+                closestPlayer = otherPlayertrans.gameObject;
+                break;
+            }
+        }
     }
 
     /// <summary>

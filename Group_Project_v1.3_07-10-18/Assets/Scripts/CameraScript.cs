@@ -11,30 +11,27 @@ public class CameraScript : MonoBehaviour {
 
     public GameObject midPoint;
 
-    private float marginDistance;
-
     private Vector3 newCameraPos;
     private Vector3 middlePoint;
-    private Quaternion targetRotation;
-    private float distanceFromMiddlePoint;
+    private Vector3 vectorBetweenPlayers;
     private float distanceBetweenPlayers;
-    private float cameraDistance;
     private float cameraSpeed;
-    private float aspectRatio;
-    private float fov;
-    private float tanFov;
+    private float maxCameraDistance;
+    private float minCameraDistance;
 
     private float p1DistToMid;
     private float p2DistToMid;
     private float p3DistToMid;
     private float p4DistToMid;
 
+    public GameObject playerSelection;
+
     void Start()
     {
-        aspectRatio = Screen.width / Screen.height;
-        tanFov = Mathf.Tan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2.0f);
         newCameraPos = Camera.main.transform.position;
-        cameraSpeed = 3;
+        cameraSpeed = 1;
+        maxCameraDistance = 35;
+        minCameraDistance = 3;
     }
 
     void LateUpdate()
@@ -44,26 +41,38 @@ public class CameraScript : MonoBehaviour {
         p3DistToMid = Vector3.Distance(player3.position, midPoint.transform.position);
         p4DistToMid = Vector3.Distance(player4.position, midPoint.transform.position);
 
-        // Find the middle point between players.
-        //IF 2 PLAYERS
-        Vector3 vectorBetweenPlayers = (player1.position / 2) + (player2.position / 2);
-        //IF 3 PLAYERS
-        //Vector3 vectorBetweenPlayers = (player1.position / 3) + (player2.position / 3) + (player3.position / 3);
-        //IF 4 PLAYERS
-        //Vector3 vectorBetweenPlayers = (player1.position / 4) + (player2.position / 4) + (player3.position / 4) + (player4.position / 4);
+        
+        switch (playerSelection.GetComponent<ControllerAssigner>().existingConNums.Count)
+        {
+            case 1:
+                //IF 1 PLAYER (Just uses same as 2 players for override)
+                vectorBetweenPlayers = (player1.position / 2) + (player2.position / 2);
+                distanceBetweenPlayers = (p1DistToMid + p2DistToMid) / 2;
+                break;
+
+            case 2:
+                //IF 2 PLAYERS
+                vectorBetweenPlayers = (player1.position / 2) + (player2.position / 2);
+                distanceBetweenPlayers = (p1DistToMid + p2DistToMid) / 2;
+                break;
+
+            case 3:
+                //IF 3 PLAYERS
+                vectorBetweenPlayers = (player1.position / 3) + (player2.position / 3) + (player3.position / 3);
+                distanceBetweenPlayers = (p1DistToMid + p2DistToMid + p3DistToMid) / 3;
+                break;
+
+            case 4:
+                //IF 4 PLAYERS
+                vectorBetweenPlayers = (player1.position / 4) + (player2.position / 4) + (player3.position / 4) + (player4.position / 4);
+                distanceBetweenPlayers = (p1DistToMid + p2DistToMid + p3DistToMid + p4DistToMid) / 4;
+                break;
+        }
+
         middlePoint = vectorBetweenPlayers;
 
-        // Calculate the new distance.
-        //IF 2 PLAYERS
-        distanceBetweenPlayers = (p1DistToMid + p2DistToMid) / 2;
-        //IF 3 PLAYERS
-        //distanceBetweenPlayers = (p1DistToMid + p2DistToMid + p3DistToMid) / 3;
-        //IF 4 PLAYERS
-        //distanceBetweenPlayers = (p1DistToMid + p2DistToMid + p3DistToMid + p4DistToMid) / 4;
-
-        marginDistance = 1 - (1 / distanceBetweenPlayers);
-        newCameraPos.y = (1 - (1 / distanceBetweenPlayers)) * 25.0f;
-        newCameraPos.z = midPoint.transform.position.z + (-1 * (newCameraPos.y * 0.466f));
+        newCameraPos.y = (((distanceBetweenPlayers / maxCameraDistance) * (maxCameraDistance - minCameraDistance))) + minCameraDistance;
+        newCameraPos.z = (midPoint.transform.position.z + (-1 * (newCameraPos.y * 1.0f))) + 0.75f;
 
         //Debug.Log(distanceBetweenPlayers);
 
@@ -74,7 +83,7 @@ public class CameraScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-        midPoint.transform.position = middlePoint + new Vector3(0, 1.25f, 0);
+        midPoint.transform.position = middlePoint + new Vector3(0, 1f, 0);
     }
 }
 

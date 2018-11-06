@@ -22,5 +22,6 @@ public class PlayerAnimationScript : MonoBehaviour {
 
         animator.SetFloat("MoveRight", h);
         animator.SetFloat("MoveForward", v);
+
     }
 }
