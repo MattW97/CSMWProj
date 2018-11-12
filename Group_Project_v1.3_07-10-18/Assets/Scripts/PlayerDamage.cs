@@ -11,6 +11,10 @@ public class PlayerDamage : MonoBehaviour {
         if(other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<PlayerHealthManager>().DamagePlayer(damageToPlayer);
+
+            Transform bloodParticleObject = other.gameObject.transform.Find("BloodSplatterParticle");
+            bloodParticleObject.rotation = Quaternion.LookRotation(this.gameObject.transform.forward);
+            bloodParticleObject.GetComponent<ParticleSystem>().Play();
         }
     }
 

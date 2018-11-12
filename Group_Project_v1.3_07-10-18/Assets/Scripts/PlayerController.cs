@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float movementSpeed = 4;
     private float dodgeSpeed = 5;
     private float shotTimer;
-    private float playerTurnSpeed = 8;
+    private float playerTurnSpeed = 20;
     private float initAmmoAmount = 4;
     private float ammoAmount;
     private float reloadTime = 1;
@@ -33,9 +33,13 @@ public class PlayerController : MonoBehaviour {
     public bool canControl;
     public bool isDead;
     public bool beenDragged;
+    public bool draggingPlayer;
     public bool ragdolling;
-    public bool inRange;
+    
     public bool pickUpMode;
+    private bool inRange;
+
+    private bool firstDistanceCheck;
     [Space]
 
     #region Inputs
@@ -105,7 +109,7 @@ public class PlayerController : MonoBehaviour {
         isDead = false;
         mashTimer = 0.5f;
 
-        //IntialDistance();
+        //StartDistance();
         RagdollSetup();      
     }
 
@@ -165,14 +169,11 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {      
-        DistanceToPlayer();
-
+        if(!draggingPlayer)
+            DistanceToPlayer();
+        
         if(closestPlayer != null)
-        {
-            ClosestHand();
             ClosestLimb();
-            //closestPlayer.GetComponentInParent<PlayerController>().ClosestLimb();
-        }
 
         if (!isDead)
         {
@@ -184,9 +185,9 @@ public class PlayerController : MonoBehaviour {
 
                 //This causes the player not to fall with gravity. Remove this line and player falls with gravity working normally.
                 // Applies velocity from this script directly to the Rigidbody
-                thisRigidbody.velocity = movementVelocity;
+                thisRigidbody.velocity = new Vector3(movementVelocity.x, -9.81f, movementVelocity.z);
 
-                
+
             }
         }
     }
@@ -199,20 +200,46 @@ public class PlayerController : MonoBehaviour {
         movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal), 0f, Input.GetAxisRaw(leftStickVertical));
         movementVelocity = movementInput * movementSpeed;
 
-        // Configure input for right analog stick
-        playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
+
+        if(Input.GetAxisRaw(pickUp) > 0)
+        {
+            // Configure input for right analog stick
+            //playerDirection = Vector3.right * Input.GetAxisRaw(leftStickHorizontal) - Vector3.forward * Input.GetAxisRaw(leftStickVertical);
+
+            //// Configure input for right analog stick
+            playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
+
+            if (playerDirection != Vector3.zero)
+            {
+
+                // Old method of rotation - Jittery
+                // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+
+                // New method of rotation - Smooth
+                //transform.rotation = Quaternion.LookRotation(movementInput);
+                Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+                thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
+            }
+        }
+
+        else
+        {
+            if (movementInput != Vector3.zero)
+            {
+
+                // Old method of rotation - Jittery
+                // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+
+                // New method of rotation - Smooth
+                transform.rotation = Quaternion.LookRotation(movementInput);
+                //Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+                //thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
+            }
+        }
+        
 
         // Stops log outputting that the Vector3 is equal to 0
-        if (playerDirection != Vector3.zero)
-        {
-
-            // Old method of rotation - Jittery
-            // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-
-            // New method of rotation - Smooth
-            Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-            thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
-        }
+        
         #endregion
     }
 
@@ -279,26 +306,25 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
-            print(pickUpMode);
             pickUpMode = true;
             weapon.SetActive(false);
+            draggingPlayer = true;
         }
         else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
         {
+            draggingPlayer = false;
             pickUpScript.join = false;
             Destroy(pickUpScript.GetComponent<SpringJoint>());
             pickUpMode = false;
             weapon.SetActive(true);
         }
-        else if (!pickUpMode)
+        else if (Input.GetAxisRaw(pickUp) == 0 && !draggingPlayer)
         {
             foreach (Transform limbs in thisPlayersLimbs)
             {
                 limbs.GetComponent<PickUp>().join = false;
                 Destroy(limbs.GetComponent<SpringJoint>());
             }
-
-            weapon.SetActive(true);
         }
 
         //Current Setup for picking up player
@@ -470,18 +496,22 @@ public class PlayerController : MonoBehaviour {
         {
             float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
             
-            if (dist < distanceCheck)
+            if (dist < distanceCheck  && otherPlayertrans.root.GetComponent<PlayerController>().PlayerInGame)
             {
+                inRange = true;
+                closestPlayer = otherPlayertrans.gameObject;
+                ClosestLimb();
+                break;
+
                 //GetComponent<IKControl>().lookObj = placeToLook;
                 //GetComponent<IKControl>().ikActive = true;
-                closestPlayer = otherPlayertrans.gameObject;
-                inRange = true;
                 //pickUpScript = closestPlayer.GetComponentInChildren<PickUp>();
             }
             else
             {
                 inRange = false;
                 GetComponent<IKControl>().ikActive = false;
+
                 //closestPlayer = null;
                 //otherPlayertrans.GetComponentInParent<PlayerController>().closestPlayer = null;
                 //pickUpScript = null;
@@ -489,19 +519,48 @@ public class PlayerController : MonoBehaviour {
         }   
     }
 
-    private void IntialDistance()
-    {
-        foreach (Transform otherPlayertrans in otherPlayersOrigin)
-        {
-            float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
+    //public void StartDistance()
+    //{
+    //    int checkRange = 1000;
+    //    ///Closest player
+    //    foreach (Transform otherPlayertrans in otherPlayersOrigin)
+    //    {
+    //        float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
 
-            if (dist < 1000)
-            {
-                closestPlayer = otherPlayertrans.gameObject;
-                break;
-            }
-        }
-    }
+    //        if (dist < checkRange)
+    //        {
+    //            closestPlayer = otherPlayertrans.gameObject;
+    //            break;
+    //        }
+    //    }
+
+    //    ///Closest Limb
+    //    foreach (Transform otherPlayerLimb in closestPlayer.GetComponentInParent<PlayerController>().thisPlayersLimbs)
+    //    {
+    //        float dist = Vector3.Distance(otherPlayerLimb.position, closestHand.transform.position);
+
+    //        if (dist < checkRange)
+    //        {
+    //            pointToGrab = otherPlayerLimb.GetComponent<Rigidbody>();
+    //            pickUpScript = otherPlayerLimb.GetComponent<PickUp>();
+    //        }
+    //    }
+
+    //    ///Closest Hand
+    //    foreach (Transform thisPlayersHandPos in thisPlayersHand)
+    //    {
+    //        float dist = Vector3.Distance(thisPlayersHandPos.position, closestPlayer.transform.position);
+
+    //        if (dist < checkRange)
+    //        {
+    //            closestHand = thisPlayersHandPos.gameObject;
+    //        }
+    //    }
+
+    //    firstDistanceCheck = true;
+    //}
+
+
 
     /// <summary>
     /// Used to be  aware of how closest enemy limb the player
@@ -520,25 +579,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Used to be aware of closest hand to enemy players 
-    /// </summary>
-    public void ClosestHand()
-    {
-        foreach (Transform thisPlayersHandPos in thisPlayersHand)
-        {
-            float dist = Vector3.Distance(thisPlayersHandPos.position, closestPlayer.transform.position);
-
-            if (dist < distanceCheck)
-            {
-                closestHand = thisPlayersHandPos.gameObject;
-            }
-        }
-    }
-
     internal void SetUpInputs(int controller)
     {
-
         playerNum = controller;
 
         leftStickHorizontal = "L_Horizontal_" + playerNum.ToString();

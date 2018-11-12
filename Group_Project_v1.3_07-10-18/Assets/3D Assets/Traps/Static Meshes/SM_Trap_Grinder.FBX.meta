@@ -1,0 +1,132 @@
+fileFormatVersion: 2
+guid: 29125fb6bd6cca24e9461efa3150a97b
+timeCreated: 1542021220
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: SM_Trap_Grinder_Collsion
+    100004: SM_Trap_Grinder_Roller
+    100006: SM_Trap_Grinder_Roller001
+    100008: SM_Trap_Grinder_Roller_Collision
+    100010: SM_Trap_Grinder_Roller_Collision001
+    400000: //RootNode
+    400002: SM_Trap_Grinder_Collsion
+    400004: SM_Trap_Grinder_Roller
+    400006: SM_Trap_Grinder_Roller001
+    400008: SM_Trap_Grinder_Roller_Collision
+    400010: SM_Trap_Grinder_Roller_Collision001
+    2300000: //RootNode
+    2300002: SM_Trap_Grinder_Collsion
+    2300004: SM_Trap_Grinder_Roller
+    2300006: SM_Trap_Grinder_Roller001
+    2300008: SM_Trap_Grinder_Roller_Collision
+    2300010: SM_Trap_Grinder_Roller_Collision001
+    3300000: //RootNode
+    3300002: SM_Trap_Grinder_Collsion
+    3300004: SM_Trap_Grinder_Roller
+    3300006: SM_Trap_Grinder_Roller001
+    3300008: SM_Trap_Grinder_Roller_Collision
+    3300010: SM_Trap_Grinder_Roller_Collision001
+    4300000: SM_Trap_Grinder
+    4300002: SM_Trap_Grinder_Roller
+    4300004: SM_Trap_Grinder_Roller_Collision
+    4300006: SM_Trap_Grinder_Collsion
+    4300008: SM_Trap_Grinder_Roller001
+    4300010: SM_Trap_Grinder_Roller_Collision001
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 08 - Default
+    second: {fileID: 2100000, guid: b065575206281f5479442bb0ec450803, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Nose1_defaultMat
+    second: {fileID: 2100000, guid: 3f31db7cbbec8b549bcdc50142ea4b5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Teeth1_defaultMat
+    second: {fileID: 2100000, guid: 1d39e15b232bc644f8195cf125e1571c, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
