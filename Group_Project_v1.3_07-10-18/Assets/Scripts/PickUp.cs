@@ -7,7 +7,7 @@ public class PickUp : MonoBehaviour {
 
     public float force = 4000;
     public Rigidbody rb;
-    public bool join = false;
+    public bool join = false; public GameObject playerToJoinTo;
     private Rigidbody connectionPoint;
 
     private void Start()
@@ -20,12 +20,11 @@ public class PickUp : MonoBehaviour {
         if (!join)
         {
             SpringJoint sp = gameObject.AddComponent<SpringJoint>();
-            sp.connectedBody = GetComponentInParent<PlayerController>().pointToGrab;
+            playerToJoinTo = GetComponentInParent<PlayerController>().ClosestPlayer;
+            sp.connectedBody = playerToJoinTo.GetComponentInParent<PlayerController>().rightHand;
             ConnectionPoint = sp.connectedBody;
-            //ConnectionPoint.GetComponentInParent<PlayerController>().beenDragged = true;
-            //ConnectionPoint.GetComponentInParent<PlayerController>().TotalCurrentMashes = 0;
             sp.autoConfigureConnectedAnchor = false;
-            //sp.connectedAnchor = connectionPoint;
+            sp.connectedAnchor = new Vector3(0, 0, 0);
 
             sp.spring = 12000;
             sp.enableCollision = true;

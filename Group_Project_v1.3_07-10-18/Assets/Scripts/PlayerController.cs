@@ -91,17 +91,13 @@ public class PlayerController : MonoBehaviour {
 
 
     [Header("Change These For Each Player")]
-    public Rigidbody pointToGrab;
     public Transform thisPlayersOrigin;
-    public List<Transform> thisPlayersHand;
-    public List<Transform> thisPlayersLimbs;
     public List<Transform> otherPlayersOrigin;
     [Space]
+    public Rigidbody rightHand;
     public PlayerUI playerUILink;
-    public GameObject closestPlayer;
     public PickUp pickUpScript;
-    private GameObject closestEnemyLimb;
-    public GameObject closestHand;
+    private GameObject closestPlayer;
 
     void Start()
     {
@@ -182,8 +178,8 @@ public class PlayerController : MonoBehaviour {
         if(!draggingPlayer)
             DistanceToPlayer();
         
-        if(closestPlayer != null)
-            ClosestLimb();
+        //if(closestPlayer != null)
+            //ClosestLimb();
 
         if (!isDead)
         {
@@ -281,42 +277,7 @@ public class PlayerController : MonoBehaviour {
         #endregion
     }
 
-    void GrabAndDrag()
-    {
-        #region Grabbing and Dragging
-        // Left Bumper picks up player when held
-        if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
-        {
-            pickUpMode = true;
-            weapon.SetActive(false);
-            draggingPlayer = true;
-        }
-        else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
-        {
-            draggingPlayer = false;
-            pickUpScript.join = false;
-            Destroy(pickUpScript.GetComponent<SpringJoint>());
-            pickUpMode = false;
-            weapon.SetActive(true);
-        }
-        else if (Input.GetAxisRaw(pickUp) == 0 && !draggingPlayer)
-        {
-            foreach (Transform limbs in thisPlayersLimbs)
-            {
-                limbs.GetComponent<PickUp>().join = false;
-                Destroy(limbs.GetComponent<SpringJoint>());
-            }
-        }
-
-        // Current Setup for picking up player
-        if (pickUpMode && inRange && !pickUpScript.join && closestPlayer.GetComponentInParent<PlayerController>().ragdolling)
-            {
-                pickUpScript.join = false;
-                pickUpScript.CreateJoint();
-            }
-        #endregion
-    }
-
+   
     void ButtonMashing()
     {
         #region Button Mashing 
@@ -326,7 +287,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (TotalCurrentMashes >= (numToMash - 1))
             {
-                BreakDragging();
+                //BreakDragging();
+                GetComponent<PlayerHealthManager>().CurrentHealth = GetComponent<PlayerHealthManager>().startingHealth;
                 Ragdoll(false);
             }
             else
@@ -434,8 +396,8 @@ public class PlayerController : MonoBehaviour {
     {
         beenDragged = false;
         GetComponent<PlayerHealthManager>().CurrentHealth = GetComponent<PlayerHealthManager>().startingHealth;
-        pointToGrab.GetComponent<PickUp>().join = false;
-        Destroy(pointToGrab.GetComponent<SpringJoint>());
+        rightHand.gameObject.GetComponent<PickUp>().join = false;
+        Destroy(rightHand.gameObject.GetComponent<SpringJoint>());
         TotalCurrentMashes = 0;
     }
 
@@ -514,8 +476,7 @@ public class PlayerController : MonoBehaviour {
             if (dist < distanceCheck  && otherPlayertrans.root.GetComponent<PlayerController>().PlayerInGame)
             {
                 inRange = true;
-                closestPlayer = otherPlayertrans.gameObject;
-                ClosestLimb();
+                ClosestPlayer = otherPlayertrans.gameObject;
                 break;
 
                 //GetComponent<IKControl>().lookObj = placeToLook;
@@ -527,75 +488,37 @@ public class PlayerController : MonoBehaviour {
                 inRange = false;
                 GetComponent<IKControl>().ikActive = false;
 
-                //closestPlayer = null;
-                //otherPlayertrans.GetComponentInParent<PlayerController>().closestPlayer = null;
-                //pickUpScript = null;
             }
         }   
     }
 
-    //public void StartDistance()
-    //{
-    //    int checkRange = 1000;
-    //    ///Closest player
-    //    foreach (Transform otherPlayertrans in otherPlayersOrigin)
-    //    {
-    //        float dist = Vector3.Distance(otherPlayertrans.position, transform.position);
-
-    //        if (dist < checkRange)
-    //        {
-    //            closestPlayer = otherPlayertrans.gameObject;
-    //            break;
-    //        }
-    //    }
-
-    //    ///Closest Limb
-    //    foreach (Transform otherPlayerLimb in closestPlayer.GetComponentInParent<PlayerController>().thisPlayersLimbs)
-    //    {
-    //        float dist = Vector3.Distance(otherPlayerLimb.position, closestHand.transform.position);
-
-    //        if (dist < checkRange)
-    //        {
-    //            pointToGrab = otherPlayerLimb.GetComponent<Rigidbody>();
-    //            pickUpScript = otherPlayerLimb.GetComponent<PickUp>();
-    //        }
-    //    }
-
-    //    ///Closest Hand
-    //    foreach (Transform thisPlayersHandPos in thisPlayersHand)
-    //    {
-    //        float dist = Vector3.Distance(thisPlayersHandPos.position, closestPlayer.transform.position);
-
-    //        if (dist < checkRange)
-    //        {
-    //            closestHand = thisPlayersHandPos.gameObject;
-    //        }
-    //    }
-
-    //    firstDistanceCheck = true;
-    //}
-
-    /// <summary>
-    /// Used to be  aware of how closest enemy limb the player
-    /// </summary>
-    public void ClosestLimb()
+    void GrabAndDrag()
     {
-        foreach (Transform otherPlayerLimb in closestPlayer.GetComponentInParent<PlayerController>().thisPlayersLimbs)
+        #region Grabbing and Dragging
+        // Left Bumper picks up player when held
+        if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
-            float dist = Vector3.Distance(otherPlayerLimb.position, closestHand.transform.position);
-
-            if (dist < distanceCheck)
-            {
-                pointToGrab = otherPlayerLimb.GetComponent<Rigidbody>();
-                pickUpScript = otherPlayerLimb.GetComponent<PickUp>();
-            }
+            pickUpMode = true;
+            weapon.SetActive(false);
+            draggingPlayer = true;
         }
+        else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
+        {
+            draggingPlayer = false;
+            pickUpScript.join = false;
+            Destroy(pickUpScript.GetComponent<SpringJoint>());
+            pickUpMode = false;
+            weapon.SetActive(true);
+        }
+
+        // Current Setup for picking up player
+        if (pickUpMode && inRange && !pickUpScript.join && ClosestPlayer.GetComponentInParent<PlayerController>().ragdolling)
+        {
+            pickUpScript.join = false;
+            pickUpScript.CreateJoint();
+        }
+        #endregion
     }
-
-
-
-
-
 
     internal void SetUpInputs(int controller)
     {
@@ -663,5 +586,7 @@ public class PlayerController : MonoBehaviour {
 
     public bool PlayerInGame { get { return playerInGame; } set { playerInGame = value; } }
 
+    public GameObject ClosestPlayer { get { return closestPlayer; } set { closestPlayer = value; } }
+    
     #endregion
 }

@@ -17,7 +17,7 @@ public class UtilityManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
     }
 }
