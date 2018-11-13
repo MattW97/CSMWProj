@@ -390,7 +390,7 @@ InputManager:
     axis: 9
     joyNum: 4
   - serializedVersion: 3
-    m_Name: PickUp_1
+    m_Name: Aim_1
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -406,7 +406,7 @@ InputManager:
     axis: 8
     joyNum: 1
   - serializedVersion: 3
-    m_Name: PickUp_2
+    m_Name: Aim_2
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -422,7 +422,7 @@ InputManager:
     axis: 8
     joyNum: 2
   - serializedVersion: 3
-    m_Name: PickUp_3
+    m_Name: Aim_3
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -438,7 +438,7 @@ InputManager:
     axis: 8
     joyNum: 3
   - serializedVersion: 3
-    m_Name: PickUp_4
+    m_Name: Aim_4
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -451,6 +451,70 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
+    axis: 8
+    joyNum: 4
+  - serializedVersion: 3
+    m_Name: PickUp_1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 8
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: PickUp_2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 2 button 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 8
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: PickUp_3
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 3 button 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 8
+    joyNum: 3
+  - serializedVersion: 3
+    m_Name: PickUp_4
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 4 button 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
     axis: 8
     joyNum: 4
   - serializedVersion: 3

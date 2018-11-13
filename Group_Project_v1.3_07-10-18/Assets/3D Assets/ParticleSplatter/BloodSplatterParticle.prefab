@@ -2561,10 +2561,10 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 0
-    radiusScale: 1
+    radiusScale: 0.1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 2048
+      m_Bits: 6144
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -3387,8 +3387,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ffc79fcc8f17eec468d7e86b5ec6ec37, type: 2}
+  - {fileID: 2100000, guid: ffc79fcc8f17eec468d7e86b5ec6ec37, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -41,10 +41,10 @@ public class ParticleDecalPool : MonoBehaviour {
             particleDecalDataIndex = 0;
         }
 
-        particleData[particleDecalDataIndex].position = particleCollisionEvent.intersection + new Vector3(0, -0.2f, 0);
+        particleData[particleDecalDataIndex].position = particleCollisionEvent.intersection;
 
         Vector3 particleRotationEuler = -Quaternion.LookRotation(particleCollisionEvent.normal).eulerAngles;
-        particleRotationEuler.y = Random.Range(0, 360);    
+        particleRotationEuler.z = Random.Range(0, 360);    
 
         particleData[particleDecalDataIndex].rotation = particleRotationEuler;
 

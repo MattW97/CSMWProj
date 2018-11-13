@@ -227,11 +227,6 @@
     <Compile Include="Assets\3D Assets\ParticleSplatter\ParticleDecalPool.cs" />
     <Compile Include="Assets\3D Assets\ParticleSplatter\ParticleLauncher.cs" />
     <Compile Include="Assets\3D Assets\ParticleSplatter\SplatOnCollision.cs" />
-    <Compile Include="Assets\Plugin_DecalSystem\Plugins\DecalSystem\Decal.cs" />
-    <Compile Include="Assets\Plugin_DecalSystem\Plugins\DecalSystem\Utils\DecalBuilder.cs" />
-    <Compile Include="Assets\Plugin_DecalSystem\Plugins\DecalSystem\Utils\DecalUtils.cs" />
-    <Compile Include="Assets\Plugin_DecalSystem\Plugins\DecalSystem\Utils\MeshBuilder.cs" />
-    <Compile Include="Assets\Plugin_DecalSystem\Plugins\DecalSystem\Utils\PolygonClippingUtils.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />

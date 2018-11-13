@@ -25,7 +25,7 @@ public class PickUp : MonoBehaviour {
             //ConnectionPoint.GetComponentInParent<PlayerController>().beenDragged = true;
             //ConnectionPoint.GetComponentInParent<PlayerController>().TotalCurrentMashes = 0;
             sp.autoConfigureConnectedAnchor = false;
-            sp.connectedAnchor = new Vector3 (0,0,0);
+            //sp.connectedAnchor = connectionPoint;
 
             sp.spring = 12000;
             sp.enableCollision = true;

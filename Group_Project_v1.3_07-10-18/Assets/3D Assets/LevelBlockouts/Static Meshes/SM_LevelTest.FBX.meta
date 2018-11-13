@@ -1,0 +1,317 @@
+fileFormatVersion: 2
+guid: 0287b48b698dc5c4284a332cf003aa12
+timeCreated: 1542121891
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Box042
+    100002: Box100
+    100004: Box111
+    100006: Box114
+    100008: Box115
+    100010: Box116
+    100012: Box117
+    100014: Cylinder007
+    100016: Cylinder008
+    100018: Cylinder009
+    100020: Cylinder010
+    100022: Cylinder011
+    100024: Cylinder012
+    100026: Cylinder013
+    100028: Cylinder014
+    100030: Cylinder015
+    100032: Cylinder017
+    100034: Cylinder019
+    100036: Cylinder020
+    100038: Cylinder021
+    100040: Cylinder022
+    100042: Object003
+    100044: Object004
+    100046: Object005
+    100048: Plane001
+    100050: Railing001
+    100052: Railing003
+    100054: Railing004
+    100056: Railing005
+    100058: Railing006
+    100060: //RootNode
+    100062: SM_Trap_SpikedRoller
+    100064: SM_Trap_SpikedRoller001
+    100066: SM_Trap_SpikedRoller002
+    100068: SM_Trap_SpikedRoller003
+    100070: SM_Trap_SpikedRoller004
+    100072: Sphere006
+    100074: Sphere007
+    100076: Truck
+    100078: Truck001
+    400000: Box042
+    400002: Box100
+    400004: Box111
+    400006: Box114
+    400008: Box115
+    400010: Box116
+    400012: Box117
+    400014: Cylinder007
+    400016: Cylinder008
+    400018: Cylinder009
+    400020: Cylinder010
+    400022: Cylinder011
+    400024: Cylinder012
+    400026: Cylinder013
+    400028: Cylinder014
+    400030: Cylinder015
+    400032: Cylinder017
+    400034: Cylinder019
+    400036: Cylinder020
+    400038: Cylinder021
+    400040: Cylinder022
+    400042: Object003
+    400044: Object004
+    400046: Object005
+    400048: Plane001
+    400050: Railing001
+    400052: Railing003
+    400054: Railing004
+    400056: Railing005
+    400058: Railing006
+    400060: //RootNode
+    400062: SM_Trap_SpikedRoller
+    400064: SM_Trap_SpikedRoller001
+    400066: SM_Trap_SpikedRoller002
+    400068: SM_Trap_SpikedRoller003
+    400070: SM_Trap_SpikedRoller004
+    400072: Sphere006
+    400074: Sphere007
+    400076: Truck
+    400078: Truck001
+    2300000: Box042
+    2300002: Box100
+    2300004: Box111
+    2300006: Box114
+    2300008: Box115
+    2300010: Box116
+    2300012: Box117
+    2300014: Cylinder007
+    2300016: Cylinder008
+    2300018: Cylinder009
+    2300020: Cylinder010
+    2300022: Cylinder011
+    2300024: Cylinder012
+    2300026: Cylinder013
+    2300028: Cylinder014
+    2300030: Cylinder015
+    2300032: Cylinder017
+    2300034: Cylinder019
+    2300036: Cylinder020
+    2300038: Cylinder021
+    2300040: Cylinder022
+    2300042: Object003
+    2300044: Object004
+    2300046: Object005
+    2300048: Plane001
+    2300050: Railing001
+    2300052: Railing003
+    2300054: Railing004
+    2300056: Railing005
+    2300058: Railing006
+    2300060: SM_Trap_SpikedRoller
+    2300062: SM_Trap_SpikedRoller001
+    2300064: SM_Trap_SpikedRoller002
+    2300066: SM_Trap_SpikedRoller003
+    2300068: SM_Trap_SpikedRoller004
+    2300070: Sphere006
+    2300072: Sphere007
+    3300000: Box042
+    3300002: Box100
+    3300004: Box111
+    3300006: Box114
+    3300008: Box115
+    3300010: Box116
+    3300012: Box117
+    3300014: Cylinder007
+    3300016: Cylinder008
+    3300018: Cylinder009
+    3300020: Cylinder010
+    3300022: Cylinder011
+    3300024: Cylinder012
+    3300026: Cylinder013
+    3300028: Cylinder014
+    3300030: Cylinder015
+    3300032: Cylinder017
+    3300034: Cylinder019
+    3300036: Cylinder020
+    3300038: Cylinder021
+    3300040: Cylinder022
+    3300042: Object003
+    3300044: Object004
+    3300046: Object005
+    3300048: Plane001
+    3300050: Railing001
+    3300052: Railing003
+    3300054: Railing004
+    3300056: Railing005
+    3300058: Railing006
+    3300060: SM_Trap_SpikedRoller
+    3300062: SM_Trap_SpikedRoller001
+    3300064: SM_Trap_SpikedRoller002
+    3300066: SM_Trap_SpikedRoller003
+    3300068: SM_Trap_SpikedRoller004
+    3300070: Sphere006
+    3300072: Sphere007
+    4300000: Box042
+    4300002: Box100
+    4300004: Cylinder008
+    4300006: Cylinder007
+    4300008: Cylinder010
+    4300010: Cylinder009
+    4300012: Plane001
+    4300014: Sphere007
+    4300016: Object004
+    4300018: Box117
+    4300020: Sphere006
+    4300022: Box114
+    4300024: Object003
+    4300026: Railing001
+    4300028: Railing003
+    4300030: Railing004
+    4300032: Railing005
+    4300034: Railing006
+    4300036: Box111
+    4300038: Cylinder011
+    4300040: Cylinder012
+    4300042: Cylinder013
+    4300044: Cylinder014
+    4300046: Box115
+    4300048: Cylinder015
+    4300050: Cylinder017
+    4300052: Box116
+    4300054: Cylinder019
+    4300056: Cylinder020
+    4300058: Cylinder021
+    4300060: Cylinder022
+    4300062: SM_Trap_SpikedRoller
+    4300064: SM_Trap_SpikedRoller001
+    4300066: SM_Trap_SpikedRoller002
+    4300068: SM_Trap_SpikedRoller003
+    4300070: SM_Trap_SpikedRoller004
+    4300072: Object005
+    7400000: LevelAnimation
+    9500000: //RootNode
+    11100000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Nose1_defaultMat
+    second: {fileID: 2100000, guid: 8b98075596e4f1f41ac44f59b8707dda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 29cf6a3f24d363c44a86ee2a29a0c80f, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: LevelAnimation
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

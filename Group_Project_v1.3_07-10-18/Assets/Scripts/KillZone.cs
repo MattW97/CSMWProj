@@ -7,7 +7,9 @@ public class KillZone : MonoBehaviour {
     public enum ZoneType
     {
         ragdoll,
-        killZone
+        killZone,
+        both,
+        removeCollisions
     }
 
     public ZoneType zoneSelection;
@@ -31,6 +33,23 @@ public class KillZone : MonoBehaviour {
             {
                 other.gameObject.GetComponentInParent<PlayerController>().isDead = true;
                 other.gameObject.SetActive(false);
+            }
+            else if (zoneSelection == ZoneType.both)
+            {
+                if (!other.gameObject.GetComponentInParent<PlayerController>().ragdolling)
+                {
+                    other.gameObject.GetComponentInParent<PlayerController>().Ragdoll(true);
+                }
+
+                other.gameObject.GetComponentInParent<PlayerController>().isDead = true;
+                //other.gameObject.SetActive(false);
+            }
+            else if (zoneSelection == ZoneType.removeCollisions)
+            {
+                foreach (Collider collider in other.gameObject.GetComponentsInChildren<Collider>())
+                {
+                    collider.enabled = false;
+                }
             }
 
         }

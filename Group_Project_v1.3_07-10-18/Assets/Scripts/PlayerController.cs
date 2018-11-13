@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,12 @@ public class PlayerController : MonoBehaviour {
     public float numToMash = 5;
     private float numToMashMultiplier = 2.0f;
     private float joystickAxisValue;
+
+    public float jumpForce = 3.0f;
+    private float verticalVelocity;
+    private float distToGround;
+    private bool isGrounded = false;
+    private bool jumpingBool = false;
 
     public float forwardBackward;
     public float rightLeft;
@@ -48,10 +55,12 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public string rightStickHorizontal;
     [HideInInspector] public string rightStickVertical;
     [HideInInspector] public string fireButton;
+    [HideInInspector] public string aimButton;
     [HideInInspector] public string pickUp;
     [HideInInspector] public string reload;
     [HideInInspector] public string mashButton;
     [HideInInspector] public string dodgeButton;
+    [HideInInspector] public string jumpButton;
     #endregion
 
     private Vector3 dodgePos;
@@ -83,7 +92,6 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Change These For Each Player")]
     public Rigidbody pointToGrab;
-    //public Transform placeToLook;
     public Transform thisPlayersOrigin;
     public List<Transform> thisPlayersHand;
     public List<Transform> thisPlayersLimbs;
@@ -97,8 +105,6 @@ public class PlayerController : MonoBehaviour {
 
     void Start()
     {
-        //SetUpInputs();
-
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
         ammoAmount = InitAmmoAmount;
@@ -108,6 +114,8 @@ public class PlayerController : MonoBehaviour {
         canControl = true;
         isDead = false;
         mashTimer = 0.5f;
+
+        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
 
         //StartDistance();
         RagdollSetup();      
@@ -121,8 +129,6 @@ public class PlayerController : MonoBehaviour {
 
         if (!isDead)
         {
-            // Placed the ButtonMashing() function in here as FixedUpdate() missed some Y inputs
-            // Regular Update() fixes this issue
             ButtonMashing();
 
             #region Button Mash degredation timer (Optional)
@@ -145,6 +151,10 @@ public class PlayerController : MonoBehaviour {
                 {
                     dodging = true;
                 }
+
+                Shooting();
+                GrabAndDrag();
+                Jumping();
             }
 
             #region Dodge bool
@@ -155,7 +165,7 @@ public class PlayerController : MonoBehaviour {
                 canControl = false;
                 transform.position = Vector3.Lerp(transform.position, dodgePos, dodgeSpeed * Time.deltaTime);
             }
-            else
+            else if (!dodging && !ragdolling)
             {
                 dodgePoint.transform.parent = this.gameObject.transform;
                 dodgePoint.transform.position = (movementInput.normalized * 2) + transform.position;
@@ -180,66 +190,40 @@ public class PlayerController : MonoBehaviour {
             if(canControl)
             {
                 CharMovement();
-                Shooting();
-                GrabAndDrag();
-
-                //This causes the player not to fall with gravity. Remove this line and player falls with gravity working normally.
-                // Applies velocity from this script directly to the Rigidbody
-                thisRigidbody.velocity = new Vector3(movementVelocity.x, -9.81f, movementVelocity.z);
-
-
             }
         }
     }
 
     void CharMovement()
     {
-        #region Twin Stick Character Movement
+        #region Character Movement
+
+        print("move");
 
         // Configure input for left analog stick
-        movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal), 0f, Input.GetAxisRaw(leftStickVertical));
-        movementVelocity = movementInput * movementSpeed;
+        movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal) * movementSpeed, 0, Input.GetAxisRaw(leftStickVertical) * movementSpeed);
+        movementVelocity = movementInput;
 
-
-        if(Input.GetAxisRaw(pickUp) > 0)
+        // When Left Trigger is pressed...
+        if (Input.GetAxisRaw(aimButton) > 0)
         {
-            // Configure input for right analog stick
-            //playerDirection = Vector3.right * Input.GetAxisRaw(leftStickHorizontal) - Vector3.forward * Input.GetAxisRaw(leftStickVertical);
 
-            //// Configure input for right analog stick
+            // Configure input for right analog stick
             playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
 
             if (playerDirection != Vector3.zero)
             {
-
-                // Old method of rotation - Jittery
-                // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-
-                // New method of rotation - Smooth
-                //transform.rotation = Quaternion.LookRotation(movementInput);
                 Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
                 thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
             }
         }
-
         else
         {
             if (movementInput != Vector3.zero)
             {
-
-                // Old method of rotation - Jittery
-                // transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-
-                // New method of rotation - Smooth
                 transform.rotation = Quaternion.LookRotation(movementInput);
-                //Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-                //thisTransform.rotation = Quaternion.Lerp(thisTransform.rotation, targetRotation, playerTurnSpeed * Time.deltaTime);
             }
         }
-        
-
-        // Stops log outputting that the Vector3 is equal to 0
-        
         #endregion
     }
 
@@ -271,16 +255,14 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            //Stops delay between pressing the fire button and the shot firing
-            //Makes it so shotTimer is only active whilst the fire button is down
+            // Stops delay between pressing the fire button and the shot firing
+            // Makes it so shotTimer is only active whilst the fire button is down
             shotTimer = 0;
         }
 
         if (Input.GetButtonDown(reload) && !pickUpMode && InitAmmoAmount < ammoAmount || InitAmmoAmount == 0)
         {
             reloading = true;
-            //playerUILink.reloadBarImage.enabled = true;
-            //playerUILink.reloadingText.enabled = true;
         }
 
         if (reloading)
@@ -302,8 +284,7 @@ public class PlayerController : MonoBehaviour {
     void GrabAndDrag()
     {
         #region Grabbing and Dragging
-        //Left Trigger picks up player when held
-
+        // Left Bumper picks up player when held
         if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
             pickUpMode = true;
@@ -327,7 +308,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        //Current Setup for picking up player
+        // Current Setup for picking up player
         if (pickUpMode && inRange && !pickUpScript.join && closestPlayer.GetComponentInParent<PlayerController>().ragdolling)
             {
                 pickUpScript.join = false;
@@ -340,7 +321,7 @@ public class PlayerController : MonoBehaviour {
     {
         #region Button Mashing 
 
-        //Button mashing if the player is just ragdolling
+        // Button mashing if the player is just ragdolling
         if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
         {
             if (TotalCurrentMashes >= (numToMash - 1))
@@ -354,7 +335,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        //Button mashing if the player is been dragged by an opposing player
+        // Button mashing if the player is been dragged by an opposing player
         if (beenDragged && Input.GetButtonDown(mashButton))
         {
             if (TotalCurrentMashes >= (numToMash - 1))
@@ -368,6 +349,40 @@ public class PlayerController : MonoBehaviour {
             }
         }
         #endregion
+    }
+
+    void Jumping()
+    {
+        if (isGrounded)
+        {
+            verticalVelocity = -Physics.gravity.y * Time.deltaTime;
+
+            if (Input.GetButtonDown(jumpButton) && !jumpingBool)
+            {
+                jumpingBool = true;
+                StartCoroutine(JumpGravity());
+            }
+
+            if (jumpingBool)
+            {
+                verticalVelocity = jumpForce;
+            }
+
+        }
+        else if (!isGrounded)
+        {
+            verticalVelocity -= 15 * Time.deltaTime;
+        }
+
+        thisRigidbody.velocity = new Vector3(movementVelocity.x, verticalVelocity, movementVelocity.z);
+
+    }
+
+    IEnumerator JumpGravity()
+    {
+        yield return new WaitForSeconds(.1f);
+        isGrounded = false;
+        jumpingBool = false;
     }
 
     //Used to calculate player directions for animation blend trees
@@ -459,8 +474,8 @@ public class PlayerController : MonoBehaviour {
             {
                 rb.isKinematic = false;
             }
-            //weapon.GetComponent<Rigidbody>().isKinematic = false;
-            //weapon.GetComponent<BoxCollider>().enabled = true;
+            // weapon.GetComponent<Rigidbody>().isKinematic = false;
+            // weapon.GetComponent<BoxCollider>().enabled = true;
             weapon.gameObject.SetActive(false);
             thisRigidbody.isKinematic = true;
             GetComponent<Animator>().enabled = false;
@@ -479,7 +494,7 @@ public class PlayerController : MonoBehaviour {
                 rb.isKinematic = true;
             }
             weapon.GetComponent<Rigidbody>().isKinematic = true;
-            //weapon.GetComponent<BoxCollider>().enabled = false;
+            // weapon.GetComponent<BoxCollider>().enabled = false;
             weapon.gameObject.SetActive(true);
             thisRigidbody.isKinematic = false;
             GetComponent<Animator>().enabled = true;
@@ -560,8 +575,6 @@ public class PlayerController : MonoBehaviour {
     //    firstDistanceCheck = true;
     //}
 
-
-
     /// <summary>
     /// Used to be  aware of how closest enemy limb the player
     /// </summary>
@@ -579,6 +592,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+
+
+
+
     internal void SetUpInputs(int controller)
     {
         playerNum = controller;
@@ -588,10 +606,12 @@ public class PlayerController : MonoBehaviour {
         rightStickHorizontal = "R_Horizontal_" + playerNum.ToString();
         rightStickVertical = "R_Vertical_" + playerNum.ToString();
         fireButton = "Fire_" + playerNum.ToString();
+        aimButton = "Aim_" + playerNum.ToString();
         pickUp = "PickUp_" + playerNum.ToString();
         reload = "Reload_" + playerNum.ToString();
         mashButton = "Mash_" + playerNum.ToString();
         dodgeButton = "B_" + playerNum.ToString();
+        jumpButton = "A_" + playerNum.ToString();
     }
 
     private void OnTriggerEnter(Collider col)
@@ -612,11 +632,24 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 11)
+        {
+            isGrounded = true;
+        }
+    }
+
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Obstacle")
         {
             canDodge = true;
+        }
+
+        if (collision.gameObject.layer == 11)
+        {
+            isGrounded = false;
         }
     }
 
