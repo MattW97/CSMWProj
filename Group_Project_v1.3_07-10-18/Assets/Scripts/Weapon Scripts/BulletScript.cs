@@ -8,9 +8,16 @@ public class BulletScript : MonoBehaviour {
     public float bulletSpeed = 25;
     private float lifeTime = 0.1f;
 
+    private Transform thisTransform;
+
+    void Start()
+    {
+        thisTransform = this.GetComponent<Transform>();
+    }
+
     void Update()
     {
-        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+        thisTransform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
 
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)

@@ -11,13 +11,16 @@ public class WeaponScript : MonoBehaviour {
     public GameObject bullet;
     public GameObject player;
 
+    private Transform thisTransform;
     private Transform pickUpVolume;
 
+    private float despawnTimer;
+    private float initDespawnTime = 15;
     private float fireRate = 0.3f;
     private float shotTimer;
     private float initAmmoAmount = 4;
-    public float ammoAmount;
     private float reloadTime = 1;
+    public float ammoAmount;
 
     private int meleeDamage;
 
@@ -45,15 +48,16 @@ public class WeaponScript : MonoBehaviour {
 
     void Start()
     {
-        pickUpVolume = gameObject.transform.Find("PickUpVolume");
-
-        thisRigidbody = gameObject.GetComponent<Rigidbody>();
-
-        audioSource = GetComponent<AudioSource>();
+        thisTransform = this.GetComponent<Transform>();
+        thisRigidbody = this.GetComponent<Rigidbody>();
+        audioSource = this.GetComponent<AudioSource>();
+        pickUpVolume = thisTransform.Find("PickUpVolume");
 
         ammoAmount = initAmmoAmount;
         canShoot = false;
         reloading = false;
+
+        despawnTimer = initDespawnTime;
 
         if(weaponSelection == WeaponType.BaseballBat)
         {
@@ -67,7 +71,19 @@ public class WeaponScript : MonoBehaviour {
         {
             meleeDamage = 10;
         }
+    }
 
+    void Update()
+    {
+        if(transform.parent == null)
+        {
+            despawnTimer -= Time.deltaTime;
+
+            if(despawnTimer <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     public void GetPickedUp (Rigidbody rightPalm)
@@ -84,6 +100,8 @@ public class WeaponScript : MonoBehaviour {
         gameObject.GetComponent<MeshCollider>().isTrigger = true;
 
         canShoot = true;
+
+        despawnTimer = initDespawnTime;
     }
 
     public void GetDropped ()

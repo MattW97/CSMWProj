@@ -12,6 +12,7 @@ ModelImporter:
     100008: SM_Factory_Trap_Press_Hydraulic
     100010: SM_Factory_Trap_Press_Hydraulic_Collision
     100012: SM_Factory_Trap_PressBase
+    100014: SM_Factory_Trap_Shadow
     400000: SM_Factory_Trap_Press
     400002: SM_Factory_Trap_Press_Collision
     400004: SM_Factory_Trap_PressBase_Collision
@@ -19,6 +20,7 @@ ModelImporter:
     400008: SM_Factory_Trap_Press_Hydraulic
     400010: SM_Factory_Trap_Press_Hydraulic_Collision
     400012: SM_Factory_Trap_PressBase
+    400014: SM_Factory_Trap_Shadow
     2300000: SM_Factory_Trap_Press
     2300002: SM_Factory_Trap_Press_Collision
     2300004: SM_Factory_Trap_PressBase_Collision
@@ -26,6 +28,7 @@ ModelImporter:
     2300008: SM_Factory_Trap_Press_Hydraulic
     2300010: SM_Factory_Trap_Press_Hydraulic_Collision
     2300012: SM_Factory_Trap_PressBase
+    2300014: SM_Factory_Trap_Shadow
     3300000: SM_Factory_Trap_Press
     3300002: SM_Factory_Trap_Press_Collision
     3300004: SM_Factory_Trap_PressBase_Collision
@@ -33,12 +36,14 @@ ModelImporter:
     3300008: SM_Factory_Trap_Press_Hydraulic
     3300010: SM_Factory_Trap_Press_Hydraulic_Collision
     3300012: SM_Factory_Trap_PressBase
+    3300014: SM_Factory_Trap_Shadow
     4300000: SM_Factory_Trap_PressBase
     4300002: SM_Factory_Trap_Press
     4300004: SM_Factory_Trap_Press_Collision
     4300006: SM_Factory_Trap_PressBase_Collision
     4300008: SM_Factory_Trap_Press_Hydraulic
     4300010: SM_Factory_Trap_Press_Hydraulic_Collision
+    4300012: SM_Factory_Trap_Shadow
     7400000: Take 001
     9500000: //RootNode
   externalObjects:

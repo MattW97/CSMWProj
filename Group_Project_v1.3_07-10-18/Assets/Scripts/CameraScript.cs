@@ -15,7 +15,6 @@ public class CameraScript : MonoBehaviour {
     private Vector3 middlePoint;
     private Vector3 vectorBetweenPlayers;
     private float distanceBetweenPlayers;
-    private float cameraSpeed;
     private float maxCameraDistance;
     private float minCameraDistance;
 
@@ -29,7 +28,6 @@ public class CameraScript : MonoBehaviour {
     void Start()
     {
         newCameraPos = Camera.main.transform.position;
-        cameraSpeed = 1;
         maxCameraDistance = 35;
         minCameraDistance = 3;
     }
@@ -74,11 +72,9 @@ public class CameraScript : MonoBehaviour {
         newCameraPos.y = (midPoint.transform.position.y + ((distanceBetweenPlayers / maxCameraDistance) * (maxCameraDistance - minCameraDistance))) + minCameraDistance;
         newCameraPos.z = (midPoint.transform.position.z + (-1 * (newCameraPos.y * 1.0f))) + 0.75f;
 
-        //Debug.Log(distanceBetweenPlayers);
-
         Vector3 des = new Vector3(midPoint.transform.position.x, newCameraPos.y, (0.75f + newCameraPos.z));
 
-        Camera.main.transform.position = Vector3.Lerp(transform.position, des, cameraSpeed);
+        Camera.main.transform.position = des;
     }
 
     void FixedUpdate()

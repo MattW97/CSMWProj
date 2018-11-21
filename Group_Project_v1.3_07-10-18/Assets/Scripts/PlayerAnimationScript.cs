@@ -7,9 +7,8 @@ public class PlayerAnimationScript : MonoBehaviour {
     Animator animator;
     PlayerController playerController;
 
-    public WeaponScript weapon;
-
-    public bool canDealDamage;
+    [HideInInspector] public WeaponScript weapon;
+    [HideInInspector] public bool canDealDamage;
 
     private AudioSource audioSource;
     //public AudioClip shotgunFire;

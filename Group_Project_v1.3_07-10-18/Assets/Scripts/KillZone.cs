@@ -20,8 +20,10 @@ public class KillZone : MonoBehaviour
 
     private void Start()
     {
-        if (zoneSelection != ZoneType.trapDamage)
+        if (zoneSelection != ZoneType.trapDamage && GetComponent<MeshRenderer>() != null)
+        {
             GetComponent<MeshRenderer>().enabled = false;
+        }          
     }
     public void OnTriggerEnter(Collider other)
     {

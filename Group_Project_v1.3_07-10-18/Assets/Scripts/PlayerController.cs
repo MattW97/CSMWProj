@@ -8,44 +8,46 @@ public class PlayerController : MonoBehaviour {
 
     #region floats
     [Header("Variables")]
-    public float playerNum;
-    [SerializeField] float movementSpeed = 4;
+    [HideInInspector] public float movementSpeed = 4;
+    [HideInInspector] public float jumpForce = 3.0f;
+    [HideInInspector] public float numToMash = 5;
+
+    [HideInInspector] public float playerNum;
+    [HideInInspector] public float distanceCheck;
+    [HideInInspector] public float forwardBackward;
+    [HideInInspector] public float rightLeft;
+
     private float playerTurnSpeed = 20;
-    private float mashTimer;
-    public float numToMash = 5;
+    //private float mashTimer;
     private float numToMashMultiplier = 2.0f;
-    private float joystickAxisValue;
-    public float jumpForce = 3.0f;
+    private float joystickAxisValue;  
     private float verticalVelocity;
-    private float distToGround;
-    public float forwardBackward;
-    public float rightLeft;
-    public float distanceCheck;
     private float respawnTimer;
     private float respawnTimerReset = 3;
     #endregion
 
-    #region bools
-    private bool playerInGame;
-    public bool inCountdown;
-    public bool canControl;
-    public bool isDead;
-    public bool beenDragged;
-    public bool draggingPlayer;
-    public bool ragdolling;
-    private bool isGrounded = false;
-    private bool jumpingBool = false;
-    public bool pickUpMode;
-    private bool inRange;
-    private bool firstDistanceCheck;
-    public bool canPickUpWeapon;
-    public bool isHoldingWeapon;
-    [Space]
+    #region ints
+    private int totalCurrentMashes = 0;
+    private int lives = 3;
     #endregion
 
-    public Vector3 startingPosition;
+    #region bools 
+    [HideInInspector] public bool canControl;
+    [HideInInspector] public bool isDead;
+    [HideInInspector] public bool ragdolling;
+    [HideInInspector] public bool canPickUpWeapon;
+    [HideInInspector] public bool isHoldingWeapon;
+    [HideInInspector] public bool beenDragged;
+    [HideInInspector] public bool draggingPlayer;
+    [HideInInspector] public bool pickUpMode;
+    [HideInInspector] public bool inCountdown;
 
-    public GameObject weapon;
+    private bool playerInGame;
+    private bool isGrounded = false;
+    private bool jumpingBool = false;  
+    private bool inRange;
+    [Space]
+    #endregion
 
     #region Inputs
     [HideInInspector] public string leftStickHorizontal;
@@ -62,29 +64,27 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public string interactButton;
     #endregion
 
-    private int totalCurrentMashes = 0;
-    private int lives = 3;
+    #region GameObjects
+    [HideInInspector] public GameObject weapon;
+    private GameObject closestPlayer;
+    #endregion
 
+    #region Vector3s
     private Vector3 movementInput;
     [HideInInspector] public Vector3 movementVelocity;
     [HideInInspector] public Vector3 playerDirection;
+    [HideInInspector] public Vector3 startingPosition;
+    #endregion
 
-    [Header("Transforms & Rigidbodies")] 
-    [HideInInspector] public Transform thisTransform;
+    private Transform thisTransform;
     private Rigidbody thisRigidbody;
-    [Space]
-
-    [Header("Scripts")]
-    public UtilityManager utilManagerScript;
+    [HideInInspector] public Rigidbody rightHand;
 
     [Header("Change These For Each Player")]
-    public Transform thisPlayersOrigin;
     public List<Transform> otherPlayersOrigin;
-    [Space]
-    public Rigidbody rightHand;
+    public Transform thisPlayersOrigin;
     public PlayerUI playerUILink;
     public PickUp pickUpScript;
-    private GameObject closestPlayer;
 
     void Start()
     {
@@ -92,28 +92,69 @@ public class PlayerController : MonoBehaviour {
         thisRigidbody = GetComponent<Rigidbody>();
         canControl = true;
         isDead = false;
-        mashTimer = 0.5f;
-
+        //mashTimer = 0.5f;
         respawnTimer = respawnTimerReset;
-
-        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
-
         isHoldingWeapon = false;
-
         startingPosition = transform.position + new Vector3(0, 0.5f, 0);
+        RagdollSetup();
 
-        RagdollSetup();      
+        // Recursivly searches all children to find the right hand
+        Transform[] allChildren = GetComponentsInChildren<Transform>();
+        foreach (Transform child in allChildren)
+        {
+            if (child.gameObject.name == "RightPalm")
+            {
+                rightHand = child.transform.GetComponent<Rigidbody>();
+            }
+        }
     }
 
     void Update()
     {
-        GetCharDirections();
+        // Only get values if moving
+        if(thisRigidbody.velocity.x > 0 || thisRigidbody.velocity.x < 0 || thisRigidbody.velocity.z > 0 || thisRigidbody.velocity.z < 0)
+        {
+            GetCharDirections();
+        }
 
-        joystickAxisValue = Mathf.Clamp01(new Vector2(Input.GetAxis(leftStickHorizontal), Input.GetAxis(leftStickVertical)).magnitude);
+        joystickAxisValue = Mathf.Clamp01(new Vector2(Input.GetAxis(leftStickHorizontal), Input.GetAxis(leftStickVertical)).sqrMagnitude);
 
         if (!isDead)
         {
-            ButtonMashing();
+            if (canControl)
+            {
+                CharMovement();
+                GrabAndDrag();
+                Jumping();
+
+                #region Pick Up Weapon and Drop Weapon
+                if (!isHoldingWeapon && canPickUpWeapon)
+                {
+                    if(Input.GetButtonDown(interactButton))
+                    {
+                        PickUpWeapon();
+                        isHoldingWeapon = !isHoldingWeapon;
+                    }
+                }
+                else if (isHoldingWeapon)
+                {
+                    if (Input.GetButtonDown(interactButton))
+                    {
+                        DropWeapon();
+                        isHoldingWeapon = !isHoldingWeapon;
+                    }
+
+                    canPickUpWeapon = false;
+                    weapon.GetComponent<WeaponScript>().Shoot(gameObject);
+                    weapon.GetComponent<WeaponScript>().Reload(gameObject);
+                }
+                #endregion
+            }
+
+            if (ragdolling)
+            {
+                ButtonMashing();
+            }
 
             #region Button Mash degredation timer (Optional)
             //if (TotalCurrentMashes > 0)
@@ -128,43 +169,12 @@ public class PlayerController : MonoBehaviour {
             //Debug.Log(TotalCurrentMashes);
             //}
             #endregion
-
-            if (canControl)
-            {
-                GrabAndDrag();
-                Jumping();
-
-                #region Pick Up Weapon and Drop Weapon
-                if (Input.GetButtonDown(interactButton))
-                {              
-                    if (!isHoldingWeapon && canPickUpWeapon)
-                    {
-                        PickUpWeapon();
-                    }
-
-                    if (isHoldingWeapon)
-                    {
-                        DropWeapon();
-                    }
-
-                    isHoldingWeapon = !isHoldingWeapon;
-                }
-
-                if(isHoldingWeapon)
-                {
-                    canPickUpWeapon = false;
-                    weapon.GetComponent<WeaponScript>().Shoot(gameObject);
-                    weapon.GetComponent<WeaponScript>().Reload(gameObject);
-                }
-                #endregion
-            }
         }
-        else
-        {
-            
-            respawnTimer -= Time.deltaTime;
 
-            Debug.Log(respawnTimer);
+        if (isDead)
+        {
+            #region Respawning
+            respawnTimer -= Time.deltaTime;
 
             if(respawnTimer <= 0 && lives > 0)
             {
@@ -176,36 +186,20 @@ public class PlayerController : MonoBehaviour {
 
                 respawnTimer = respawnTimerReset;
                 lives = lives - 1;
-                Debug.Log(lives);
-            }         
+            }
+            #endregion
         }
 
+        // Drop weapon if you get knocked out or die
         if (!canControl || isDead)
         {
             isHoldingWeapon = false;
             DropWeapon();
         }
 
-        if(this.weapon == null)
+        if (!draggingPlayer)
         {
-            isHoldingWeapon = false;
-        }
-    }
-
-    private void FixedUpdate()
-    {      
-        if(!draggingPlayer)
             DistanceToPlayer();
-        
-        //if(closestPlayer != null)
-            //ClosestLimb();
-
-        if (!isDead)
-        {
-            if(canControl)
-            {
-                CharMovement();
-            }
         }
     }
 
@@ -246,7 +240,7 @@ public class PlayerController : MonoBehaviour {
         #region Button Mashing 
 
         // Button mashing if the player is just ragdolling
-        if (ragdolling && !beenDragged && Input.GetButtonDown(mashButton))
+        if (!beenDragged && Input.GetButtonDown(mashButton))
         {
             if (TotalCurrentMashes >= (numToMash - 1))
             {
@@ -312,7 +306,7 @@ public class PlayerController : MonoBehaviour {
 
     //Used to calculate player directions for animation blend trees
     void GetCharDirections()
-    {        
+    {   
         #region Player Directions
         forwardBackward = Vector3.Dot(movementVelocity.normalized, thisTransform.forward.normalized) * joystickAxisValue;
 
@@ -484,7 +478,7 @@ public class PlayerController : MonoBehaviour {
         gameObject.GetComponent<PlayerAnimationScript>().canDealDamage = false;
 
         WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
-        weaponScript.GetDropped(); 
+        weaponScript.GetDropped();
     }
 
     internal void SetUpInputs(int controller)
@@ -509,7 +503,7 @@ public class PlayerController : MonoBehaviour {
     {
         if(col.gameObject.tag == "Weapon" && !isHoldingWeapon)
         {
-            weapon = col.gameObject.transform.parent.gameObject;
+            this.weapon = col.gameObject.transform.parent.gameObject;
             canPickUpWeapon = true;
         }
     }
@@ -518,7 +512,7 @@ public class PlayerController : MonoBehaviour {
     {
         if(!isHoldingWeapon)
         {
-            weapon = null;
+            this.weapon = null;
             canPickUpWeapon = false;
         }        
     }

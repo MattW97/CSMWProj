@@ -9,9 +9,9 @@ public class IKControl : MonoBehaviour
 
     protected Animator animator;
 
-    public bool ikActive = false;
-    public Transform rightHandObj = null;
-    public Transform lookObj = null;
+    [HideInInspector] public bool ikActive = false;
+    [HideInInspector] public Transform rightHandObj = null;
+    [HideInInspector] public Transform lookObj = null;
 
     void Start()
     {

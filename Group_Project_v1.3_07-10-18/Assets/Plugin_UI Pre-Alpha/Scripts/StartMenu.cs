@@ -39,7 +39,7 @@ public class StartMenu : MonoBehaviour
     public ControllerAssigner controlAssign;
     private List<PlayerController> playersInGame;
 
-    private bool inStart;
+    //private bool inStart;
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class StartMenu : MonoBehaviour
         menuFlyCamera.gameObject.SetActive(true);
         countdownCamera.gameObject.SetActive(false);
 
-        inStart = true;
+        //inStart = true;
 
         startMenuGameObj.SetActive(true);
         startGameInfo.SetActive(false);
