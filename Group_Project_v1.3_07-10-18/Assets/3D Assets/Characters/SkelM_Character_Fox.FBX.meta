@@ -246,7 +246,7 @@ ModelImporter:
       name: Skeleton_default
     second: {fileID: 2100000, guid: 0d1fb2cce1664fd418f4efb05464f123, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0

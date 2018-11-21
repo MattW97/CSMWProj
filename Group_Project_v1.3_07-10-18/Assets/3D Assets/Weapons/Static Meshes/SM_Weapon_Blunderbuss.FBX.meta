@@ -13,8 +13,10 @@ ModelImporter:
     400004: SM_Weapon_Blunderbuss_Collision
     2300000: SM_Weapon_Blunderbuss
     2300002: SM_Weapon_Blunderbuss_Collision
+    2300004: //RootNode
     3300000: SM_Weapon_Blunderbuss
     3300002: SM_Weapon_Blunderbuss_Collision
+    3300004: //RootNode
     4300000: SM_Weapon_Blunderbuss
     4300002: SM_Weapon_Blunderbuss_Collision
   externalObjects:

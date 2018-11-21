@@ -1,41 +1,46 @@
 fileFormatVersion: 2
 guid: 29125fb6bd6cca24e9461efa3150a97b
-timeCreated: 1542021220
+timeCreated: 1542545400
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     100002: SM_Trap_Grinder_Collsion
-    100004: SM_Trap_Grinder_Roller
-    100006: SM_Trap_Grinder_Roller001
-    100008: SM_Trap_Grinder_Roller_Collision
-    100010: SM_Trap_Grinder_Roller_Collision001
+    100004: SM_Trap_Grinder_Floor
+    100006: SM_Trap_Grinder_Roller_Collision
+    100008: SM_Trap_Grinder_Roller_Collision001
+    100010: SM_Trap_Grinder_Roller_L
+    100012: SM_Trap_Grinder_Roller_R
     400000: //RootNode
     400002: SM_Trap_Grinder_Collsion
-    400004: SM_Trap_Grinder_Roller
-    400006: SM_Trap_Grinder_Roller001
-    400008: SM_Trap_Grinder_Roller_Collision
-    400010: SM_Trap_Grinder_Roller_Collision001
+    400004: SM_Trap_Grinder_Floor
+    400006: SM_Trap_Grinder_Roller_Collision
+    400008: SM_Trap_Grinder_Roller_Collision001
+    400010: SM_Trap_Grinder_Roller_L
+    400012: SM_Trap_Grinder_Roller_R
     2300000: //RootNode
     2300002: SM_Trap_Grinder_Collsion
-    2300004: SM_Trap_Grinder_Roller
-    2300006: SM_Trap_Grinder_Roller001
-    2300008: SM_Trap_Grinder_Roller_Collision
-    2300010: SM_Trap_Grinder_Roller_Collision001
+    2300004: SM_Trap_Grinder_Floor
+    2300006: SM_Trap_Grinder_Roller_Collision
+    2300008: SM_Trap_Grinder_Roller_Collision001
+    2300010: SM_Trap_Grinder_Roller_L
+    2300012: SM_Trap_Grinder_Roller_R
     3300000: //RootNode
     3300002: SM_Trap_Grinder_Collsion
-    3300004: SM_Trap_Grinder_Roller
-    3300006: SM_Trap_Grinder_Roller001
-    3300008: SM_Trap_Grinder_Roller_Collision
-    3300010: SM_Trap_Grinder_Roller_Collision001
+    3300004: SM_Trap_Grinder_Floor
+    3300006: SM_Trap_Grinder_Roller_Collision
+    3300008: SM_Trap_Grinder_Roller_Collision001
+    3300010: SM_Trap_Grinder_Roller_L
+    3300012: SM_Trap_Grinder_Roller_R
     4300000: SM_Trap_Grinder
-    4300002: SM_Trap_Grinder_Roller
+    4300002: SM_Trap_Grinder_Roller_L
     4300004: SM_Trap_Grinder_Roller_Collision
     4300006: SM_Trap_Grinder_Collsion
-    4300008: SM_Trap_Grinder_Roller001
+    4300008: SM_Trap_Grinder_Roller_R
     4300010: SM_Trap_Grinder_Roller_Collision001
-    7400000: Take_Trap_Grinder
+    4300012: SM_Trap_Grinder_Floor
+    7400000: Take 001
     9500000: //RootNode
   externalObjects:
   - first:
@@ -53,8 +58,13 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Allparts_Teeth1_defaultMat
     second: {fileID: 2100000, guid: 1d39e15b232bc644f8195cf125e1571c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: aa353bbd62451f248a3e3f41eaec8e16, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -71,42 +81,14 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take_Trap_Grinder
-      takeName: Take 001
-      firstFrame: 0
-      lastFrame: 30
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -133,7 +115,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -152,7 +134,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

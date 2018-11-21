@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MasterAnimationMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: CATRigLLegPlatform
+    m_Weight: 0
+  - m_Path: CATRigRLegPlatform
+    m_Weight: 0
+  - m_Path: Character001
+    m_Weight: 0
+  - m_Path: Pelvis
+    m_Weight: 0
+  - m_Path: Pelvis/LeftUpperLeg
+    m_Weight: 0
+  - m_Path: Pelvis/LeftUpperLeg/LeftLowerLeg
+    m_Weight: 0
+  - m_Path: Pelvis/LeftUpperLeg/LeftLowerLeg/LeftAnkle
+    m_Weight: 0
+  - m_Path: Pelvis/LeftUpperLeg/LeftLowerLeg/LeftAnkle/LeftFoot
+    m_Weight: 0
+  - m_Path: Pelvis/RightUpperLeg
+    m_Weight: 0
+  - m_Path: Pelvis/RightUpperLeg/RightLowerLeg
+    m_Weight: 0
+  - m_Path: Pelvis/RightUpperLeg/RightLowerLeg/RightAnkle
+    m_Weight: 0
+  - m_Path: Pelvis/RightUpperLeg/RightLowerLeg/RightAnkle/RightFoot
+    m_Weight: 0
+  - m_Path: Pelvis/Spine1
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm/LeftLowerArm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm/LeftLowerArm/LeftPalm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm/LeftLowerArm/LeftPalm/LeftFingers
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm/LeftLowerArm/LeftPalm/LeftUpperThumb
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/LeftArmCollarbone/LeftUpperArm/LeftLowerArm/LeftPalm/LeftUpperThumb/LeftLowerThumb
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/Neck
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/Neck/Head
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm/RightLowerArm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm/RightLowerArm/RightPalm
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm/RightLowerArm/RightPalm/RightFingers
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm/RightLowerArm/RightPalm/RightUpperThumb
+    m_Weight: 1
+  - m_Path: Pelvis/Spine1/Spine2/Spine3/Spine4/Spine5/Chest/RightArmCollarbone/RightUpperArm/RightLowerArm/RightPalm/RightUpperThumb/RightLowerThumb
+    m_Weight: 1

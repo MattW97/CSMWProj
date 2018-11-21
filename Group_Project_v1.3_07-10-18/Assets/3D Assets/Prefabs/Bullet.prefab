@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65658747790988340}
   - component: {fileID: 23932152121383834}
   - component: {fileID: 54991033241751688}
-  - component: {fileID: 114968027364906214}
   - component: {fileID: 114419532293473582}
   m_Layer: 0
   m_Name: Bullet
@@ -124,16 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa78c6bedca69a408b6ab29d3bbf5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToPlayer: 5
---- !u!114 &114968027364906214
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511319414114544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eaf28f1f821db24794439701f9fc9d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  bulletDamage: 5
   bulletSpeed: 25

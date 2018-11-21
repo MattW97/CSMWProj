@@ -5,8 +5,8 @@ using UnityEngine;
 public class ParticleDecalPool : MonoBehaviour {
 
     public int maxDecals = 100;
-    public float decalSizeMin = 0.5f;
-    public float decalSizeMax = 1.5f;
+    public float decalSizeMin = 0.75f;
+    public float decalSizeMax = 1.0f;
 
     private ParticleSystem decalParticleSystem;
     private int particleDecalDataIndex;
@@ -51,7 +51,7 @@ public class ParticleDecalPool : MonoBehaviour {
         particleData[particleDecalDataIndex].size = Random.Range(decalSizeMin, decalSizeMax);
 
         particleDecalDataIndex++;
- 
+
     }
 
     void DisplayParticles()

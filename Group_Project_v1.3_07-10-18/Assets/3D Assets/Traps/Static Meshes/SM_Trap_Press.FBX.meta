@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 82a544e0aa9e8b248938af583a8440ac
+timeCreated: 1542550159
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: SM_Factory_Trap_Press
+    100002: SM_Factory_Trap_Press_Collision
+    100004: SM_Factory_Trap_PressBase_Collision
+    100006: //RootNode
+    100008: SM_Factory_Trap_Press_Hydraulic
+    100010: SM_Factory_Trap_Press_Hydraulic_Collision
+    100012: SM_Factory_Trap_PressBase
+    400000: SM_Factory_Trap_Press
+    400002: SM_Factory_Trap_Press_Collision
+    400004: SM_Factory_Trap_PressBase_Collision
+    400006: //RootNode
+    400008: SM_Factory_Trap_Press_Hydraulic
+    400010: SM_Factory_Trap_Press_Hydraulic_Collision
+    400012: SM_Factory_Trap_PressBase
+    2300000: SM_Factory_Trap_Press
+    2300002: SM_Factory_Trap_Press_Collision
+    2300004: SM_Factory_Trap_PressBase_Collision
+    2300006: //RootNode
+    2300008: SM_Factory_Trap_Press_Hydraulic
+    2300010: SM_Factory_Trap_Press_Hydraulic_Collision
+    2300012: SM_Factory_Trap_PressBase
+    3300000: SM_Factory_Trap_Press
+    3300002: SM_Factory_Trap_Press_Collision
+    3300004: SM_Factory_Trap_PressBase_Collision
+    3300006: //RootNode
+    3300008: SM_Factory_Trap_Press_Hydraulic
+    3300010: SM_Factory_Trap_Press_Hydraulic_Collision
+    3300012: SM_Factory_Trap_PressBase
+    4300000: SM_Factory_Trap_PressBase
+    4300002: SM_Factory_Trap_Press
+    4300004: SM_Factory_Trap_Press_Collision
+    4300006: SM_Factory_Trap_PressBase_Collision
+    4300008: SM_Factory_Trap_Press_Hydraulic
+    4300010: SM_Factory_Trap_Press_Hydraulic_Collision
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: 146f19e1ae0042543810f0d85cf6b24f, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

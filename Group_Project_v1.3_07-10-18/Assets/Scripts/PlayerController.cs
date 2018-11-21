@@ -6,48 +6,46 @@ using UnityEngine.UI;
 [RequireComponent(typeof(IKControl))]
 public class PlayerController : MonoBehaviour {
 
+    #region floats
     [Header("Variables")]
     public float playerNum;
-    [SerializeField] float fireRate = 0.3f;
     [SerializeField] float movementSpeed = 4;
-    private float dodgeSpeed = 5;
-    private float shotTimer;
     private float playerTurnSpeed = 20;
-    private float initAmmoAmount = 4;
-    private float ammoAmount;
-    private float reloadTime = 1;
     private float mashTimer;
     public float numToMash = 5;
     private float numToMashMultiplier = 2.0f;
     private float joystickAxisValue;
-
     public float jumpForce = 3.0f;
     private float verticalVelocity;
     private float distToGround;
-    private bool isGrounded = false;
-    private bool jumpingBool = false;
-
     public float forwardBackward;
     public float rightLeft;
     public float distanceCheck;
+    private float respawnTimer;
+    private float respawnTimerReset = 3;
+    #endregion
 
-    private int totalCurrentMashes = 0;
-    
-    private bool reloading;
-    private bool dodging;
-    private bool canDodge;
+    #region bools
     private bool playerInGame;
+    public bool inCountdown;
     public bool canControl;
     public bool isDead;
     public bool beenDragged;
     public bool draggingPlayer;
     public bool ragdolling;
-    
+    private bool isGrounded = false;
+    private bool jumpingBool = false;
     public bool pickUpMode;
     private bool inRange;
-
     private bool firstDistanceCheck;
+    public bool canPickUpWeapon;
+    public bool isHoldingWeapon;
     [Space]
+    #endregion
+
+    public Vector3 startingPosition;
+
+    public GameObject weapon;
 
     #region Inputs
     [HideInInspector] public string leftStickHorizontal;
@@ -59,36 +57,25 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public string pickUp;
     [HideInInspector] public string reload;
     [HideInInspector] public string mashButton;
-    [HideInInspector] public string dodgeButton;
+    [HideInInspector] public string bButton;
     [HideInInspector] public string jumpButton;
+    [HideInInspector] public string interactButton;
     #endregion
 
-    private Vector3 dodgePos;
+    private int totalCurrentMashes = 0;
+    private int lives = 3;
+
     private Vector3 movementInput;
     [HideInInspector] public Vector3 movementVelocity;
-
-    [Header("Game Objects")]
-    public GameObject[] bulletSpawn;
-    public GameObject bullet;   
-    public GameObject weapon;
-    public GameObject dodgePoint;
-    [Space]
+    [HideInInspector] public Vector3 playerDirection;
 
     [Header("Transforms & Rigidbodies")] 
     [HideInInspector] public Transform thisTransform;
     private Rigidbody thisRigidbody;
     [Space]
 
-
-    [HideInInspector] public Vector3 playerDirection;
-
-    [Header("Particle Systems")]
-    public ParticleSystem muzzleFlash;
-    [Space]
-
     [Header("Scripts")]
     public UtilityManager utilManagerScript;
-
 
     [Header("Change These For Each Player")]
     public Transform thisPlayersOrigin;
@@ -103,17 +90,18 @@ public class PlayerController : MonoBehaviour {
     {
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
-        ammoAmount = InitAmmoAmount;
-        reloading = false;
-        dodging = false;
-        canDodge = true;
         canControl = true;
         isDead = false;
         mashTimer = 0.5f;
 
+        respawnTimer = respawnTimerReset;
+
         distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
 
-        //StartDistance();
+        isHoldingWeapon = false;
+
+        startingPosition = transform.position + new Vector3(0, 0.5f, 0);
+
         RagdollSetup();      
     }
 
@@ -143,33 +131,64 @@ public class PlayerController : MonoBehaviour {
 
             if (canControl)
             {
-                if (Input.GetButtonDown(dodgeButton) && canDodge)
-                {
-                    dodging = true;
-                }
-
-                Shooting();
                 GrabAndDrag();
                 Jumping();
-            }
 
-            #region Dodge bool
-            if (dodging)
-            {
-                dodgePos = dodgePoint.transform.position;
-                dodgePoint.transform.parent = null;
-                canControl = false;
-                transform.position = Vector3.Lerp(transform.position, dodgePos, dodgeSpeed * Time.deltaTime);
+                #region Pick Up Weapon and Drop Weapon
+                if (Input.GetButtonDown(interactButton))
+                {              
+                    if (!isHoldingWeapon && canPickUpWeapon)
+                    {
+                        PickUpWeapon();
+                    }
+
+                    if (isHoldingWeapon)
+                    {
+                        DropWeapon();
+                    }
+
+                    isHoldingWeapon = !isHoldingWeapon;
+                }
+
+                if(isHoldingWeapon)
+                {
+                    canPickUpWeapon = false;
+                    weapon.GetComponent<WeaponScript>().Shoot(gameObject);
+                    weapon.GetComponent<WeaponScript>().Reload(gameObject);
+                }
+                #endregion
             }
-            else if (!dodging && !ragdolling)
+        }
+        else
+        {
+            
+            respawnTimer -= Time.deltaTime;
+
+            Debug.Log(respawnTimer);
+
+            if(respawnTimer <= 0 && lives > 0)
             {
-                dodgePoint.transform.parent = this.gameObject.transform;
-                dodgePoint.transform.position = (movementInput.normalized * 2) + transform.position;
+                transform.position = startingPosition;
+                isDead = false;
                 canControl = true;
-            }
+                ragdolling = false;
+                Ragdoll(false);
 
-            // See OnTriggerEnter() function for dodging = false;
-            #endregion
+                respawnTimer = respawnTimerReset;
+                lives = lives - 1;
+                Debug.Log(lives);
+            }         
+        }
+
+        if (!canControl || isDead)
+        {
+            isHoldingWeapon = false;
+            DropWeapon();
+        }
+
+        if(this.weapon == null)
+        {
+            isHoldingWeapon = false;
         }
     }
 
@@ -193,9 +212,6 @@ public class PlayerController : MonoBehaviour {
     void CharMovement()
     {
         #region Character Movement
-
-        print("move");
-
         // Configure input for left analog stick
         movementInput = new Vector3(Input.GetAxisRaw(leftStickHorizontal) * movementSpeed, 0, Input.GetAxisRaw(leftStickVertical) * movementSpeed);
         movementVelocity = movementInput;
@@ -203,6 +219,7 @@ public class PlayerController : MonoBehaviour {
         // When Left Trigger is pressed...
         if (Input.GetAxisRaw(aimButton) > 0)
         {
+            movementSpeed = 3;
 
             // Configure input for right analog stick
             playerDirection = Vector3.right * Input.GetAxisRaw(rightStickHorizontal) - Vector3.forward * Input.GetAxisRaw(rightStickVertical);
@@ -217,66 +234,12 @@ public class PlayerController : MonoBehaviour {
         {
             if (movementInput != Vector3.zero)
             {
+                movementSpeed = 4;
                 transform.rotation = Quaternion.LookRotation(movementInput);
             }
         }
         #endregion
     }
-
-    void Shooting()
-    {
-        #region Shooting and Reloading
-        // If right trigger is pressed...
-        if (Input.GetAxis(fireButton) > 0 && !reloading && !pickUpMode)
-        {
-            if (InitAmmoAmount > 0)
-            {
-
-                shotTimer -= Time.deltaTime;
-
-                if (shotTimer <= 0)
-                {
-
-                    for (int i = 0; i < bulletSpawn.Length; i++)
-                    {
-
-                        Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
-                    }
-
-                    muzzleFlash.Play();
-                    shotTimer = fireRate;
-                    InitAmmoAmount = InitAmmoAmount - 1;
-                }
-            }
-        }
-        else
-        {
-            // Stops delay between pressing the fire button and the shot firing
-            // Makes it so shotTimer is only active whilst the fire button is down
-            shotTimer = 0;
-        }
-
-        if (Input.GetButtonDown(reload) && !pickUpMode && InitAmmoAmount < ammoAmount || InitAmmoAmount == 0)
-        {
-            reloading = true;
-        }
-
-        if (reloading)
-        {
-            ReloadTime -= Time.deltaTime;
-
-            if (ReloadTime <= 0)
-            {
-
-                InitAmmoAmount = ammoAmount;
-                shotTimer = 0;
-                ReloadTime = 1;
-                reloading = false;
-            }
-        }
-        #endregion
-    }
-
    
     void ButtonMashing()
     {
@@ -419,7 +382,6 @@ public class PlayerController : MonoBehaviour {
             cj.enableProjection = true;
         }
         thisRigidbody.isKinematic = false;
-        weapon.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     /// <summary>
@@ -436,9 +398,6 @@ public class PlayerController : MonoBehaviour {
             {
                 rb.isKinematic = false;
             }
-            // weapon.GetComponent<Rigidbody>().isKinematic = false;
-            // weapon.GetComponent<BoxCollider>().enabled = true;
-            weapon.gameObject.SetActive(false);
             thisRigidbody.isKinematic = true;
             GetComponent<Animator>().enabled = false;
             GetComponent<CapsuleCollider>().enabled = false;
@@ -455,9 +414,6 @@ public class PlayerController : MonoBehaviour {
             {
                 rb.isKinematic = true;
             }
-            weapon.GetComponent<Rigidbody>().isKinematic = true;
-            // weapon.GetComponent<BoxCollider>().enabled = false;
-            weapon.gameObject.SetActive(true);
             thisRigidbody.isKinematic = false;
             GetComponent<Animator>().enabled = true;
             GetComponent<CapsuleCollider>().enabled = true;
@@ -487,7 +443,6 @@ public class PlayerController : MonoBehaviour {
             {
                 inRange = false;
                 GetComponent<IKControl>().ikActive = false;
-
             }
         }   
     }
@@ -499,7 +454,6 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetAxisRaw(pickUp) > 0 && !pickUpMode && inRange && !ragdolling)
         {
             pickUpMode = true;
-            weapon.SetActive(false);
             draggingPlayer = true;
         }
         else if (Input.GetAxisRaw(pickUp) == 0 && pickUpMode)
@@ -508,7 +462,6 @@ public class PlayerController : MonoBehaviour {
             pickUpScript.join = false;
             Destroy(pickUpScript.GetComponent<SpringJoint>());
             pickUpMode = false;
-            weapon.SetActive(true);
         }
 
         // Current Setup for picking up player
@@ -520,39 +473,54 @@ public class PlayerController : MonoBehaviour {
         #endregion
     }
 
+    void PickUpWeapon ()
+    {
+        WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
+        weaponScript.GetPickedUp(rightHand);
+    }
+
+    void DropWeapon()
+    {
+        gameObject.GetComponent<PlayerAnimationScript>().canDealDamage = false;
+
+        WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
+        weaponScript.GetDropped(); 
+    }
+
     internal void SetUpInputs(int controller)
     {
         playerNum = controller;
 
-        leftStickHorizontal = "L_Horizontal_" + playerNum.ToString();
+        leftStickHorizontal = "L_Horizontal_" + playerNum.ToString(); // Left Analogue Stick
         leftStickVertical = "L_Vertical_" + playerNum.ToString();
-        rightStickHorizontal = "R_Horizontal_" + playerNum.ToString();
+        rightStickHorizontal = "R_Horizontal_" + playerNum.ToString(); // Right Analogue Stick
         rightStickVertical = "R_Vertical_" + playerNum.ToString();
-        fireButton = "Fire_" + playerNum.ToString();
-        aimButton = "Aim_" + playerNum.ToString();
-        pickUp = "PickUp_" + playerNum.ToString();
-        reload = "Reload_" + playerNum.ToString();
-        mashButton = "Mash_" + playerNum.ToString();
-        dodgeButton = "B_" + playerNum.ToString();
-        jumpButton = "A_" + playerNum.ToString();
+        fireButton = "Fire_" + playerNum.ToString(); // RT
+        aimButton = "Aim_" + playerNum.ToString(); // LT
+        pickUp = "PickUp_" + playerNum.ToString(); // LB
+        reload = "Reload_" + playerNum.ToString(); // X
+        mashButton = "Mash_" + playerNum.ToString(); // Y
+        bButton = "B_" + playerNum.ToString(); // B
+        jumpButton = "A_" + playerNum.ToString(); // A
+        interactButton = "Interact_" + playerNum.ToString(); // RB
     }
 
-    private void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.tag == "Dodge Point")
+        if(col.gameObject.tag == "Weapon" && !isHoldingWeapon)
         {
-            dodging = false;
+            weapon = col.gameObject.transform.parent.gameObject;
+            canPickUpWeapon = true;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnTriggerExit (Collider col)
     {
-        if(collision.gameObject.tag == "Obstacle")
+        if(!isHoldingWeapon)
         {
-            dodging = false;
-            canDodge = false;
-            Debug.Log("Obstacle Hit");
-        }
+            weapon = null;
+            canPickUpWeapon = false;
+        }        
     }
 
     void OnCollisionStay(Collision collision)
@@ -565,11 +533,6 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            canDodge = true;
-        }
-
         if (collision.gameObject.layer == 11)
         {
             isGrounded = false;
@@ -579,10 +542,6 @@ public class PlayerController : MonoBehaviour {
     #region Getters/ Setters
 
     public int TotalCurrentMashes { get { return totalCurrentMashes; } set { totalCurrentMashes = value; } }
-
-    public float InitAmmoAmount { get { return initAmmoAmount; } set { initAmmoAmount = value; } }
-
-    public float ReloadTime { get { return reloadTime; } set { reloadTime = value; } }
 
     public bool PlayerInGame { get { return playerInGame; } set { playerInGame = value; } }
 

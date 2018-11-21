@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Add These Into CS Version\Addons\CameraPathCreator\Scripts\Editor\CPC_CameraPathInspector.cs" />
      <Compile Include="Assets\Plugin_PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
      <Compile Include="Assets\Plugin_PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
      <Compile Include="Assets\Plugin_PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />

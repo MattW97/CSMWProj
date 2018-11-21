@@ -1,28 +1,34 @@
 fileFormatVersion: 2
-guid: a454ba3eaa4c87c4fa6c2eeea7fa7e7d
-timeCreated: 1542017860
+guid: eecfbf2ba7a7d8647aa398c96863ec1b
+timeCreated: 1542542671
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Skeleton
-    100002: //RootNode
-    400000: Skeleton
-    400002: //RootNode
-    2300000: Skeleton
-    2300002: //RootNode
-    3300000: Skeleton
-    3300002: //RootNode
-    4300000: Bear
-    4300002: Skeleton
-    7400000: Take 001
+    100000: NEWBearhead
+    100002: NEWBody
+    100004: //RootNode
+    400000: NEWBearhead
+    400002: NEWBody
+    400004: //RootNode
+    2300000: NEWBearhead
+    2300002: NEWBody
+    3300000: NEWBearhead
+    3300002: NEWBody
+    4300000: NEWBody
+    4300002: NEWBearhead
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: default
-    second: {fileID: 2100000, guid: 9e9456af45c63de418bf573c898d2050, type: 2}
+      name: BearHead
+    second: {fileID: 2100000, guid: a0d099ab98921c24d88ac20a2587ea8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 687cf0c870629ab459e700968f4992e0, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
@@ -91,7 +97,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0

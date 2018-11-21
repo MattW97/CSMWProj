@@ -6,11 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/S_ReeceTestLevel.unity
-    guid: 0fff18164d0f41d43b1d2bad09d3aee0
-  - enabled: 1
-    path: Assets/Scenes/S_Main.unity
-    guid: c07b6bf3a436b824781066cffbe68d97
-  - enabled: 1
-    path: Assets/Scenes/S_FactoryBlockout.unity
-    guid: 78a33e3d47e36c348b8caadd21c431fb
+    path: Assets/Scenes/S_JakeTestLevel.unity
+    guid: 170322fc7064b48468c664b8c1c51bb8

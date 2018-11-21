@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: baa93616776c6294eac674674d8a6aa1
+timeCreated: 1542543127
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Circle002
+    100002: //RootNode
+    100004: SM_Weapon_Chainsaw_Collision
+    100006: SM_WeaponChainsaw_Teeth_00
+    100008: SM_WeaponChainsaw_Teeth_01
+    100010: SM_WeaponChainsaw_Teeth_02
+    100012: SM_WeaponChainsaw_Teeth_03
+    100014: SM_WeaponChainsaw_Teeth_04
+    100016: SM_WeaponChainsaw_Teeth_05
+    100018: SM_WeaponChainsaw_Teeth_06
+    100020: SM_WeaponChainsaw_Teeth_07
+    100022: SM_WeaponChainsaw_Teeth_08
+    100024: SM_WeaponChainsaw_Teeth_09
+    100026: SM_WeaponChainsaw_Teeth_10
+    100028: SM_WeaponChainsaw_Teeth_11
+    100030: SM_WeaponChainsaw_Teeth_12
+    100032: SM_WeaponChainsaw_Teeth_13
+    100034: SM_WeaponChainsaw_Teeth_14
+    100036: SM_WeaponChainsaw_Teeth_15
+    100038: SM_WeaponChainsaw_Teeth_16
+    100040: SM_WeaponChainsaw_Teeth_17
+    100042: SM_WeaponChainsaw_Teeth_18
+    100044: SM_WeaponChainsaw_Teeth_19
+    100046: SM_WeaponChainsaw_Teeth_20
+    400000: Circle002
+    400002: //RootNode
+    400004: SM_Weapon_Chainsaw_Collision
+    400006: SM_WeaponChainsaw_Teeth_00
+    400008: SM_WeaponChainsaw_Teeth_01
+    400010: SM_WeaponChainsaw_Teeth_02
+    400012: SM_WeaponChainsaw_Teeth_03
+    400014: SM_WeaponChainsaw_Teeth_04
+    400016: SM_WeaponChainsaw_Teeth_05
+    400018: SM_WeaponChainsaw_Teeth_06
+    400020: SM_WeaponChainsaw_Teeth_07
+    400022: SM_WeaponChainsaw_Teeth_08
+    400024: SM_WeaponChainsaw_Teeth_09
+    400026: SM_WeaponChainsaw_Teeth_10
+    400028: SM_WeaponChainsaw_Teeth_11
+    400030: SM_WeaponChainsaw_Teeth_12
+    400032: SM_WeaponChainsaw_Teeth_13
+    400034: SM_WeaponChainsaw_Teeth_14
+    400036: SM_WeaponChainsaw_Teeth_15
+    400038: SM_WeaponChainsaw_Teeth_16
+    400040: SM_WeaponChainsaw_Teeth_17
+    400042: SM_WeaponChainsaw_Teeth_18
+    400044: SM_WeaponChainsaw_Teeth_19
+    400046: SM_WeaponChainsaw_Teeth_20
+    2300000: //RootNode
+    2300002: SM_Weapon_Chainsaw_Collision
+    2300004: SM_WeaponChainsaw_Teeth_00
+    2300006: SM_WeaponChainsaw_Teeth_01
+    2300008: SM_WeaponChainsaw_Teeth_02
+    2300010: SM_WeaponChainsaw_Teeth_03
+    2300012: SM_WeaponChainsaw_Teeth_04
+    2300014: SM_WeaponChainsaw_Teeth_05
+    2300016: SM_WeaponChainsaw_Teeth_06
+    2300018: SM_WeaponChainsaw_Teeth_07
+    2300020: SM_WeaponChainsaw_Teeth_08
+    2300022: SM_WeaponChainsaw_Teeth_09
+    2300024: SM_WeaponChainsaw_Teeth_10
+    2300026: SM_WeaponChainsaw_Teeth_11
+    2300028: SM_WeaponChainsaw_Teeth_12
+    2300030: SM_WeaponChainsaw_Teeth_13
+    2300032: SM_WeaponChainsaw_Teeth_14
+    2300034: SM_WeaponChainsaw_Teeth_15
+    2300036: SM_WeaponChainsaw_Teeth_16
+    2300038: SM_WeaponChainsaw_Teeth_17
+    2300040: SM_WeaponChainsaw_Teeth_18
+    2300042: SM_WeaponChainsaw_Teeth_19
+    2300044: SM_WeaponChainsaw_Teeth_20
+    3300000: //RootNode
+    3300002: SM_Weapon_Chainsaw_Collision
+    3300004: SM_WeaponChainsaw_Teeth_00
+    3300006: SM_WeaponChainsaw_Teeth_01
+    3300008: SM_WeaponChainsaw_Teeth_02
+    3300010: SM_WeaponChainsaw_Teeth_03
+    3300012: SM_WeaponChainsaw_Teeth_04
+    3300014: SM_WeaponChainsaw_Teeth_05
+    3300016: SM_WeaponChainsaw_Teeth_06
+    3300018: SM_WeaponChainsaw_Teeth_07
+    3300020: SM_WeaponChainsaw_Teeth_08
+    3300022: SM_WeaponChainsaw_Teeth_09
+    3300024: SM_WeaponChainsaw_Teeth_10
+    3300026: SM_WeaponChainsaw_Teeth_11
+    3300028: SM_WeaponChainsaw_Teeth_12
+    3300030: SM_WeaponChainsaw_Teeth_13
+    3300032: SM_WeaponChainsaw_Teeth_14
+    3300034: SM_WeaponChainsaw_Teeth_15
+    3300036: SM_WeaponChainsaw_Teeth_16
+    3300038: SM_WeaponChainsaw_Teeth_17
+    3300040: SM_WeaponChainsaw_Teeth_18
+    3300042: SM_WeaponChainsaw_Teeth_19
+    3300044: SM_WeaponChainsaw_Teeth_20
+    4300000: SM_Weapon_Chainsaw
+    4300002: SM_WeaponChainsaw_Teeth_00
+    4300004: SM_WeaponChainsaw_Teeth_01
+    4300006: SM_WeaponChainsaw_Teeth_02
+    4300008: SM_WeaponChainsaw_Teeth_03
+    4300010: SM_WeaponChainsaw_Teeth_04
+    4300012: SM_WeaponChainsaw_Teeth_05
+    4300014: SM_WeaponChainsaw_Teeth_06
+    4300016: SM_WeaponChainsaw_Teeth_07
+    4300018: SM_WeaponChainsaw_Teeth_08
+    4300020: SM_WeaponChainsaw_Teeth_09
+    4300022: SM_WeaponChainsaw_Teeth_10
+    4300024: SM_WeaponChainsaw_Teeth_11
+    4300026: SM_WeaponChainsaw_Teeth_12
+    4300028: SM_WeaponChainsaw_Teeth_13
+    4300030: SM_WeaponChainsaw_Teeth_14
+    4300032: SM_WeaponChainsaw_Teeth_15
+    4300034: SM_WeaponChainsaw_Teeth_16
+    4300036: SM_WeaponChainsaw_Teeth_17
+    4300038: SM_WeaponChainsaw_Teeth_18
+    4300040: SM_WeaponChainsaw_Teeth_19
+    4300042: SM_WeaponChainsaw_Teeth_20
+    4300044: SM_Weapon_Chainsaw_Collision
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Nose1_defaultMat
+    second: {fileID: 2100000, guid: 5b1ca3fa660918d40b087b16185f58bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Teeth1_defaultMat
+    second: {fileID: 2100000, guid: d67d40419fc5277438d6bb68a2ce0600, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: 136dc30b74a8a2a48a44b431265265a0
-timeCreated: 1542017859
+guid: a00bd4e2f6a561946b5e034d7744894b
+timeCreated: 1542542671
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: Skeleton
     100002: //RootNode
+    100004: Monkey
     400000: Skeleton
     400002: //RootNode
+    400004: Monkey
     2300000: Skeleton
     3300000: Skeleton
     4300000: Skeleton
@@ -19,7 +21,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: default
-    second: {fileID: 2100000, guid: 9e9456af45c63de418bf573c898d2050, type: 2}
+    second: {fileID: 2100000, guid: 81f257ff001ef5a49827b842a7d5eaa7, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
@@ -88,7 +90,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0

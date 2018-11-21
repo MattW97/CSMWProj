@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: 98cfce462d82865448d58504cd79a664
+timeCreated: 1542546634
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: SM_Trap_Grinder_Collsion
+    100002: //RootNode
+    100004: SM_Trap_SpikedRoller
+    100006: SM_Trap_SpikedRoller001
+    100008: SM_Trap_SpikedRoller002
+    100010: SM_Trap_SpikedRoller003
+    100012: SM_Factory_Trap_Grinder_Base
+    100014: SM_Factory_Trap_Grinder_Roller001
+    100016: SM_Factory_Trap_Grinder_Roller002
+    100018: SM_Factory_Trap_Grinder_Roller003
+    100020: SM_Factory_Trap_Grinder_Roller004
+    400000: SM_Trap_Grinder_Collsion
+    400002: //RootNode
+    400004: SM_Trap_SpikedRoller
+    400006: SM_Trap_SpikedRoller001
+    400008: SM_Trap_SpikedRoller002
+    400010: SM_Trap_SpikedRoller003
+    400012: SM_Factory_Trap_Grinder_Base
+    400014: SM_Factory_Trap_Grinder_Roller001
+    400016: SM_Factory_Trap_Grinder_Roller002
+    400018: SM_Factory_Trap_Grinder_Roller003
+    400020: SM_Factory_Trap_Grinder_Roller004
+    2300000: SM_Trap_Grinder_Collsion
+    2300002: //RootNode
+    2300004: SM_Trap_SpikedRoller
+    2300006: SM_Trap_SpikedRoller001
+    2300008: SM_Trap_SpikedRoller002
+    2300010: SM_Trap_SpikedRoller003
+    2300012: SM_Factory_Trap_Grinder_Base
+    2300014: SM_Factory_Trap_Grinder_Roller001
+    2300016: SM_Factory_Trap_Grinder_Roller002
+    2300018: SM_Factory_Trap_Grinder_Roller003
+    2300020: SM_Factory_Trap_Grinder_Roller004
+    3300000: SM_Trap_Grinder_Collsion
+    3300002: //RootNode
+    3300004: SM_Trap_SpikedRoller
+    3300006: SM_Trap_SpikedRoller001
+    3300008: SM_Trap_SpikedRoller002
+    3300010: SM_Trap_SpikedRoller003
+    3300012: SM_Factory_Trap_Grinder_Base
+    3300014: SM_Factory_Trap_Grinder_Roller001
+    3300016: SM_Factory_Trap_Grinder_Roller002
+    3300018: SM_Factory_Trap_Grinder_Roller003
+    3300020: SM_Factory_Trap_Grinder_Roller004
+    4300000: SM_Trap_Grinder
+    4300002: SM_Trap_Grinder_Collsion
+    4300004: SM_Trap_SpikedRoller
+    4300006: SM_Trap_SpikedRoller001
+    4300008: SM_Trap_SpikedRoller002
+    4300010: SM_Trap_SpikedRoller003
+    4300012: SM_Factory_Trap_Grinder_Floor
+    4300014: SM_Factory_Trap_Grinder_Base
+    4300016: SM_Factory_Trap_Grinder_Roller001
+    4300018: SM_Factory_Trap_Grinder_Roller002
+    4300020: SM_Factory_Trap_Grinder_Roller003
+    4300022: SM_Factory_Trap_Grinder_Roller004
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 08 - Default
+    second: {fileID: 2100000, guid: b065575206281f5479442bb0ec450803, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Nose1_defaultMat
+    second: {fileID: 2100000, guid: 3f31db7cbbec8b549bcdc50142ea4b5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Allparts_Teeth1_defaultMat
+    second: {fileID: 2100000, guid: 1d39e15b232bc644f8195cf125e1571c, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

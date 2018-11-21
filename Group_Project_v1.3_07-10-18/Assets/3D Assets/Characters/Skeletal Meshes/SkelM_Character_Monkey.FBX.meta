@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: 3b6b2deb8af55ee49af6f87abc91ea6c
+timeCreated: 1542542954
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: BODY
+    100002: Chest
+    100004: Head
+    100006: LeftAnkle
+    100008: LeftArmCollarbone
+    100010: LeftFingers
+    100012: LeftFoot
+    100014: LeftLowerArm
+    100016: LeftLowerLeg
+    100018: LeftLowerThumb
+    100020: LeftPalm
+    100022: LeftUpperArm
+    100024: LeftUpperLeg
+    100026: LeftUpperThumb
+    100028: Neck
+    100030: NEWMonkey
+    100032: NEWMonkeyTail
+    100034: Pelvis
+    100036: RightAnkle
+    100038: RightArmCollarbone
+    100040: RightFingers
+    100042: RightFoot
+    100044: RightLowerArm
+    100046: RightLowerLeg
+    100048: RightLowerThumb
+    100050: RightPalm
+    100052: RightUpperArm
+    100054: RightUpperLeg
+    100056: RightUpperThumb
+    100058: //RootNode
+    100060: Spine1
+    100062: Spine2
+    100064: Spine3
+    100066: Spine4
+    100068: Spine5
+    100070: NEWBody
+    100072: NEWMonkeyhead
+    400000: BODY
+    400002: Chest
+    400004: Head
+    400006: LeftAnkle
+    400008: LeftArmCollarbone
+    400010: LeftFingers
+    400012: LeftFoot
+    400014: LeftLowerArm
+    400016: LeftLowerLeg
+    400018: LeftLowerThumb
+    400020: LeftPalm
+    400022: LeftUpperArm
+    400024: LeftUpperLeg
+    400026: LeftUpperThumb
+    400028: Neck
+    400030: NEWMonkey
+    400032: NEWMonkeyTail
+    400034: Pelvis
+    400036: RightAnkle
+    400038: RightArmCollarbone
+    400040: RightFingers
+    400042: RightFoot
+    400044: RightLowerArm
+    400046: RightLowerLeg
+    400048: RightLowerThumb
+    400050: RightPalm
+    400052: RightUpperArm
+    400054: RightUpperLeg
+    400056: RightUpperThumb
+    400058: //RootNode
+    400060: Spine1
+    400062: Spine2
+    400064: Spine3
+    400066: Spine4
+    400068: Spine5
+    400070: NEWBody
+    400072: NEWMonkeyhead
+    4300000: BODY
+    4300002: NEWMonkeyTail
+    4300004: NEWMonkey
+    4300006: NEWBody
+    4300008: NEWMonkeyhead
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: BODY
+    13700002: NEWMonkey
+    13700004: NEWMonkeyTail
+    13700006: NEWBody
+    13700008: NEWMonkeyhead
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 754310bfcde269a428cb5b2216140c66, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MonkeyHead
+    second: {fileID: 2100000, guid: 1688730331516de478698006372bf494, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

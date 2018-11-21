@@ -60,13 +60,13 @@ public class PlayerHealthManager : MonoBehaviour {
 
     }
 
-    public void DamagePlayer(int damageAmount) {
-
+    public void DamagePlayer(int damageAmount)
+    {
         CurrentHealth = CurrentHealth - damageAmount;
     }
 
-    public void HealPlayer(int healAmount) {
-
+    public void HealPlayer(int healAmount)
+    {
         CurrentHealth = CurrentHealth + healAmount;
     }
 

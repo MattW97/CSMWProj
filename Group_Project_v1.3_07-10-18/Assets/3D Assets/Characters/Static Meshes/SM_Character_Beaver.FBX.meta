@@ -1,28 +1,39 @@
 fileFormatVersion: 2
-guid: cb4f22564db4254419aba1376d02bfe5
-timeCreated: 1542017860
+guid: 6bc3eb975330ba947812ac018666d579
+timeCreated: 1542542670
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Skeleton
-    100002: //RootNode
-    400000: Skeleton
-    400002: //RootNode
-    2300000: Skeleton
-    2300002: //RootNode
-    3300000: Skeleton
-    3300002: //RootNode
-    4300000: Beaver
-    4300002: Skeleton
-    7400000: Take 001
+    100000: NEWBeaverhead
+    100002: NEWBeaverTail
+    100004: NEWBody
+    100006: //RootNode
+    400000: NEWBeaverhead
+    400002: NEWBeaverTail
+    400004: NEWBody
+    400006: //RootNode
+    2300000: NEWBeaverhead
+    2300002: NEWBeaverTail
+    2300004: NEWBody
+    3300000: NEWBeaverhead
+    3300002: NEWBeaverTail
+    3300004: NEWBody
+    4300000: NEWBody
+    4300002: NEWBeaverhead
+    4300004: NEWBeaverTail
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: default
-    second: {fileID: 2100000, guid: 9e9456af45c63de418bf573c898d2050, type: 2}
+      name: BeaverHead
+    second: {fileID: 2100000, guid: 668318e6de889cc43984137314e26f0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 687cf0c870629ab459e700968f4992e0, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
@@ -91,7 +102,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0

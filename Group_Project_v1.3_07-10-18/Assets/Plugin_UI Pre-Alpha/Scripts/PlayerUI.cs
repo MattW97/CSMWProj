@@ -23,29 +23,29 @@ public class PlayerUI : MonoBehaviour {
 
         #region Ammo Shells on UI
 
-        if (assignedPlayer.InitAmmoAmount == 4)
-        {
-            shellIcon.GetComponent<Animator>().runtimeAnimatorController = null;
-            shellIcon.sprite = shells[0];
-        }
-        else if (assignedPlayer.InitAmmoAmount == 3)
-        {
-            shellIcon.sprite = shells[1];
-        }
-        else if (assignedPlayer.InitAmmoAmount == 2)
-        {
-            shellIcon.sprite = shells[2];
-        }
-        else if (assignedPlayer.InitAmmoAmount == 1)
-        {
-            shellIcon.sprite = shells[3];
-        }
-        else if (assignedPlayer.InitAmmoAmount == 0)
-        {
-            shellIcon.sprite = shells[4];
-            shellIcon.GetComponent<Animator>().runtimeAnimatorController = animatorControl;
-            shellIcon.GetComponent<Animator>().SetBool("play", true);
-        }
+        //if (assignedPlayer.InitAmmoAmount == 4)
+        //{
+        //    shellIcon.GetComponent<Animator>().runtimeAnimatorController = null;
+        //    shellIcon.sprite = shells[0];
+        //}
+        //else if (assignedPlayer.InitAmmoAmount == 3)
+        //{
+        //    shellIcon.sprite = shells[1];
+        //}
+        //else if (assignedPlayer.InitAmmoAmount == 2)
+        //{
+        //    shellIcon.sprite = shells[2];
+        //}
+        //else if (assignedPlayer.InitAmmoAmount == 1)
+        //{
+        //    shellIcon.sprite = shells[3];
+        //}
+        //else if (assignedPlayer.InitAmmoAmount == 0)
+        //{
+        //    shellIcon.sprite = shells[4];
+        //    shellIcon.GetComponent<Animator>().runtimeAnimatorController = animatorControl;
+        //    shellIcon.GetComponent<Animator>().SetBool("play", true);
+        //}
 
         #endregion
 

@@ -1,0 +1,254 @@
+fileFormatVersion: 2
+guid: 030dc114d14985e4eabfcb6164984c41
+timeCreated: 1542316417
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: CATRigLLegPlatform
+    100002: CATRigRLegPlatform
+    100004: Character001
+    100006: Chest
+    100008: Head
+    100010: LeftAnkle
+    100012: LeftArmCollarbone
+    100014: LeftFingers
+    100016: LeftFoot
+    100018: LeftLowerArm
+    100020: LeftLowerLeg
+    100022: LeftLowerThumb
+    100024: LeftPalm
+    100026: LeftUpperArm
+    100028: LeftUpperLeg
+    100030: LeftUpperThumb
+    100032: Neck
+    100034: Pelvis
+    100036: RightAnkle
+    100038: RightArmCollarbone
+    100040: RightFingers
+    100042: RightFoot
+    100044: RightLowerArm
+    100046: RightLowerLeg
+    100048: RightLowerThumb
+    100050: RightPalm
+    100052: RightUpperArm
+    100054: RightUpperLeg
+    100056: RightUpperThumb
+    100058: //RootNode
+    100060: Spine1
+    100062: Spine2
+    100064: Spine3
+    100066: Spine4
+    100068: Spine5
+    400000: CATRigLLegPlatform
+    400002: CATRigRLegPlatform
+    400004: Character001
+    400006: Chest
+    400008: Head
+    400010: LeftAnkle
+    400012: LeftArmCollarbone
+    400014: LeftFingers
+    400016: LeftFoot
+    400018: LeftLowerArm
+    400020: LeftLowerLeg
+    400022: LeftLowerThumb
+    400024: LeftPalm
+    400026: LeftUpperArm
+    400028: LeftUpperLeg
+    400030: LeftUpperThumb
+    400032: Neck
+    400034: Pelvis
+    400036: RightAnkle
+    400038: RightArmCollarbone
+    400040: RightFingers
+    400042: RightFoot
+    400044: RightLowerArm
+    400046: RightLowerLeg
+    400048: RightLowerThumb
+    400050: RightPalm
+    400052: RightUpperArm
+    400054: RightUpperLeg
+    400056: RightUpperThumb
+    400058: //RootNode
+    400060: Spine1
+    400062: Spine2
+    400064: Spine3
+    400066: Spine4
+    400068: Spine5
+    2300000: Chest
+    2300002: Head
+    2300004: LeftAnkle
+    2300006: LeftArmCollarbone
+    2300008: LeftFingers
+    2300010: LeftFoot
+    2300012: LeftLowerArm
+    2300014: LeftLowerLeg
+    2300016: LeftLowerThumb
+    2300018: LeftPalm
+    2300020: LeftUpperArm
+    2300022: LeftUpperLeg
+    2300024: LeftUpperThumb
+    2300026: Neck
+    2300028: Pelvis
+    2300030: RightAnkle
+    2300032: RightArmCollarbone
+    2300034: RightFingers
+    2300036: RightFoot
+    2300038: RightLowerArm
+    2300040: RightLowerLeg
+    2300042: RightLowerThumb
+    2300044: RightPalm
+    2300046: RightUpperArm
+    2300048: RightUpperLeg
+    2300050: RightUpperThumb
+    2300052: Spine1
+    2300054: Spine2
+    2300056: Spine3
+    2300058: Spine4
+    2300060: Spine5
+    3300000: Chest
+    3300002: Head
+    3300004: LeftAnkle
+    3300006: LeftArmCollarbone
+    3300008: LeftFingers
+    3300010: LeftFoot
+    3300012: LeftLowerArm
+    3300014: LeftLowerLeg
+    3300016: LeftLowerThumb
+    3300018: LeftPalm
+    3300020: LeftUpperArm
+    3300022: LeftUpperLeg
+    3300024: LeftUpperThumb
+    3300026: Neck
+    3300028: Pelvis
+    3300030: RightAnkle
+    3300032: RightArmCollarbone
+    3300034: RightFingers
+    3300036: RightFoot
+    3300038: RightLowerArm
+    3300040: RightLowerLeg
+    3300042: RightLowerThumb
+    3300044: RightPalm
+    3300046: RightUpperArm
+    3300048: RightUpperLeg
+    3300050: RightUpperThumb
+    3300052: Spine1
+    3300054: Spine2
+    3300056: Spine3
+    3300058: Spine4
+    3300060: Spine5
+    4300000: Pelvis
+    4300002: LeftUpperLeg
+    4300004: LeftLowerLeg
+    4300006: LeftAnkle
+    4300008: LeftFoot
+    4300010: Spine1
+    4300012: Spine2
+    4300014: Spine3
+    4300016: Spine4
+    4300018: Spine5
+    4300020: Chest
+    4300022: LeftArmCollarbone
+    4300024: LeftUpperArm
+    4300026: LeftLowerArm
+    4300028: LeftPalm
+    4300030: LeftFingers
+    4300032: LeftUpperThumb
+    4300034: LeftLowerThumb
+    4300036: Neck
+    4300038: Head
+    4300040: RightArmCollarbone
+    4300042: RightUpperArm
+    4300044: RightLowerArm
+    4300046: RightPalm
+    4300048: RightFingers
+    4300050: RightUpperThumb
+    4300052: RightLowerThumb
+    4300054: RightUpperLeg
+    4300056: RightLowerLeg
+    4300058: RightAnkle
+    4300060: RightFoot
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 610d6d4c39ab0224cadca326db85347b, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Pelvis
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

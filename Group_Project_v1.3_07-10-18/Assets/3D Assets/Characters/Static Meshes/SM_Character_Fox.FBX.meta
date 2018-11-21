@@ -1,28 +1,39 @@
 fileFormatVersion: 2
-guid: fe18306911318694a9e5ea683c0c9512
-timeCreated: 1542017860
+guid: a59d2ab4f1efcb142a5492d04b17743e
+timeCreated: 1542542671
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Skeleton
-    100002: //RootNode
-    400000: Skeleton
-    400002: //RootNode
-    2300000: Skeleton
-    2300002: //RootNode
-    3300000: Skeleton
-    3300002: //RootNode
-    4300000: Fox
-    4300002: Skeleton
-    7400000: Take 001
+    100000: NEWBody
+    100002: NEWFoxhead
+    100004: NEWFoxTail
+    100006: //RootNode
+    400000: NEWBody
+    400002: NEWFoxhead
+    400004: NEWFoxTail
+    400006: //RootNode
+    2300000: NEWBody
+    2300002: NEWFoxhead
+    2300004: NEWFoxTail
+    3300000: NEWBody
+    3300002: NEWFoxhead
+    3300004: NEWFoxTail
+    4300000: NEWBody
+    4300002: NEWFoxTail
+    4300004: NEWFoxhead
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: default
-    second: {fileID: 2100000, guid: 9e9456af45c63de418bf573c898d2050, type: 2}
+      name: Body
+    second: {fileID: 2100000, guid: 687cf0c870629ab459e700968f4992e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FoxHead
+    second: {fileID: 2100000, guid: e91c2c828cf3455469702ca7ace2ba60, type: 2}
   materials:
     importMaterials: 0
     materialName: 0
@@ -91,7 +102,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0

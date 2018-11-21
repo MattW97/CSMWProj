@@ -216,16 +216,10 @@
       <HintPath>Assets/Plugin_XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/mat15/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/stewi/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/mat15/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+      <HintPath>C:/Users/stewi/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +227,8 @@
     <Compile Include="Assets\3D Assets\ParticleSplatter\ParticleDecalPool.cs" />
     <Compile Include="Assets\3D Assets\ParticleSplatter\ParticleLauncher.cs" />
     <Compile Include="Assets\3D Assets\ParticleSplatter\SplatOnCollision.cs" />
+    <Compile Include="Assets\Add These Into CS Version\Addons\CameraPathCreator\DEMO\CPC_DEMO_UpDown.cs" />
+    <Compile Include="Assets\Add These Into CS Version\Addons\CameraPathCreator\Scripts\CPC_CameraPath.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\Plugin_PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -323,21 +319,22 @@
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\ColorChange.cs" />
     <Compile Include="Assets\Scripts\Conveyor.cs" />
-    <Compile Include="Assets\Scripts\GameModeScript.cs" />
     <Compile Include="Assets\Scripts\HealthOrb.cs" />
     <Compile Include="Assets\Scripts\HealthOrbSpawner.cs" />
     <Compile Include="Assets\Scripts\IKControl.cs" />
     <Compile Include="Assets\Scripts\KillZone.cs" />
-    <Compile Include="Assets\Scripts\NewCameraScript.cs" />
+    <Compile Include="Assets\Scripts\OrganExplosionScript.cs" />
+    <Compile Include="Assets\Scripts\PanningTextureScript.cs" />
     <Compile Include="Assets\Scripts\PickUp.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimationScript.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\PlayerDamage.cs" />
     <Compile Include="Assets\Scripts\PlayerHealthManager.cs" />
     <Compile Include="Assets\Scripts\PlayerManagerScript.cs" />
-    <Compile Include="Assets\Scripts\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\RagdollToggle.cs" />
     <Compile Include="Assets\Scripts\UtilityManager.cs" />
+    <Compile Include="Assets\Scripts\Weapon Scripts\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\Weapon Scripts\WeaponScript.cs" />
+    <Compile Include="Assets\Scripts\Weapon Scripts\WeaponSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugin_PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
