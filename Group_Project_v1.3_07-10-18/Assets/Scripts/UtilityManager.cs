@@ -6,16 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class UtilityManager : MonoBehaviour
 {
-    void Start()
-    {
-        // Finds an object called New Game Object and destroys it
-        // I don't know what spawns it - CS
-        if (GameObject.Find("New Game Object") != null)
-        {
-            Destroy(GameObject.Find("New Game Object"));
-        }
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
