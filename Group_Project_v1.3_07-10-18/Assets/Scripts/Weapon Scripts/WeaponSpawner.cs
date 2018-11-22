@@ -11,41 +11,52 @@ public class WeaponSpawner : MonoBehaviour
     private float respawnTimer;
     private float initRespawnTime = 15;
 
-    public List<GameObject> weapons;
-
     private Transform thisTransform;
 
+    private Vector3 spawnOffset;
+
+    private Quaternion spawnTilt;
+
+    public List<GameObject> weapons;
     public GameObject lightObject;
 
     void Start()
     {
         respawnTimer = initRespawnTime;
-
+  
         thisTransform = GetComponent<Transform>();
 
+        spawnOffset = this.transform.position + new Vector3(0, 0.5f, 0);
+        spawnTilt = weapons[weaponIndex].transform.rotation * Quaternion.Euler(10, 0, 0);
+
         weaponIndex = Random.Range(0, weapons.Count);
-        Quaternion weaponRotation = weapons[weaponIndex].transform.rotation * Quaternion.Euler(10, 0, 0);
-        Instantiate(weapons[weaponIndex], this.transform.position + new Vector3(0, 0.5f, 0), weaponRotation, gameObject.transform);
+        Quaternion weaponRotation = spawnTilt;
+        Instantiate(weapons[weaponIndex], spawnOffset, weaponRotation, gameObject.transform);
     }
 
     void Update()
     {
         if(thisTransform.childCount == 0)
         {
-            lightObject.SetActive(false);
+            RespawnWeapon();
+        }
+    }
 
-            respawnTimer -= Time.deltaTime;
+    void RespawnWeapon()
+    {
+        lightObject.SetActive(false);
 
-            if (respawnTimer <= 0)
-            {
-                weaponIndex = Random.Range(0, weapons.Count);
-                Quaternion weaponRotation = weapons[weaponIndex].transform.rotation * Quaternion.Euler(10, 0, 0);
-                Instantiate(weapons[weaponIndex], this.transform.position + new Vector3(0, 0.5f, 0), weaponRotation, gameObject.transform);
+        respawnTimer -= Time.deltaTime;
 
-                lightObject.SetActive(true);
+        if (respawnTimer <= 0)
+        {
+            weaponIndex = Random.Range(0, weapons.Count);
+            Quaternion weaponRotation = weapons[weaponIndex].transform.rotation * Quaternion.Euler(10, 0, 0);
+            Instantiate(weapons[weaponIndex], this.transform.position + new Vector3(0, 0.5f, 0), weaponRotation, gameObject.transform);
 
-                respawnTimer = initRespawnTime;
-            }
+            lightObject.SetActive(true);
+
+            respawnTimer = initRespawnTime;
         }
     }
 }

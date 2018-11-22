@@ -13,6 +13,14 @@ public class Conveyor : MonoBehaviour
         if(objectOnBelt.tag != "Weapon")
         {
             objectOnBelt.transform.position = Vector3.MoveTowards(objectOnBelt.transform.position, endOfBelt.position, conveyorSpeed * Time.deltaTime);
-        }     
+        }
+
+        if (objectOnBelt.tag == "Weapon")
+        {
+            if(objectOnBelt.transform.parent == null)
+            {
+                objectOnBelt.transform.position = Vector3.MoveTowards(objectOnBelt.transform.position, endOfBelt.position, conveyorSpeed * Time.deltaTime);
+            }
+        }
     }
 }

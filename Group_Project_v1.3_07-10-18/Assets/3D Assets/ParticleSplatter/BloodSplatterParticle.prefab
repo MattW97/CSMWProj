@@ -53,8 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43495edda8d78444795cfa5b6bc5c8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleLauncher: {fileID: 198084642279440842}
-  splatDecalPool: {fileID: 0}
+  splatDecalPool: {fileID: 175348, guid: 33cec8d535cd4e543af906f5f174a148, type: 2}
 --- !u!198 &198084642279440842
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -163,7 +162,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 30
+      scalar: 10
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -675,7 +674,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2

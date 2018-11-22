@@ -23,12 +23,11 @@ GameObject:
   - component: {fileID: 23399604731801994}
   - component: {fileID: 54239479435828026}
   - component: {fileID: 64233599863469098}
-  - component: {fileID: 65833681263088256}
   - component: {fileID: 114260908950521216}
   - component: {fileID: 82922858988754386}
   m_Layer: 0
   m_Name: Baseball Bat
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,18 +145,6 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 3d51146e5da71ce4fb8a8b23675dd7d1, type: 3}
---- !u!65 &65833681263088256
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1527348653818166}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.07925638, y: 0.0792564, z: 0.68}
-  m_Center: {x: -0.0000000037252903, y: -0.000000003725291, z: 0.62}
 --- !u!82 &82922858988754386
 AudioSource:
   m_ObjectHideFlags: 1
@@ -255,6 +242,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   player: {fileID: 0}
   ammoAmount: 0
+  canDealDamage: 0
   thisRigidbody: {fileID: 0}
   muzzleFlash: {fileID: 0}
   baseballBatImpact: {fileID: 8300000, guid: f33f098b75e96914096fe3a51b99ad09, type: 3}

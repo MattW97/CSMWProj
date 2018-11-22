@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     #region ints
-    private int totalCurrentMashes = 0;
+    [HideInInspector] public int totalCurrentMashes = 0;
     private int lives = 3;
     #endregion
 
@@ -80,16 +80,26 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody thisRigidbody;
     [HideInInspector] public Rigidbody rightHand;
 
+    [HideInInspector] public PickUp pickUpScript;
+
+    [HideInInspector] public PlayerHealthManager healthManager;
+
     [Header("Change These For Each Player")]
+    public GameObject playerSkeletalMesh;
     public List<Transform> otherPlayersOrigin;
     public Transform thisPlayersOrigin;
     public PlayerUI playerUILink;
-    public PickUp pickUpScript;
 
-    void Start()
+    void Awake()
     {
         thisTransform = GetComponent<Transform>();
         thisRigidbody = GetComponent<Rigidbody>();
+        Instantiate(playerSkeletalMesh, thisTransform.position, thisTransform.rotation, thisTransform);
+    }
+
+    void Start()
+    {
+        healthManager = GetComponent<PlayerHealthManager>();
         canControl = true;
         isDead = false;
         //mashTimer = 0.5f;
@@ -105,6 +115,7 @@ public class PlayerController : MonoBehaviour {
             if (child.gameObject.name == "RightPalm")
             {
                 rightHand = child.transform.GetComponent<Rigidbody>();
+                pickUpScript = child.transform.GetComponent<PickUp>();
             }
         }
     }
@@ -142,6 +153,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         DropWeapon();
                         isHoldingWeapon = !isHoldingWeapon;
+                        weapon.GetComponent<WeaponScript>().canDealDamage = false;
                     }
 
                     canPickUpWeapon = false;
@@ -183,7 +195,8 @@ public class PlayerController : MonoBehaviour {
                 canControl = true;
                 ragdolling = false;
                 Ragdoll(false);
-
+                numToMash = 5;
+                healthManager.currentHealth = healthManager.startingHealth;
                 respawnTimer = respawnTimerReset;
                 lives = lives - 1;
             }
@@ -242,29 +255,29 @@ public class PlayerController : MonoBehaviour {
         // Button mashing if the player is just ragdolling
         if (!beenDragged && Input.GetButtonDown(mashButton))
         {
-            if (TotalCurrentMashes >= (numToMash - 1))
+            if (totalCurrentMashes >= (numToMash - 1))
             {
                 //BreakDragging();
-                GetComponent<PlayerHealthManager>().CurrentHealth = GetComponent<PlayerHealthManager>().startingHealth;
+                healthManager.currentHealth = healthManager.startingHealth;
                 Ragdoll(false);
             }
             else
             {
-                TotalCurrentMashes++;
+                totalCurrentMashes++;
             }
         }
 
         // Button mashing if the player is been dragged by an opposing player
         if (beenDragged && Input.GetButtonDown(mashButton))
         {
-            if (TotalCurrentMashes >= (numToMash - 1))
+            if (totalCurrentMashes >= (numToMash - 1))
             {
                 BreakDragging();
                 Ragdoll(false);
             }
             else
             {
-                TotalCurrentMashes++;
+                totalCurrentMashes++;
             }
         }
         #endregion
@@ -352,10 +365,10 @@ public class PlayerController : MonoBehaviour {
     private void BreakDragging()
     {
         beenDragged = false;
-        GetComponent<PlayerHealthManager>().CurrentHealth = GetComponent<PlayerHealthManager>().startingHealth;
+        healthManager.currentHealth = healthManager.startingHealth;
         rightHand.gameObject.GetComponent<PickUp>().join = false;
         Destroy(rightHand.gameObject.GetComponent<SpringJoint>());
-        TotalCurrentMashes = 0;
+        totalCurrentMashes = 0;
     }
 
     /// <summary>
@@ -401,7 +414,7 @@ public class PlayerController : MonoBehaviour {
         {
             ragdolling = false;
             thisTransform.position = new Vector3(thisPlayersOrigin.position.x, 0 , thisPlayersOrigin.position.z);
-            TotalCurrentMashes = 0;
+            totalCurrentMashes = 0;
             numToMash = numToMash * numToMashMultiplier;
             canControl = true;
             foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
@@ -475,10 +488,11 @@ public class PlayerController : MonoBehaviour {
 
     void DropWeapon()
     {
-        gameObject.GetComponent<PlayerAnimationScript>().canDealDamage = false;
-
-        WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
-        weaponScript.GetDropped();
+        if(weapon != null)
+        {
+            WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
+            weaponScript.GetDropped();
+        }   
     }
 
     internal void SetUpInputs(int controller)
@@ -501,10 +515,13 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.tag == "Weapon" && !isHoldingWeapon)
+        if (!isHoldingWeapon)
         {
-            this.weapon = col.gameObject.transform.parent.gameObject;
-            canPickUpWeapon = true;
+            if (col.gameObject.tag == "Weapon")
+            {
+                weapon = col.transform.parent.gameObject;
+                canPickUpWeapon = true;
+            }
         }
     }
 
@@ -534,12 +551,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     #region Getters/ Setters
-
-    public int TotalCurrentMashes { get { return totalCurrentMashes; } set { totalCurrentMashes = value; } }
-
     public bool PlayerInGame { get { return playerInGame; } set { playerInGame = value; } }
-
-    public GameObject ClosestPlayer { get { return closestPlayer; } set { closestPlayer = value; } }
-    
+    public GameObject ClosestPlayer { get { return closestPlayer; } set { closestPlayer = value; } } 
     #endregion
 }

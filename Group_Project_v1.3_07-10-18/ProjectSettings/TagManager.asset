@@ -8,6 +8,7 @@ TagManager:
   - KillZone
   - Weapon
   - Dodge Point
+  - Trap
   layers:
   - Default
   - TransparentFX

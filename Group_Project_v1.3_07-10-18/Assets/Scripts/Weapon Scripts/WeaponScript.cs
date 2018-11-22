@@ -27,6 +27,8 @@ public class WeaponScript : MonoBehaviour {
     private bool canShoot;
     private bool reloading;
 
+    public bool canDealDamage;
+
     public Rigidbody thisRigidbody;
 
     public ParticleSystem muzzleFlash;
@@ -56,6 +58,7 @@ public class WeaponScript : MonoBehaviour {
         ammoAmount = initAmmoAmount;
         canShoot = false;
         reloading = false;
+        canDealDamage = false;
 
         despawnTimer = initDespawnTime;
 
@@ -121,34 +124,37 @@ public class WeaponScript : MonoBehaviour {
         PlayerController playerController = player.GetComponent<PlayerController>();
 
         // If right trigger is pressed...
-        if (Input.GetAxis(playerController.fireButton) > 0 && !reloading && !playerController.pickUpMode)
+        if(weaponSelection == WeaponType.Shotgun)
         {
-            if (initAmmoAmount > 0)
+            if (Input.GetAxis(playerController.fireButton) > 0 && !reloading && !playerController.pickUpMode)
             {
-
-                shotTimer -= Time.deltaTime;
-
-                if (shotTimer <= 0)
+                if (initAmmoAmount > 0)
                 {
 
-                    for (int i = 0; i < bulletSpawn.Length; i++)
+                    shotTimer -= Time.deltaTime;
+
+                    if (shotTimer <= 0)
                     {
 
-                        Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
-                    }
+                        for (int i = 0; i < bulletSpawn.Length; i++)
+                        {
 
-                    muzzleFlash.Play();
-                    shotTimer = fireRate;
-                    initAmmoAmount = initAmmoAmount - 1;
+                            Instantiate(bullet, bulletSpawn[i].transform.position, bulletSpawn[i].transform.rotation);
+                        }
+
+                        muzzleFlash.Play();
+                        shotTimer = fireRate;
+                        initAmmoAmount = initAmmoAmount - 1;
+                    }
                 }
             }
+            else
+            {
+                // Stops delay between pressing the fire button and the shot firing
+                // Makes it so shotTimer is only active whilst the fire button is down
+                shotTimer = 0;
+            }
         }
-        else
-        {
-            // Stops delay between pressing the fire button and the shot firing
-            // Makes it so shotTimer is only active whilst the fire button is down
-            shotTimer = 0;
-        }  
     }
 
     public void Reload(GameObject player)
@@ -159,7 +165,6 @@ public class WeaponScript : MonoBehaviour {
         if (Input.GetButtonDown(playerController.reload) && !playerController.pickUpMode && initAmmoAmount < ammoAmount || initAmmoAmount == 0)
         {
             reloadTime -= Time.deltaTime;
-            Debug.Log(reloadTime);
             if (reloadTime <= 0)
             {
 
@@ -173,28 +178,30 @@ public class WeaponScript : MonoBehaviour {
 
     void OnTriggerEnter (Collider collider)
     {
-        if(collider.tag == "Player" && player.GetComponent<PlayerAnimationScript>().canDealDamage && player != null)
+        if(player != null)
         {
-            collider.gameObject.GetComponent<PlayerHealthManager>().DamagePlayer(meleeDamage / 2);
-
-            Transform bloodParticleObject = collider.gameObject.transform.Find("BloodSplatterParticle");
-            bloodParticleObject.rotation = Quaternion.LookRotation(this.gameObject.transform.forward);
-            bloodParticleObject.GetComponent<ParticleSystem>().Play();
-
-            Debug.Log(collider.gameObject.GetComponent<PlayerHealthManager>().CurrentHealth.ToString());
-
-            // Impact sounds
-            if (weaponSelection == WeaponType.BaseballBat)
+            
+            if (collider.tag == "Player" && canDealDamage)
             {
-                audioSource.PlayOneShot(baseballBatImpact, 0.2f);
-            }
-            if (weaponSelection == WeaponType.Mallet)
-            {
-                audioSource.PlayOneShot(baseballBatImpact, 0.2f);
-            }
-            if (weaponSelection == WeaponType.Machete)
-            {
-                audioSource.PlayOneShot(macheteImpact, 0.2f);
+                collider.gameObject.GetComponent<PlayerHealthManager>().DamagePlayer(meleeDamage / 2);
+
+                Transform bloodParticleObject = collider.gameObject.transform.Find("BloodSplatterParticle");
+                bloodParticleObject.rotation = Quaternion.LookRotation(this.gameObject.transform.forward);
+                bloodParticleObject.GetComponent<ParticleSystem>().Play();
+
+                // Impact sounds
+                if (weaponSelection == WeaponType.BaseballBat)
+                {
+                    audioSource.PlayOneShot(baseballBatImpact, 0.2f);
+                }
+                if (weaponSelection == WeaponType.Mallet)
+                {
+                    audioSource.PlayOneShot(baseballBatImpact, 0.2f);
+                }
+                if (weaponSelection == WeaponType.Machete)
+                {
+                    audioSource.PlayOneShot(macheteImpact, 0.2f);
+                }
             }
         }    
     }

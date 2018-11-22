@@ -8,7 +8,6 @@ public class PlayerAnimationScript : MonoBehaviour {
     PlayerController playerController;
 
     [HideInInspector] public WeaponScript weapon;
-    [HideInInspector] public bool canDealDamage;
 
     private AudioSource audioSource;
     //public AudioClip shotgunFire;
@@ -22,28 +21,34 @@ public class PlayerAnimationScript : MonoBehaviour {
         animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         audioSource = GetComponent<AudioSource>();
-
-        canDealDamage = false;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-
         float h = playerController.rightLeft;
         float v = playerController.forwardBackward;
 
         animator.SetFloat("MoveRight", h);
         animator.SetFloat("MoveForward", v);
 
-        weapon = playerController.weapon.GetComponent<WeaponScript>();
-
+        if(playerController.weapon != null)
+        {
+            weapon = playerController.weapon.GetComponent<WeaponScript>();
+        }
+        
         if (!playerController.isHoldingWeapon)
         {
             // If unarmed
             animator.SetLayerWeight(1, 0);
             animator.SetLayerWeight(2, 0);
             animator.SetLayerWeight(3, 0);
+
+            if (Input.GetAxisRaw(playerController.fireButton) > 0 && animator.GetCurrentAnimatorStateInfo(0).IsName("MasterMovementBlendTree"))
+            {
+                animator.ResetTrigger("AttackTrigger");
+                animator.SetTrigger("AttackTrigger");
+            }
         }
         else
         {
@@ -99,13 +104,19 @@ public class PlayerAnimationScript : MonoBehaviour {
         }      
     }
 
-    public void DamageOn ()
+    public void DamageOn()
     {
-        canDealDamage = true;
+        if(playerController.isHoldingWeapon)
+        {
+            playerController.weapon.GetComponent<WeaponScript>().canDealDamage = true;
+        }
     }
 
     public void DamageOff()
     {
-        canDealDamage = false;
+        if(playerController.weapon != null)
+        {
+            playerController.weapon.GetComponent<WeaponScript>().canDealDamage = false;
+        }   
     }
 }
